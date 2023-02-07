@@ -2,7 +2,279 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Kmarket::index</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font: normal 12px '고딕';
+        }
+        ul,ol{
+            list-style: none;
+        }
+        a{text-decoration: none; color: #111;}
+        #wrapper{
+            width: 100%;
+        }
+        /*헤더*/
+        header{
+            width: 100%;
+            height: 197px;
+        }
+        header>div{
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .top{
+            height: 35px;
+            border-bottom: 1px solid #e9e9e9;
+        }
+        .top > div{
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+            text-align: right;
+        }
+        .top > div> a{
+            display: inline-block;
+            height: 100%;
+            line-height: 35px;
+            border-left: 1px solid #e9e9e9;
+            padding: 0 10px;
+            color: #646464;
+        }
+        .top > div> a > i{}
+        .logo{
+            height: 115px;
+            border-bottom: 1px solid #e9e9e9;
+        }
+        .logo > div{
+            position: relative;
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+        }
+        .logo > div > a {
+            display: inline-block;
+            margin-top: 30px;
+        }
+        .logo > div > a > img {}
+        .logo > div > form {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -185px;
+            margin-top: -22px;
+            display: inline-block;
+            width: 370px;
+            height: 45px;
+        }
+        .logo > div > form > input{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #e9e9e9;
+            border-radius: 5px;
+            font-size: 20px;
+            padding-left: 10px;
+            padding-right: 30px;
+            box-sizing: border-box;
+        }
+        .menu{
+            height: 46px;
+            background: #f2f2f2;
+            border-bottom: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .menu > div{
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+        }
+        .menu > div> ul{
+            display: inline-block;
+            margin-top: 16px;
+        }
+        .menu > div> ul:nth-of-type(1){
+            float: left;
+        }
+        .menu > div> ul:nth-of-type(2){
+            float: right;
+        }
+        .menu > div> ul > li{
+            float: left;
+        }
+        .menu > div> ul > li>a{
+            border-left: 1px solid #e9e9e9;
+            padding: 0 10px;
+        }
+        /*메인*/
+        main{
+            width: 1200px;
+            height: auto;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        main > aside{
+            float: left;
+            width: 215px;
+            height: 100%;
+        }
+        main > aside > .category {
+            position: relative;
+            width: 100%;
+            height: 425px;
+            background: #333949;
+        }
+        main > aside > .category > li {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            color: #ccc;
+            font-size: 13px;
+            border-bottom: 1px solid #2b313f;
+            box-sizing: border-box;
+        }
+        main > aside > .category > li:first-child {
+            padding: 0 20px;
+            color: #fff;
+            line-height: 40px;
+        }
+        main > aside > .category i {
+            width: 22px;
+            font-size: 16px;
+            margin-right: 12px;
+        }
+        main > aside > .category > li > a {
+            display: block;
+            padding: 0 20px;
+            line-height: 40px;
+            color: #ccc;
+            font-size: 1em;
+        }
+        main > aside > .category > li:hover ol{
+            display: block;
+        }
+        main > aside > .category ol {
+            position: absolute;
+            left: 215px;
+            top: 0;
+            display: none;
+            width: 215px;
+            height: 100%;
+            border: 1px solid #787f89;
+            background: #fff;
+            box-sizing: border-box;
+            z-index: 10000;
+        }
+        main > aside > .category ol > li {
+            width: 100%;
+            height: 24px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+
+        main > aside > .best {
+            width: 215px;
+            height: auto;
+            border: 1px solid #dbdbdb;
+            box-sizing: border-box;
+            box-shadow: 0 0 5px rgb(55, 55, 5 / 20%);
+        }
+        main > aside > .best > h1{
+            font-size: 14px;
+            font-weight: bold;
+            color: #111;
+            margin: 6px;
+        }
+        main > aside > .best > h1 > i{
+            margin-right: 6px;
+            font-size: 18px;
+        }
+        main > aside > .best > ol{
+            width: 100%;
+        }
+        main > aside > .best > ol > li {
+            width: 100%;
+            height: 100%;
+            padding: 0 6px;
+            box-sizing: border-box;
+            margin-bottom: 16px;
+        }
+        main > aside > .best > ol > li > a{
+            display: block;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        main > aside > .best > ol > li:first-child > a > .thumb{
+            position: relative;
+            float: none;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        main > aside > .best > ol > li > a > .thumb{
+            float: left;
+            position: relative;
+            width: 50px;
+            height: 50px;
+            overflow: hidden;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        main > aside > .best > ol > li > a > .thumb > i {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: inline-block;
+            width: 16px;
+            height: 20px;
+            font-size: 14px;
+            padding: 0;
+            color: #ef3e42;
+            border-bottom: 1px solid #ef3e42;
+            font-weight: bold;
+            font-style: italic;
+            text-align: center;
+            line-height: 18px;
+        }
+        main > aside > .best > ol > li:first-child > a > .thumb > i {
+            width: 35px;
+            height: 26px;
+        }
+        main > aside > .best > ol > li > a > .thumb > img {
+            width: 100%;
+        }
+        main > aside > .best > ol > li > a > article {
+            float: left;
+            width: 148px;
+            padding-left: 6px;
+            box-sizing: border-box;
+        }
+        main > aside > .best > ol > li > a > article> h2{
+            margin-top: 4px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        main > aside > .best > ol > li > a > article.org_price{}
+        main > aside > .best > ol > li > a > article > .org_price > del{
+            font-size: 10px;
+            color: #aaa;
+        }
+        main > aside > .best > ol > li > a > article> .org_price > span{
+            color: #eb000a;
+            font-size: 10px;
+        }
+        main > aside > .best > ol > li > a > article > .dis_price{}
+        main > aside > .best > ol > li > a > article > .dis_price > ins{
+            font-size: 14px;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <div class="wrapper">
@@ -24,7 +296,7 @@
                         <img src="./img/header_logo.png" alt="logo">
                     </a>
                     <form action="#">
-                        <input type="text" name="" id="">
+                        <input type="text" name="search">
                         <button>
                             <i></i>
                         </button>
@@ -32,23 +304,176 @@
                 </div>
             </div>
             <div class="menu">
-                <ul>
-                    <li>히트상품</li>
-                    <li>추천상품</li>
-                    <li>최신상품</li>
-                    <li>인기상품</li>
-                    <li>할인상품</li>
-                </ul>
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+                <div>
+                    <ul>
+                        <li><a href="#">히트상품</a></li>
+                        <li><a href="#">추천상품</a></li>
+                        <li><a href="#">최신상품</a></li>
+                        <li><a href="#">인기상품</a></li>
+                        <li><a href="#">할인상품</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="#">공지사항</a></li>
+                        <li><a href="#">자주묻는질문</a></li>
+                        <li><a href="#">문의하기</a></li>
+                        <li><a href="#">고객센터</a></li>
+                    </ul>
+                </div>
             </div>
         </header>
         <main>
-            <aside></aside>
+            <aside>
+                <ul class="category">
+                    <li><i></i>카테고리</li>
+                    <li>
+                        <a href="#">
+                            <i></i>패션·의류·뷰티<i></i>
+                        </a>
+                        <ol>
+                            <li><a href="#">남성의류</a></li>
+                            <li><a href="#">여성의류</a></li>
+                            <li><a href="#">잡화</a></li>
+                            <li><a href="#">뷰티</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i></i>가전·디지털<i></i>
+                        </a>
+                        <ol>
+                            <li><a href="#">노트북/</a></li>
+                            <li><a href="#">가전</a></li>
+                            <li><a href="#">휴대폰</a></li>
+                            <li><a href="#">기타</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i></i>식품·생필품<i></i>
+                        </a>
+                        <ol>
+                            <li><a href="#">신선식품</a></li>
+                            <li><a href="#">가공식품</a></li>
+                            <li><a href="#">건강식품</a></li>
+                            <li><a href="#">생필품</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i></i>홈·문구·취미<i></i>
+                        </a>
+                        <ol>
+                            <li><a href="#">가구/DIY</a></li>
+                            <li><a href="#">침구·커튼</a></li>
+                            <li><a href="#">생활용품</a></li>
+                            <li><a href="#">사무용품</a></li>
+                        </ol>
+                    </li>
+                    
+                </ul>
+                <article class="best">
+                    <h1>
+                        <i></i>베스트상품
+                    </h1>
+                    <ol>
+                        <li>
+                            <a href="#">
+                                <div class="thumb">
+                                    <i>1</i>
+                                    <img src="https://via.placeholder.com/230" alt="item1">
+                                </div>
+                                <article>
+                                    <h2>상품명</h2>
+                                    <div class="org_price">
+                                        <del>30,000</del>
+                                        <span>10%</span>
+                                    </div>
+                                    <div class="dis_price">
+                                        <ins>27,000</ins>
+                                    </div>
+                                </article>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="thumb">
+                                    <i>2</i>
+                                    <img src="https://via.placeholder.com/50" alt="item1">
+                                </div>
+                                <article>
+                                    <h2>상품명</h2>
+                                    <div class="org_price">
+                                        <del>30,000</del>
+                                        <span>10%</span>
+                                    </div>
+                                    <div class="dis_price">
+                                        <ins>27,000</ins>
+                                    </div>
+                                </article>
+                                
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="thumb">
+                                    <i>3</i>
+                                    <img src="https://via.placeholder.com/50" alt="item1">
+                                </div>
+                                <article>
+                                    <h2>상품명</h2>
+                                    <div class="org_price">
+                                        <del>30,000</del>
+                                        <span>10%</span>
+                                    </div>
+                                    <div class="dis_price">
+                                        <ins>27,000</ins>
+                                    </div>
+                                </article>
+                                
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="thumb">
+                                    <i>4</i>
+                                    <img src="https://via.placeholder.com/50" alt="item1">
+                                </div>
+                                <article>
+                                    <h2>상품명</h2>
+                                    <div class="org_price">
+                                        <del>30,000</del>
+                                        <span>10%</span>
+                                    </div>
+                                    <div class="dis_price">
+                                        <ins>27,000</ins>
+                                    </div>
+                                </article>
+                                
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="thumb">
+                                    <i>5</i>
+                                    <img src="https://via.placeholder.com/50" alt="item1">
+                                </div>
+                                <article>
+                                    <h2>상품명</h2>
+                                    <div class="org_price">
+                                        <del>30,000</del>
+                                        <span>10%</span>
+                                    </div>
+                                    <div class="dis_price">
+                                        <ins>27,000</ins>
+                                    </div>
+                                </article>
+                                
+                            </a>
+                        </li>
+                        
+                    </ol>
+                </article>
+            </aside>
             <section></section>
         </main>
         <footer>
