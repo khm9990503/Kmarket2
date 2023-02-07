@@ -1,0 +1,14 @@
+/*초기화*/
+*{
+    margin: 0;
+    padding: 0;
+    font: normal 12px '고딕';
+}
+ul,ol{
+    list-style: none;
+}
+a{text-decoration: none;}
+#wrapper{
+    width: 100%;
+}
+/*헤더*/
