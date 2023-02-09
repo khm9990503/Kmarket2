@@ -122,6 +122,13 @@ header > div{
 }
 
 /*footer*/
+footer{
+    width: 100%;
+    height: 192px;
+    background: #f8f8f8;
+    border-top: 1px solid #e9e9e9;
+    box-sizing: border-box;
+}
 footer > ul{
     width: 1200px;
     height: 39px;
@@ -152,6 +159,13 @@ footer > div > p{
     font-size: 11px;
     line-height: 15px;
     color: #676767;
+}
+footer > div > p > strong{
+    display: inline-block;
+    padding: 6px 15px 7px 0;
+    color: #464646;
+    font-size: 12px;
+    font-weight: bold;
 }
 footer > div > p:nth-of-type(2){
     width: 300px;
