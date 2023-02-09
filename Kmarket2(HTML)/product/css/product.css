@@ -36,6 +36,7 @@ main > aside{
 .category > li:first-child{
     padding: 0 20px;
     color: #fff;
+    line-height: 40px; /* <- 진윤희 추가(02/09)*/
 }
 .category > li > a{
     display: block;
