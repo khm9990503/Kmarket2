@@ -42,6 +42,8 @@ header > .top > div{
     margin: 0 auto;
 }
 
+
+
 header > .top > div > p{
     float: right;
     margin-top: 8px;
@@ -57,6 +59,8 @@ header > .top > div a:hover{
     color: #333;
     border-bottom: 1px solid #555;
 }
+
+
 
 header > .logo{
     height: 115px;
