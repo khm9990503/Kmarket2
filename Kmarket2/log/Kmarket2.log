@@ -1,0 +1,242 @@
+2023-02-10 10:36:02.286  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Starting Kmarket2Application using Java 17.0.5 on DESKTOP-1FFOQKL with PID 11916 (C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2\target\classes started by java1 in C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2)
+2023-02-10 10:36:02.287  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : No active profile set, falling back to 1 default profile: "default"
+2023-02-10 10:36:02.317  INFO 11916 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-02-10 10:36:02.317  INFO 11916 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-02-10 10:36:02.693  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-10 10:36:02.703  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 JPA repository interfaces.
+2023-02-10 10:36:02.788  WARN 11916 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[kr.co.kmarket2]' package. Please check your configuration.
+2023-02-10 10:36:03.082  INFO 11916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8181 (http)
+2023-02-10 10:36:03.088  INFO 11916 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-10 10:36:03.088  INFO 11916 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-02-10 10:36:03.134  INFO 11916 --- [restartedMain] o.a.c.c.C.[.[localhost].[/Kmarket2]      : Initializing Spring embedded WebApplicationContext
+2023-02-10 10:36:03.134  INFO 11916 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 816 ms
+2023-02-10 10:36:03.254  INFO 11916 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-10 10:36:03.284  INFO 11916 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-02-10 10:36:03.381  INFO 11916 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-02-10 10:36:03.440  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-02-10 10:36:03.655  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-02-10 10:36:03.677  INFO 11916 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2023-02-10 10:36:04.042  INFO 11916 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-10 10:36:04.049  INFO 11916 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-10 10:36:04.078  WARN 11916 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-10 10:36:04.170  INFO 11916 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-02-10 10:36:04.378  WARN 11916 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: d7d70fee-d1ce-4424-8e63-82dce84e31d0
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-02-10 10:36:04.451  INFO 11916 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7a758dc8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3f0192ae, org.springframework.security.web.context.SecurityContextPersistenceFilter@27a9a8d3, org.springframework.security.web.header.HeaderWriterFilter@152166db, org.springframework.security.web.csrf.CsrfFilter@7e22de0b, org.springframework.security.web.authentication.logout.LogoutFilter@5a5ba936, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@228df134, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@75c86a58, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@6580bb59, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@2afde989, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7242d6bb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@c2deeb4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@56adda47, org.springframework.security.web.session.SessionManagementFilter@7fa0fb96, org.springframework.security.web.access.ExceptionTranslationFilter@67d28ca9, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4ccc639c]
+2023-02-10 10:36:04.494  INFO 11916 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-02-10 10:36:04.520  INFO 11916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8181 (http) with context path '/Kmarket2'
+2023-02-10 10:36:04.527  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Started Kmarket2Application in 2.482 seconds (JVM running for 2.936)
+2023-02-10 10:37:10.758  INFO 11916 --- [http-nio-8181-exec-7] o.a.c.c.C.[.[localhost].[/Kmarket2]      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-02-10 10:37:10.759  INFO 11916 --- [http-nio-8181-exec-7] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-02-10 10:37:10.760  INFO 11916 --- [http-nio-8181-exec-7] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-02-10 10:39:51.895  INFO 11916 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2023-02-10 10:39:51.903  INFO 11916 --- [Thread-5] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-02-10 10:39:51.905  INFO 11916 --- [Thread-5] o.a.c.c.C.[.[localhost].[/Kmarket2]      : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-02-10 10:39:51.918  INFO 11916 --- [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-10 10:39:51.920  INFO 11916 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-02-10 10:39:51.926  INFO 11916 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-02-10 10:39:51.990  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Starting Kmarket2Application using Java 17.0.5 on DESKTOP-1FFOQKL with PID 11916 (C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2\target\classes started by java1 in C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2)
+2023-02-10 10:39:51.991  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : No active profile set, falling back to 1 default profile: "default"
+2023-02-10 10:39:52.132  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-10 10:39:52.134  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2023-02-10 10:39:52.163  WARN 11916 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[kr.co.kmarket2]' package. Please check your configuration.
+2023-02-10 10:39:52.198  INFO 11916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8181 (http)
+2023-02-10 10:39:52.198  INFO 11916 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-10 10:39:52.198  INFO 11916 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-02-10 10:39:52.213  INFO 11916 --- [restartedMain] o.a.c.c.C.[.[localhost].[/Kmarket2]      : Initializing Spring embedded WebApplicationContext
+2023-02-10 10:39:52.213  INFO 11916 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 219 ms
+2023-02-10 10:39:52.237  INFO 11916 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-10 10:39:52.241  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2023-02-10 10:39:52.360  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2023-02-10 10:39:52.361  INFO 11916 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2023-02-10 10:39:52.578  INFO 11916 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-10 10:39:52.579  INFO 11916 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-10 10:39:52.592  WARN 11916 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-10 10:39:52.620  INFO 11916 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-02-10 10:39:52.669  WARN 11916 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 743822e2-dba4-47d0-ab0a-3c22e3332c13
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-02-10 10:39:52.676  INFO 11916 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@416dfb38, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@455126a9, org.springframework.security.web.context.SecurityContextPersistenceFilter@7a38c8ad, org.springframework.security.web.header.HeaderWriterFilter@4174b387, org.springframework.security.web.csrf.CsrfFilter@7dc304ff, org.springframework.security.web.authentication.logout.LogoutFilter@60591385, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@12822d70, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@5b65af80, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@463b7ade, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@76169bc5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6e1b684f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@a971680, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4b1096f, org.springframework.security.web.session.SessionManagementFilter@1fb9c359, org.springframework.security.web.access.ExceptionTranslationFilter@2336e02d, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1392f541]
+2023-02-10 10:39:52.686  INFO 11916 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-02-10 10:39:52.693  INFO 11916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8181 (http) with context path '/Kmarket2'
+2023-02-10 10:39:52.697  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Started Kmarket2Application in 0.732 seconds (JVM running for 231.106)
+2023-02-10 10:39:52.698  INFO 11916 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-02-10 10:40:23.048  INFO 11916 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2023-02-10 10:40:23.052  INFO 11916 --- [Thread-7] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-02-10 10:40:23.056  INFO 11916 --- [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-10 10:40:23.056  INFO 11916 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2023-02-10 10:40:23.057  INFO 11916 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2023-02-10 10:40:23.121  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Starting Kmarket2Application using Java 17.0.5 on DESKTOP-1FFOQKL with PID 11916 (C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2\target\classes started by java1 in C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2)
+2023-02-10 10:40:23.121  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : No active profile set, falling back to 1 default profile: "default"
+2023-02-10 10:40:23.243  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-10 10:40:23.246  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 JPA repository interfaces.
+2023-02-10 10:40:23.271  WARN 11916 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[kr.co.kmarket2]' package. Please check your configuration.
+2023-02-10 10:40:23.300  INFO 11916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8181 (http)
+2023-02-10 10:40:23.300  INFO 11916 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-10 10:40:23.300  INFO 11916 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-02-10 10:40:23.311  INFO 11916 --- [restartedMain] o.a.c.c.C.[.[localhost].[/Kmarket2]      : Initializing Spring embedded WebApplicationContext
+2023-02-10 10:40:23.311  INFO 11916 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 188 ms
+2023-02-10 10:40:23.334  INFO 11916 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-10 10:40:23.337  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2023-02-10 10:40:23.434  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2023-02-10 10:40:23.435  INFO 11916 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2023-02-10 10:40:23.621  INFO 11916 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-10 10:40:23.622  INFO 11916 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-10 10:40:23.633  WARN 11916 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-10 10:40:23.654  INFO 11916 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-02-10 10:40:23.698  WARN 11916 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 5444183f-cb4f-421e-aa72-613e9969fee0
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-02-10 10:40:23.705  INFO 11916 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@13f9819b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7d187c4a, org.springframework.security.web.context.SecurityContextPersistenceFilter@6a427583, org.springframework.security.web.header.HeaderWriterFilter@3bb2814d, org.springframework.security.web.csrf.CsrfFilter@202fe865, org.springframework.security.web.authentication.logout.LogoutFilter@557eb214, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6c306951, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@2b86df21, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@128de859, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@2ae35b2b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3fa709e0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@10304fb0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2207c320, org.springframework.security.web.session.SessionManagementFilter@35f1cf98, org.springframework.security.web.access.ExceptionTranslationFilter@dbb116a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@228980de]
+2023-02-10 10:40:23.711  INFO 11916 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-02-10 10:40:23.719  INFO 11916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8181 (http) with context path '/Kmarket2'
+2023-02-10 10:40:23.722  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Started Kmarket2Application in 0.625 seconds (JVM running for 262.131)
+2023-02-10 10:40:23.724  INFO 11916 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-02-10 10:40:36.515  INFO 11916 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (1 addition, 1 deletion, 0 modifications)
+2023-02-10 10:40:36.524  INFO 11916 --- [Thread-11] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-02-10 10:40:36.527  INFO 11916 --- [Thread-11] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-10 10:40:36.527  INFO 11916 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2023-02-10 10:40:36.528  INFO 11916 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2023-02-10 10:40:36.579  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Starting Kmarket2Application using Java 17.0.5 on DESKTOP-1FFOQKL with PID 11916 (C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2\target\classes started by java1 in C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2)
+2023-02-10 10:40:36.579  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : No active profile set, falling back to 1 default profile: "default"
+2023-02-10 10:40:36.671  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-10 10:40:36.673  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2023-02-10 10:40:36.694  WARN 11916 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[kr.co.kmarket2]' package. Please check your configuration.
+2023-02-10 10:40:36.719  INFO 11916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8181 (http)
+2023-02-10 10:40:36.720  INFO 11916 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-10 10:40:36.720  INFO 11916 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-02-10 10:40:36.743  INFO 11916 --- [restartedMain] o.a.c.c.C.[.[localhost].[/Kmarket2]      : Initializing Spring embedded WebApplicationContext
+2023-02-10 10:40:36.743  INFO 11916 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 163 ms
+2023-02-10 10:40:36.769  INFO 11916 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-10 10:40:36.772  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2023-02-10 10:40:36.878  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2023-02-10 10:40:36.878  INFO 11916 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2023-02-10 10:40:37.065  INFO 11916 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-10 10:40:37.065  INFO 11916 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-10 10:40:37.076  WARN 11916 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-10 10:40:37.098  INFO 11916 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-02-10 10:40:37.142  WARN 11916 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 8d79a1bc-d78a-489c-98e9-185670abe5ff
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-02-10 10:40:37.149  INFO 11916 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@65d4d46b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6718c6e7, org.springframework.security.web.context.SecurityContextPersistenceFilter@76b2505d, org.springframework.security.web.header.HeaderWriterFilter@1dc6c606, org.springframework.security.web.csrf.CsrfFilter@3d3cde99, org.springframework.security.web.authentication.logout.LogoutFilter@2fe8fcb, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@11e40c72, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@58abd60a, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@56aec1ea, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@23ada7cb, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@522d824c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@797088f9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1873b70b, org.springframework.security.web.session.SessionManagementFilter@2da18b66, org.springframework.security.web.access.ExceptionTranslationFilter@37827730, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@494970f6]
+2023-02-10 10:40:37.154  INFO 11916 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-02-10 10:40:37.161  INFO 11916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8181 (http) with context path '/Kmarket2'
+2023-02-10 10:40:37.165  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Started Kmarket2Application in 0.602 seconds (JVM running for 275.574)
+2023-02-10 10:40:37.166  INFO 11916 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-02-10 10:41:48.760  INFO 11916 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2023-02-10 10:41:48.785  INFO 11916 --- [Thread-15] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-02-10 10:41:48.788  INFO 11916 --- [Thread-15] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-10 10:41:48.788  INFO 11916 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2023-02-10 10:41:48.789  INFO 11916 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2023-02-10 10:41:48.834  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Starting Kmarket2Application using Java 17.0.5 on DESKTOP-1FFOQKL with PID 11916 (C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2\target\classes started by java1 in C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2)
+2023-02-10 10:41:48.834  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : No active profile set, falling back to 1 default profile: "default"
+2023-02-10 10:41:48.927  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-10 10:41:48.929  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 JPA repository interfaces.
+2023-02-10 10:41:48.951  WARN 11916 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[kr.co.kmarket2]' package. Please check your configuration.
+2023-02-10 10:41:48.976  INFO 11916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8181 (http)
+2023-02-10 10:41:48.977  INFO 11916 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-10 10:41:48.977  INFO 11916 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-02-10 10:41:48.988  INFO 11916 --- [restartedMain] o.a.c.c.C.[.[localhost].[/Kmarket2]      : Initializing Spring embedded WebApplicationContext
+2023-02-10 10:41:48.988  INFO 11916 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 153 ms
+2023-02-10 10:41:49.009  INFO 11916 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-10 10:41:49.013  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2023-02-10 10:41:49.098  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2023-02-10 10:41:49.100  INFO 11916 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2023-02-10 10:41:49.123 ERROR 11916 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: No identifier specified for entity: kr.co.kmarket2.entity.MemberEntity
+2023-02-10 10:41:49.123  WARN 11916 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.AnnotationException: No identifier specified for entity: kr.co.kmarket2.entity.MemberEntity
+2023-02-10 10:41:49.123  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2023-02-10 10:41:49.124  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2023-02-10 10:41:49.124  INFO 11916 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-02-10 10:41:49.129  INFO 11916 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-02-10 10:41:49.143 ERROR 11916 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.AnnotationException: No identifier specified for entity: kr.co.kmarket2.entity.MemberEntity
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1804) ~[spring-beans-5.3.25.jar:5.3.25]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620) ~[spring-beans-5.3.25.jar:5.3.25]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.25.jar:5.3.25]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.25.jar:5.3.25]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.25.jar:5.3.25]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.25.jar:5.3.25]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.25.jar:5.3.25]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154) ~[spring-context-5.3.25.jar:5.3.25]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908) ~[spring-context-5.3.25.jar:5.3.25]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.25.jar:5.3.25]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147) ~[spring-boot-2.7.8.jar:2.7.8]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731) ~[spring-boot-2.7.8.jar:2.7.8]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408) ~[spring-boot-2.7.8.jar:2.7.8]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307) ~[spring-boot-2.7.8.jar:2.7.8]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303) ~[spring-boot-2.7.8.jar:2.7.8]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292) ~[spring-boot-2.7.8.jar:2.7.8]
+	at kr.co.kmarket2.Kmarket2Application.main(Kmarket2Application.java:10) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.7.8.jar:2.7.8]
+Caused by: org.hibernate.AnnotationException: No identifier specified for entity: kr.co.kmarket2.entity.MemberEntity
+	at org.hibernate.cfg.InheritanceState.determineDefaultAccessType(InheritanceState.java:266) ~[hibernate-core-5.6.14.Final.jar:5.6.14.Final]
+	at org.hibernate.cfg.InheritanceState.getElementsToProcess(InheritanceState.java:211) ~[hibernate-core-5.6.14.Final.jar:5.6.14.Final]
+	at org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:772) ~[hibernate-core-5.6.14.Final.jar:5.6.14.Final]
+	at org.hibernate.boot.model.source.internal.annotations.AnnotationMetadataSourceProcessorImpl.processEntityHierarchies(AnnotationMetadataSourceProcessorImpl.java:225) ~[hibernate-core-5.6.14.Final.jar:5.6.14.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess$1.processEntityHierarchies(MetadataBuildingProcess.java:239) ~[hibernate-core-5.6.14.Final.jar:5.6.14.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:282) ~[hibernate-core-5.6.14.Final.jar:5.6.14.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1460) ~[hibernate-core-5.6.14.Final.jar:5.6.14.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1494) ~[hibernate-core-5.6.14.Final.jar:5.6.14.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.25.jar:5.3.25]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.25.jar:5.3.25]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.25.jar:5.3.25]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.25.jar:5.3.25]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.25.jar:5.3.25]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.25.jar:5.3.25]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.25.jar:5.3.25]
+	... 21 common frames omitted
+
+2023-02-10 10:43:15.143  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Starting Kmarket2Application using Java 17.0.5 on DESKTOP-1FFOQKL with PID 11916 (C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2\target\classes started by java1 in C:\Users\java1\Desktop\Workspace\Kmarket2\Kmarket2)
+2023-02-10 10:43:15.143  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : No active profile set, falling back to 1 default profile: "default"
+2023-02-10 10:43:15.239  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-10 10:43:15.241  INFO 11916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2023-02-10 10:43:15.263  WARN 11916 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[kr.co.kmarket2]' package. Please check your configuration.
+2023-02-10 10:43:15.288  INFO 11916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8181 (http)
+2023-02-10 10:43:15.289  INFO 11916 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-10 10:43:15.289  INFO 11916 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-02-10 10:43:15.299  INFO 11916 --- [restartedMain] o.a.c.c.C.[.[localhost].[/Kmarket2]      : Initializing Spring embedded WebApplicationContext
+2023-02-10 10:43:15.300  INFO 11916 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 156 ms
+2023-02-10 10:43:15.319  INFO 11916 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-10 10:43:15.322  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
+2023-02-10 10:43:15.425  INFO 11916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
+2023-02-10 10:43:15.426  INFO 11916 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2023-02-10 10:43:15.789  INFO 11916 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-10 10:43:15.790  INFO 11916 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-10 10:43:15.804  WARN 11916 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-10 10:43:15.828  INFO 11916 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-02-10 10:43:15.872  WARN 11916 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 8cb0412b-8683-4e2e-b87d-4f371e7438b2
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-02-10 10:43:15.879  INFO 11916 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@64f67519, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7e7bfea5, org.springframework.security.web.context.SecurityContextPersistenceFilter@1c9b44cc, org.springframework.security.web.header.HeaderWriterFilter@19736c9e, org.springframework.security.web.csrf.CsrfFilter@7eb24265, org.springframework.security.web.authentication.logout.LogoutFilter@596b1f48, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@32b2a8f2, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@79f2a5b0, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@59a92ca0, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@79976119, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3f7b2fe0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3d6eb30d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1b740125, org.springframework.security.web.session.SessionManagementFilter@705691c9, org.springframework.security.web.access.ExceptionTranslationFilter@7f1b9b04, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@a1200b2]
+2023-02-10 10:43:15.884  INFO 11916 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-02-10 10:43:15.891  INFO 11916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8181 (http) with context path '/Kmarket2'
+2023-02-10 10:43:15.894  INFO 11916 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Started Kmarket2Application in 0.765 seconds (JVM running for 434.303)
+2023-02-10 10:43:15.896  INFO 11916 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-02-10 10:44:04.654  INFO 11916 --- [RMI TCP Connection(25)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-02-10 10:44:04.679  INFO 11916 --- [RMI TCP Connection(25)-127.0.0.1] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-02-10 10:44:04.682  INFO 11916 --- [RMI TCP Connection(25)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-10 10:44:04.682  INFO 11916 --- [RMI TCP Connection(25)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+2023-02-10 10:44:04.683  INFO 11916 --- [RMI TCP Connection(25)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
