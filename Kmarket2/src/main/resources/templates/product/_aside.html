@@ -1,0 +1,116 @@
+<main id="product">
+	<aside>
+	    <ul class="category">
+	        <li>
+	            <i class="fa-solid fa-bars"></i>
+	            카테고리
+	        </li>
+	        <li>
+	            <a th:href="@{/product/list}" id="cate1" onmouseover="reveal(this.id)">
+	                <i class="fa-solid fa-shirt"></i>
+	                패션·의류·뷰티
+	            </a>
+	            <ol class="subcate1"  onmouseout="hide()">
+	                <li>
+	                    <a th:href="@{/product/list}">남성의류</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}">여성의류</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}">잡화</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}">뷰티</a>
+	                </li>
+	            </ol>
+	        </li>
+	        <li>
+	            <a th:href="@{/product/list}"  id="cate2" onmouseover="reveal(this.id)">
+	                <i class="fa-solid fa-laptop"></i>
+	                가전·디지털
+	            </a>
+	            <ol class="subcate2"  onmouseout="hide()">
+	                <li>
+	                    <a th:href="@{/product/list}">노트북/PC</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}">가전</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}">휴대폰</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}"s>기타</a>
+	                </li>
+	            </ol>
+	        </li>
+	        <li>
+	            <a th:href="@{/product/list}" id="cate3" onmouseover="reveal(this.id)">
+	                <i class="fa-solid fa-utensils"></i>
+	                식품·생필품
+	            </a>
+	            <ol class="subcate3" onmouseout="hide()">
+	                <li>
+	                    <a th:href="@{/product/list}">신선식품</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}">가공식품</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}">건강식품</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}">생필품</a>
+	                </li>
+	            </ol>
+	        </li>
+	        <li>
+	            <a th:href="@{/product/list}" id="cate4" onmouseover="reveal(this.id)">
+	                <i class="fa-solid fa-house-chimney"></i>
+	                홈·문구·취미
+	            </a>
+	            <ol class="subcate4" onmouseout="hide()">
+	                <li>
+	                    <a th:href="@{/product/list}">가구/DIY</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}">침구·커튼</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}">생활용품</a>
+	                </li>
+	                <li>
+	                    <a th:href="@{/product/list}">사무용품</a>
+	                </li>
+	            </ol>
+	        </li>
+	    </ul>
+	</aside>
+<script defer>
+let subcate = document.getElementsByTagName("ol");
+let subs = document.QuerySelectorAll("ol li");
+
+	function reveal(clicked_id){
+		switch(clicked_id){
+			case 'cate1':
+				subcate[0].style.display = 'block';
+				break;
+			case 'cate2':
+				subcate[1].style.display = 'block';
+				break;
+			case 'cate3':
+				subcate[2].style.display = 'block';
+				break;
+			case 'cate4': 
+				subcate[3].style.display = 'block';
+				break;
+		}
+	}
+	
+	function hide(){	
+		for(let sub of subcate){
+			sub.style.display = 'none';
+		}
+	}
+</script>

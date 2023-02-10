@@ -1,363 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>complete</title>
-    <script src="https://kit.fontawesome.com/78ddb08b0c.css" crossorigin="anonymous"></script>
-    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
-    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
-    
-    <link rel="stylesheet" href="./css/common.css">
-    <link rel="stylesheet" href="./css/product.css">
-
-    <style>
-        /* Complete - 진윤희 작업(2023/02/09) */
-        #product  > .complete > article {
-            margin-top: 16px;
-        }
-
-        #product  > .complete > .message > h2 {
-            font-size: 32px;
-            font-weight: bold;
-            text-align: center;
-            color: #555;
-            padding: 10px;
-        }
-
-        #product  > .complete > .message > h2 > i {
-            font-size: 26px;
-        }
-
-        #product  > .complete > .message > p {
-            font-size: 16px;
-            font-weight: bold;
-            padding: 10px;
-            text-align: center;
-        }
-
-        #product  > .complete > article > h1 {
-            font-weight: bold;
-            font-size: 14px;
-            color: #111;
-            padding: 6px 0;
-        }
-
-        #product  > .complete table {
-            width: 100%;
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-top: 2px solid #000;
-        }
-
-        #product  > .complete table tr {
-            border-bottom: 1px solid #d3d3d3;
-        }
-
-        #product  > .complete > .info > table tr > th {
-            padding: 12px 0;
-            background: #fff;
-            color: #383838;
-            font-size: 0.95em;
-            text-align: center;
-            letter-spacing: -0.1em;
-            
-        }
-
-        #product  > .complete > .info > table tr > th:last-child {
-            width: 200px;
-        }
-
-        #product  > .complete > .info table tr > td {
-            text-align: center;
-        }
-
-        #product  > .complete > .info table tr > td > article {
-            overflow: hidden;
-            padding: 6px;
-        }
-
-        #product  > .complete > .info table tr > td img {
-            float: left;
-            width: 80px;
-        }
-
-        #product  > .complete > .info table tr > td div {
-            float: left;
-            margin-left: 10px;
-            text-align: left;
-        }
-
-        #product  > .complete > .info table tr > td div > p {
-            text-align: left;
-            color: #777;
-            margin-top: 4px;
-        }
-
-        #product  > .complete > .info table tr > td:last-child {
-            color: #ff006c;
-            font-weight: bold;
-            text-align: right;
-        }
-
-        #product  > .complete > .info .total > td > table {
-            border: none;
-        }
-
-        #product  > .complete > .info .total > td > table tr {
-            border: none;
-        }
-
-        #product  > .complete > .info .total > td > table td {
-            text-align: right;
-            color: #111;
-            background: #f2f2f2;
-            font-weight: normal;
-            border-bottom: none;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        #product  > .complete > .info .total > td > table tr:last-child span {
-            font-weight: bold;
-            color: #ff006c;
-        }
-
-        #product  > .complete > .order table tr > td {
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        #product  > .complete > .order table tr > td:nth-child(1) {
-            width: 160px;
-            background: #f2f2f2;
-        }
-
-        #product  > .complete > .order table tr > td:nth-child(2) {
-            width: auto;
-        }
-
-        #product  > .complete > .order table tr > td:nth-child(3) {
-            width: 100px;
-            text-align: right;
-            vertical-align: top;
-            background: #f2f2f2;
-        }
-
-        #product  > .complete > .order table tr > td:nth-child(4) {
-            width: 100px;
-            text-align: right;
-            vertical-align: top;
-            background: #f2f2f2;
-        }
-
-        #product > .complete > .order table span {
-            font-weight: bold;
-            color: #ff006c;
-        }
-
-        #product > .complete > .delivery table tr > td {
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        #product > .complete > .delivery table tr > td:nth-child(1) {
-            width: 160px;
-            background: #f2f2f2;
-        }
-
-        #product > .complete > .delivery table tr > td:nth-child(3) {
-            width: 200px;
-            background: #f2f2f2;
-        }
-
-        #product > .complete > .alert {
-            width: 100%;
-            background-color: #f7f7f7;
-            padding: 10px;
-            padding-left: 24px;
-            color: #999;
-            box-sizing: border-box;
-        }
-
-        #product > .complete > .alert > h1 {
-            font-weight: bold;
-            font-size: 14px;
-            color: #111;
-            padding: 6px 0;
-        }
-
-        #product > .complete > .alert > ul {
-            list-style: inherit;
-        }
-
-        #product > .complete > .alert > ul > li {
-            line-height: 20px;
-        }
-
-        #product > .complete > .alert > ul > li > span {
-            position: relative;
-            left: -6px;
-        }
-
-    </style>
-</head>
-<body>
-    <div class="wrapper">
-        <header>
-            <div class="top">
-                <div>
-                    <a href="#">로그인</a>
-                    <a href="#">회원가입</a>
-                    <a href="#">마이페이지</a>
-                    <a href="#">
-                        <i class="fa fa-shopping-cart"></i>
-                        장바구니</a>
-                </div>
-            </div>
-            <div class="logo">
-                <div>
-                    <a href="#">
-                        <img src="../img/header_logo.png" alt="logo">
-                    </a>
-                    <form action="#">
-                        <input type="text">
-                        <button>
-                            <a href="#">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </a>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div class="menu">
-                <div>
-                    <ul>
-                        <li>
-                            <a href="#">히트상품</a>
-                        </li>
-                        <li>
-                            <a href="#">추천상품</a>
-                        </li>
-                        <li>
-                            <a href="#">최신상품</a>
-                        </li>
-                        <li>
-                            <a href="#">인기상품</a>
-                        </li>
-                        <li>
-                            <a href="#">할인상품</a>
-                        </li>
-                    </ul>
-                    <ul>
-                        <li>
-                            <a href="#">쿠폰존</a>
-                        </li>
-                        <li>
-                            <a href="#">사용후기</a>
-                        </li>
-                        <li>
-                            <a href="#">개인결제</a>
-                        </li>
-                        <li>
-                            <a href="#">고객센터</a>
-                        </li>
-                        <li>
-                            <a href="#">FAQ</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </header>
-        <main id="product">
-            <aside>
-                <ul class="category">
-                    <li>
-                        <i class="fa-solid fa-bars"></i>
-                        카테고리
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-shirt"></i>
-                            패션·의류·뷰티
-                        </a>
-                        <ol>
-                            <li>
-                                <a href="#">남성의류</a>
-                            </li>
-                            <li>
-                                <a href="#">여성의류</a>
-                            </li>
-                            <li>
-                                <a href="#">잡화</a>
-                            </li>
-                            <li>
-                                <a href="#">뷰티</a>
-                            </li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-laptop"></i>
-                            가전·디지털
-                        </a>
-                        <ol>
-                            <li>
-                                <a href="#">노트북/PC</a>
-                            </li>
-                            <li>
-                                <a href="#">가전</a>
-                            </li>
-                            <li>
-                                <a href="#">휴대폰</a>
-                            </li>
-                            <li>
-                                <a href="#">기타</a>
-                            </li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-utensils"></i>
-                            식품·생필품
-                        </a>
-                        <ol>
-                            <li>
-                                <a href="#">신선식품</a>
-                            </li>
-                            <li>
-                                <a href="#">가공식품</a>
-                            </li>
-                            <li>
-                                <a href="#">건강식품</a>
-                            </li>
-                            <li>
-                                <a href="#">생필품</a>
-                            </li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-house-chimney"></i>
-                            홈·문구·취미
-                        </a>
-                        <ol>
-                            <li>
-                                <a href="#">가구/DIY</a>
-                            </li>
-                            <li>
-                                <a href="#">침구·커튼</a>
-                            </li>
-                            <li>
-                                <a href="#">생활용품</a>
-                            </li>
-                            <li>
-                                <a href="#">사무용품</a>
-                            </li>
-                        </ol>
-                    </li>
-                </ul>
-            </aside>
+<th:block th:include="@{product/_header.html}"/>
+<th:block th:include=@{product/_aside.html}/>
             <!-- 결제완료 페이지 시작 -->
             <section class="complete">
                 <!-- 제목, 페이지 네비게이션 -->
@@ -395,7 +37,7 @@
                                     <img src="https://via.placeholder.com/80x80" alt>
                                     <div>
                                         <h2>
-                                            <a href="#">상품명</a>
+                                            <a th:href="@{/product/view}">상품명</a>
                                         </h2>
                                         <p>상품설명</p>
                                     </div>
@@ -412,7 +54,7 @@
                                     <img src="https://via.placeholder.com/80x80" alt>
                                     <div>
                                         <h2>
-                                            <a href="#">상품명</a>
+                                            <a th:href="@{/product/view}">상품명</a>
                                         </h2>
                                         <p>상품설명</p>
                                     </div>
@@ -429,7 +71,7 @@
                                     <img src="https://via.placeholder.com/80x80" alt>
                                     <div>
                                         <h2>
-                                            <a href="#">상품명</a>
+                                            <a th:href="@{/product/view}">상품명</a>
                                         </h2>
                                         <p>상품설명</p>
                                     </div>
@@ -447,29 +89,25 @@
                                     <tr>
                                         <td>총 상품금액</td>
                                         <td>
-                                            <span>34,000</span>
-                                            원
+                                            <span>34,000</span>원
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>총 할인금액</td>
                                         <td>
-                                            <span>-2,000</span>
-                                            원
+                                            <span>-2,000</span>원
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>배송비</td>
                                         <td>
-                                            <span>3,000</span>
-                                            원
+                                            <span>3,000</span>원
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>총 결제금액</td>
                                         <td>
-                                            <span>35,000</span>
-                                            원
+                                            <span>35,000</span>원
                                         </td>
                                     </tr>
                                 </table>
@@ -486,8 +124,7 @@
                             <td>2008101324568</td>
                             <td rowspan="3">총 결제금액</td>
                             <td rowspan="3">
-                                <span>35,000</span>
-                                원
+                                <span>35,000</span>원
                             </td>
                         </tr>
                         <tr>
@@ -553,52 +190,4 @@
             </section>
             <!-- 결제완료 페이지 끝 -->
         </main>
-
-
-        <footer>
-            <ul>
-                <li>
-                    <a href="#">회사소개</a>
-                </li>
-                <li>
-                    <a href="#">서비스이용약관</a>
-                </li>
-                <li>
-                    <a href="#">개인정보처리방침</a>
-                </li>
-                <li>
-                    <a href="#">전자금융거래약관</a>
-                </li>
-            </ul>
-            <div>
-                <p>
-                    <img src="../img/footer_logo.png" alt="logo">
-                </p>
-                <p>
-                    <strong>(주)KMARKET</strong>
-                    <br>
-                    부산시 강남구 테헤란로 152 (역삼동 강남파이낸스센터)
-                    <br>
-                    대표이사 : 홍길동
-                    <br>
-                    사업자등록번호 : 220-81-83676
-                    <br>
-                    통신판매업신고 : 강남 10630호 Fax : 02-589-8842
-                </p>
-                <p>
-                    <strong>고객센터</strong>
-                    <br>
-                    Tel : 1234-5678 (평일 09:00~18:00)
-                    <br>
-                    스마일클럽/SVIP 전용 : 1522-5700 (365일 09:00~18:00)
-                    <br>
-                    경기도 부천시 원미구 부일로 223(상동) 투나빌딩 6층
-                    <br>
-                    Fax : 051-123-4567 | Mail : kmarket@kmarket.co.kr
-                </p>
-            </div>
-        </footer>
-        <button type="button" id="top">상단이동</button>
-    </div>
-</body>
-</html>
+<th:block th:include="@{product/_footer.html}"/>

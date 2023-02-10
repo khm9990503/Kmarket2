@@ -211,7 +211,7 @@ ins::after{content: '원';}
     vertical-align: text-bottom;
     width: 55px;
     height: 13px;
-    background: url(/img/ico_free_delivery.gif) no-repeat;
+    background: url(../img/ico_free_delivery.gif) no-repeat;
     margin-top: 4px;
 }
 .seller{
@@ -224,10 +224,10 @@ ins::after{content: '원';}
     height: 19px;
     background-repeat: no-repeat;
 }
-.badge.power {background-image: url(/img/ico_power_dealer.gif);}
+.badge.power {background-image: url(../img/ico_power_dealer.gif);}
 h6.rating{
     font-size: 11px;
-    background-image: url(/img/rating_star.png);
+    background-image: url(../img/rating_star.png);
     background-repeat: no-repeat;
     background-position: 36px 0px;
     background-size: auto 100%;
@@ -285,7 +285,7 @@ h5.rating{
     width: 150px;
     height: 20px;
     font-size: 0px;
-    background-image: url(/img/ico_rating_star.png);
+    background-image: url(../img/ico_rating_star.png);
     background-repeat: no-repeat;
     background-position: 36px 0px;
     text-indent: 86px;
@@ -326,7 +326,7 @@ h5.rating.star4{background-position: 0 -160px;}
     display: inline-block;
     width: 30px;
     height: 18px;
-    background-image: url(/img/sp_icon.png);
+    background-image: url(../img/sp_icon.png);
     font-size: 0;
     vertical-align: text-top;
     margin-right: 2px;
@@ -342,7 +342,7 @@ h5.rating.star4{background-position: 0 -160px;}
     position: absolute;
     width: 21px;
     height: 21px;
-    background-image: url(/img/ico_sprites.png);
+    background-image: url(../img/ico_sprites.png);
     font-size: 0;
     background-color: transparent;
     border: none;
@@ -759,6 +759,194 @@ h5.rating.star4{background-position: 0 -160px;}
 .order > form > .alert > ul{list-style: inherit;}
 .order > form > .alert > ul > li{line-height: 20px;}
 .order > form > .alert > ul > li > span{
+    position: relative;
+    left: -6px;
+}
+
+/* Complete - 진윤희 작업(2023/02/09) */
+#product  > .complete > article {
+    margin-top: 16px;
+}
+
+#product  > .complete > .message > h2 {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    color: #555;
+    padding: 10px;
+}
+
+#product  > .complete > .message > h2 > i {
+    font-size: 26px;
+}
+
+#product  > .complete > .message > p {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+}
+
+#product  > .complete > article > h1 {
+    font-weight: bold;
+    font-size: 14px;
+    color: #111;
+    padding: 6px 0;
+}
+
+#product  > .complete table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 2px solid #000;
+}
+
+#product  > .complete table tr {
+    border-bottom: 1px solid #d3d3d3;
+}
+
+#product  > .complete > .info > table tr > th {
+    padding: 12px 0;
+    background: #fff;
+    color: #383838;
+    font-size: 0.95em;
+    text-align: center;
+    letter-spacing: -0.1em;
+    
+}
+
+#product  > .complete > .info > table tr > th:last-child {
+    width: 200px;
+}
+
+#product  > .complete > .info table tr > td {
+    text-align: center;
+}
+
+#product  > .complete > .info table tr > td > article {
+    overflow: hidden;
+    padding: 6px;
+}
+
+#product  > .complete > .info table tr > td img {
+    float: left;
+    width: 80px;
+}
+
+#product  > .complete > .info table tr > td div {
+    float: left;
+    margin-left: 10px;
+    text-align: left;
+}
+
+#product  > .complete > .info table tr > td div > p {
+    text-align: left;
+    color: #777;
+    margin-top: 4px;
+}
+
+#product  > .complete > .info table tr > td:last-child {
+    color: #ff006c;
+    font-weight: bold;
+    text-align: right;
+}
+
+#product  > .complete > .info .total > td > table {
+    border: none;
+}
+
+#product  > .complete > .info .total > td > table tr {
+    border: none;
+}
+
+#product  > .complete > .info .total > td > table td {
+    text-align: right;
+    color: #111;
+    background: #f2f2f2;
+    font-weight: normal;
+    border-bottom: none;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#product  > .complete > .info .total > td > table tr:last-child span {
+    font-weight: bold;
+    color: #ff006c;
+}
+
+#product  > .complete > .order table tr > td {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#product  > .complete > .order table tr > td:nth-child(1) {
+    width: 160px;
+    background: #f2f2f2;
+}
+
+#product  > .complete > .order table tr > td:nth-child(2) {
+    width: auto;
+}
+
+#product  > .complete > .order table tr > td:nth-child(3) {
+    width: 100px;
+    text-align: right;
+    vertical-align: top;
+    background: #f2f2f2;
+}
+
+#product  > .complete > .order table tr > td:nth-child(4) {
+    width: 100px;
+    text-align: right;
+    vertical-align: top;
+    background: #f2f2f2;
+}
+
+#product > .complete > .order table span {
+    font-weight: bold;
+    color: #ff006c;
+}
+
+#product > .complete > .delivery table tr > td {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#product > .complete > .delivery table tr > td:nth-child(1) {
+    width: 160px;
+    background: #f2f2f2;
+}
+
+#product > .complete > .delivery table tr > td:nth-child(3) {
+    width: 200px;
+    background: #f2f2f2;
+}
+
+#product > .complete > .alert {
+    width: 100%;
+    background-color: #f7f7f7;
+    padding: 10px;
+    padding-left: 24px;
+    color: #999;
+    box-sizing: border-box;
+}
+
+#product > .complete > .alert > h1 {
+    font-weight: bold;
+    font-size: 14px;
+    color: #111;
+    padding: 6px 0;
+}
+
+#product > .complete > .alert > ul {
+    list-style: inherit;
+}
+
+#product > .complete > .alert > ul > li {
+    line-height: 20px;
+}
+
+#product > .complete > .alert > ul > li > span {
     position: relative;
     left: -6px;
 }
