@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>complete</title>
+    <script src="https://kit.fontawesome.com/78ddb08b0c.css" crossorigin="anonymous"></script>
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        /* 공통 부분 */
+        * {
+            margin: 0;
+            padding: 0;
+            font: normal 12px "맑은 고딕";
+        }
+        ul,ol {list-style: none;}
+        a {text-decoration: none;color: #111;}
+        input,textarea {outline: none;}
+        #wrapper {width: 100%;}
+
+        /* main */
+        main{
+        width: 1200px;
+        height: auto;
+        margin: 0 auto;
+        overflow: hidden;
+        }
+        
+        /*header*/
+        header {
+            width: 100%;
+            height: auto;
+        }
+
+        header > div {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        header > .top {
+            height: 35px;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        header > .top > div {
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+            text-align: right;
+        }
+
+        header > .top > div > a {
+            display: inline-block;
+            height: 100%;
+            line-height: 35px;
+            border-left: 1px solid #e9e9e9;
+            padding: 0 10px;
+            color: #646464;
+        }
+
+        .fa {
+            font-weight: 900;
+        }
+
+        header > .top > div > a:last-child {
+            border-right: 1px solid #e9e9e9;
+        }
+
+        header > .logo {
+            height: 115px;
+            border-bottom: 1px solid #d0d0d0;
+        }
+
+        header > .logo > div {
+            position: relative;
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+        header > .logo > div > a {
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        header > .logo > div > form {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -185px;
+            margin-top: -22px;
+            display: inline-block;
+            width: 370px;
+            height: 45px;
+        }
+
+        header > .logo > div > form > input {
+            position: inherit;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #e9e9e9;
+            border-radius: 5px;
+            font-size: 20px;
+            padding-left: 10;
+            padding-right: 30px;
+            box-sizing: border-box;
+        }
+
+        header > .logo > div > form > button {
+            position: absolute;
+            right: 6px;
+            top: 10px;
+            background: #fff;
+            border: none;
+            font-size: 20px;
+            color: #333;
+            outline: none;
+        }
+
+
+        /* Point */
+
+        #my > nav {
+            width: 100%;
+            height: auto;
+            background-color: #e8e8e8;
+            border-bottom: 1px solid #c9c9c9;
+        }
+
+        #my > nav > div {
+            width: 980px;
+            height: 100%;
+            padding: 16px 0;
+            box-sizing: border-box;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #my > nav img {
+            margin-top: 22px;
+        }
+
+        #my > nav > div > ol {
+            float: right;
+            width: 400px;
+            height: 86px;
+            overflow: hidden;
+        }
+        
+        #my > nav > div > ol > li {
+            float: left;
+            width: 25%;
+            height: 100%;
+            text-align: center;
+            border-right: 1px solid #c5c5c5;
+            box-sizing: border-box;
+            background-repeat: no-repeat;
+            background-position: center 30px;
+        }
+
+        #my > nav > div > ol > li:first-child{
+            border-left: none;
+        }
+
+        #my > nav > div > ol > li:nth-child(1){
+            background-image: url(../img/ico_delivery.png);
+        }
+
+        #my > nav > div > ol > li:nth-child(2){
+            background-image: url(../img/ico_point.jpg);
+        }
+
+        #my > nav > div > ol > li:nth-child(3){
+            background-image: url(../img/ico_coupon.jpg);
+        }
+
+        #my > nav > div > ol > li:nth-child(4){
+            background-image: url(../img/ico_qna.png);
+        }
+
+        #my > nav > div > ol > li > a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            color: #888;
+            box-sizing: border-box;
+        }
+        
+        #my > nav > div > ol > li > a > span {
+            position: relative;
+            top: 46px;
+            display: block;
+            color: #444;
+        }
+
+        #my > nav > div > ol > li:last-child{
+            border-right: none;
+        }
+
+        #my > div {
+            position: relative;
+            width: 980px;
+            min-height: 600px;
+            margin: 0 auto;
+        }
+
+        #my > div > ul {
+            position: absolute;
+            left: 0;
+            top: -12px;
+            width: 148px;
+            height: auto;
+            border: 1px solid #003262;
+            box-sizing: border-box;
+        }
+
+        #my > div > ul > span.menu_else {
+            display: block;
+            position: absolute;
+            right: -9px;
+            top: -2px;
+            width: 8px;
+            height: 13px;
+            background-image: url(../img/my_sprites.png);
+            background-position: -160px -50px;
+        }
+
+        #my > div > ul > li {
+            width: 100%;
+            height: 62px;
+            background-color: #006bff;
+            border-top: 1px solid #2681ff;
+            border-bottom: 1px solid #0056cd;
+            box-sizing: border-box;
+        }
+
+        #my > div > ul > li.on {
+            background-color: #075acc;
+            border-top: 1px solid #054cbc;
+        }
+
+        #my > div > ul > li > a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 62px;
+            text-indent: 12px;
+            color: #fff;
+        }
+
+        #my > div > section {
+            width: 832px;
+            height: auto;
+            margin-left: 148px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #my > div > section .banner {
+            width: 810px;
+            object-fit: none;
+        }
+
+        #my > div > section > article {
+            margin-top: 20px;
+        }
+
+        #my > div > section > article > h3 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        #my > .point > section > article > .byDate {
+            width: 100%;
+            height: auto;
+            margin-top: 16px;
+            padding: 16px;
+            background-color: #f7f7f7;
+            border: 1px solid #c7c7c7;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        #my > .point > section > article > .byDate > * {
+            float: left;
+        }
+
+        #my > .point > section > article > .byDate > .tit {
+            width: 52px;
+            height: 11px;
+            margin-right: 20px;
+            margin-top: 6px;
+            background: url(../img/my_sprites.png) no-repeat 0px -227px;
+            font-size: 0;
+        }
+        #my > .point > section > article > .byDate > ul {
+            background-image: url(../img/my_sprites.png);
+        }
+
+        #my > .point > section > article > .byDate > .date_3ea {
+            width: 165px;
+            height: 29px;
+            background-position: -485px -908px;
+        }
+
+        #my > .point > section > article > .byDate > ul > li {
+            float: left;
+            width: 54px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        #my > .point > section > article > .byDate > ul a {
+            display: block;
+            width: 54px;
+            height: 27px;
+            text-align: center;
+            line-height: 27px;
+        }
+
+        #my > .point > section > article > .byDate > ul a:hover {
+            background: url(../img/my_sprites.png) no-repeat -377px -908px;
+            color: rgb(255, 255, 255);
+        }
+
+        #my > .point > section > article > .byDate > ul a > em {
+            font-weight: bold;
+            color: #111;
+        }
+
+        #my > .point > section > article > .byDate > ul a.on {
+            background: url(../img/my_sprites.png) no-repeat -377px -908px;
+            color: rgb(255, 255, 255);
+        }
+
+        #my > .point > section > article > .byDate > ul a.on > em {
+            color: #fff;
+        }
+
+        #my > .point > section > article > .byDate > .date_5ea {
+            width: 273px;
+            height: 29px;
+            background-position: -377px -937px;
+        }
+
+        #my > .point > section > article > .byDate > p {
+            width: 190px;
+            height: 29px;
+            background: url(../img/my_sprites.png) no-repeat -461px -879px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        #my > .point > section > article > .byDate input[type=date]{
+            width: 77px;
+            border: none;
+        }
+
+        #my > .point > section > article > .byDate > p > span {
+            display: inline-block;
+            margin: 0 4px;
+        }
+
+        #my > .point > section > article > .byDate > .btnConfirm {
+            width: 69px;
+            height: 27px;
+            border: none;
+            font-size: 0;
+            background: url(../img/my_sprites.png) no-repeat -491px -80px;
+        }
+
+        #my > .point > section > article > table {
+            width: 100%;
+            height: auto;
+            border-top: 2px solid #444;
+            margin-top: 6px;
+            border-collapse: collapse;
+        }
+
+        #my > .point > section > article > table th {
+            padding: 6px;
+            background-color: #a5a7a5;
+            box-sizing: border-box;
+            color: #fff;
+        }
+
+        #my > .point > section > article > table td {
+            padding: 10px;
+            border-left: 1px solid #f1f1f1;
+            border-bottom: 1px solid #aaa;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        #my > .point > section > article > .page {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        #my > .point > section > article > .page > a {
+            display: inline-block;
+            width: 19px;
+            height: 19px;
+            box-sizing: border-box;
+            vertical-align: top;
+            color: #777;
+        }
+
+        #my > .point > section > article > .page > .prev {
+            background: url(../img/my_sprites2.png) no-repeat 0 -300px;
+            font-size: 0;
+        }
+
+        #my > .point > section > article > .page > a.on{
+            font-weight: bold;
+            color: #1179ea;
+        }
+
+        #my > .point > section > article > .page > .next {
+            background: url(../img/my_sprites2.png) no-repeat -120px -300px;
+            font-size: 0;
+        } 
+        
+
+
+        /* Footer */
+        footer {
+            width: 100%;
+            height: 192px;
+            background: #f8f8f8;
+            border-top: 1px solid #e9e9e9;
+            box-sizing: border-box;
+        }
+
+        footer > ul {
+            width: 1200px;
+            height: 39px;
+            margin: 0 auto;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9e9e9;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        footer > ul > li {
+            display: inline-block;
+            font-weight: bold;
+            border-right: 1px solid #d7d7d7;
+            padding: 0 10px;
+        }
+
+        footer > ul > li:first-child {
+            border-left: 1px solid #d7d7d7;
+        }
+
+        footer > div {
+            width: 1200px;
+            height: auto;
+            padding-top: 20px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        footer p {
+            float: left;
+            height: 100%;
+            font-size: 11px;
+            line-height: 15px;
+            color: #676767;
+        }
+
+        footer p > strong {
+            display: inline-block;
+            padding: 6px 15px 7px 0;
+            color: #464646;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        footer p:nth-of-type(2){
+            width: 300px;
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="top">
+                <div>
+                    <a href="../member/login.html">로그인</a>
+                    <a href="../member/join.html">회원가입</a>
+                    <a href="./home.html">마이페이지</a>
+                    <a href="../product/cart.html">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        장바구니
+                    </a>
+                </div>
+            </div>
+            <div class="logo">
+                <div>
+                    <a href="../index.html">
+                        <img src="../img/header_logo.png" alt="로고">
+                    </a>
+                    <form action="#">
+                        <input type="text" name="search">
+                        <button>
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <div id="my">
+            <nav>
+                <div>
+                    <a href="./home.html">
+                        <img src="../img/my_logo.jpg" alt="나의쇼핑정도">
+                    </a>
+                    <ol>
+                        <li>
+                            <a href="#">
+                            주문·배송
+                            <span class="delivery">1</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                할인쿠폰
+                                <span class="coupon">1</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                포인트
+                                <span class="point">1,000</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                문의내역
+                                <span class="qna">1</span>   
+                            </a>
+                        </li>
+                    </ol>
+                </div>
+            </nav>
+            <div class="point">
+                <ul>
+                    <span class="menu_else"></span>
+                    <li class="on">
+                        <a href="#">전체주문내역</a>
+                    </li>
+                    <li>
+                        <a href="#">포인트내역</a>
+                    </li>
+                    <li>
+                        <a href="#">쿠폰</a>
+                    </li>
+                    <li>
+                        <a href="#">나의리뷰</a>
+                    </li>
+                    <li>
+                        <a href="#">문의하기</a>
+                    </li>
+                    <li>
+                        <a href="#">나의설정</a>
+                    </li>
+                </ul>
+                <section>
+                    <a href="#">
+                        <img src="../img/my_banner2.png" alt="패션, 타운 하나로 끝" class="banner">
+                    </a>
+                    <article>
+                        <h3>포인트내역</h3>
+                        <div class="byDate">
+                            <span class="tit">기간별조회</span>
+                            <ul class="date_3ea">
+                                <li>
+                                    <a href="#">
+                                        <em>1</em>주일
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <em>15</em>일
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="on">
+                                        <em>1</em>개월
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="date_5ea">
+                                <li>
+                                    <a href="#">
+                                        <em>11</em>월
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <em>10</em>월
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <em>9</em>월
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <em>8</em>월
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <em>7</em>월
+                                    </a>
+                                </li>
+                            </ul>
+                            <p>
+                                <input type="date" name="begin">
+                                <span>~</span>
+                                <input type="date" name="end">
+                            </p>
+                            <button class="btnConfirm">조회하기</button>
+                        </div>
+                        <table border="0">
+                            <tr>
+                                <th>날짜</th>
+                                <th>구분</th>
+                                <th>주문번호</th>
+                                <th>적립금액</th>
+                                <th>비고</th>
+                                <th>유효기간</th>
+                            </tr>
+                            <tr>
+                                <td class="date">2022-12-13</td>
+                                <td class="type">적립</td>
+                                <td class="ordNo">202212101</td>
+                                <td class="point">340</td>
+                                <td class="desc">상품 구매확정</td>
+                                <td class="expire">2024-12-12</td>
+                            </tr>
+                            <tr>
+                                <td class="date">2022-12-13</td>
+                                <td class="type">적립</td>
+                                <td class="ordNo">202212101</td>
+                                <td class="point">100</td>
+                                <td class="desc">상품 리뷰 작성 추가 포인트</td>
+                                <td class="expire">2024-12-12</td>
+                            </tr>
+                            <tr>
+                                <td class="date">2022-12-13</td>
+                                <td class="type">적립</td>
+                                <td class="ordNo">202212101</td>
+                                <td class="point">340</td>
+                                <td class="desc">상품 구매확정</td>
+                                <td class="expire">2024-12-12</td>
+                            </tr>
+                            <tr>
+                                <td class="date">2022-12-13</td>
+                                <td class="type">적립</td>
+                                <td class="ordNo">202212101</td>
+                                <td class="point">340</td>
+                                <td class="desc">상품 구매확정</td>
+                                <td class="expire">2024-12-12</td>
+                            </tr>
+                        </table>
+                        <p class="page">
+                            <a href="#" class="prev">이전</a>
+                            <a href="#" class="num on">1</a>
+                            <a href="#" class="num">2</a>
+                            <a href="#" class="num">3</a>
+                            <a href="#" class="next">다음</a>
+                        </p>
+                    </article>
+                </section>
+            </div>
+        </div>
+
+
+
+
+
+<footer>
+    <ul>
+        <li><a href="#">회사소개</a></li>
+        <li><a href="#">서비스이용약관</a></li>
+        <li><a href="#">개인정보처리방침</a></li>
+        <li><a href="#">전자금융거래약관</a></li>
+    </ul>
+    <div>
+        <p>
+            <img src="../img/footer_logo.png" alt="로고">
+        </p>
+        <p>
+            <strong>(주)KMARKET</strong>
+            <br>
+            부산시 강남구 테헤란로 152(역삼동 강남파이낸스센터)
+            <br>
+            대표이사 : 홍길동
+            <br>
+            사업자등록번호 : 220-81-83676 사업자정보확인
+            <br>
+            통신판매업신고 : 강남 10630호 fax : 02-589-8842
+            <br>
+        </p>
+        <p>
+            <strong>고객센터</strong>
+            <br>
+            Tel : 1234-5678 (평일 09:00~18:00)
+            <br>
+            스마일클럽/SVIP 전용 : 1522-5700 (365일 09:00~18:00)
+            <br>
+            경기도 부천시 원미구 부일로 223(상동) 투나빌딩 6층
+            <br>
+            Fax : 051-123-4567 | Mail : kmarket@kmarket.co.kr
+            <br>
+        </p>
+    </div>
+</footer>
+</div>
+</body>
+</html>
