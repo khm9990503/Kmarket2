@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket2.dao.ProductDAO">
+    <select id="selectProducts" resultType="kr.co.kmarket2.vo.ProductVO">
+    	select * from `km_product` where `prodCate1`= #{cate1} and `prodCate2` = #{cate2} order by 
+    		<choose>
+    			<when test="sort == 1">
+    				`sold` desc 
+    			</when>
+    			<when test="sort == 2">
+    				`price` asc 
+    			</when>
+    			<when test="sort == 3">
+    				`price` desc 
+    			</when>
+    			<when test="sort == 4">
+    				`score` desc 
+    			</when>
+    			<when test="sort == 5">
+    				`review` desc 
+    			</when>
+    			<otherwise>
+    				`rdate` desc 
+    			</otherwise>
+    		</choose>
+    	limit #{start}, 10;
+    </select>
+    <select id="selectCates" resultType="kr.co.kmarket2.vo.Cate2VO">
+    	select a.c1Name, b.c2Name from `km_product_cate1` as a 
+    	join `km_product_cate2` as b 
+    	on a.cate1 = b.cate2 
+    	where b.cate1 = #{cate1} and `cate2` = #{cate2};
+    </select>
+    <select id="selectCountTotal" resultType="int">
+    	select count(`prodNo`) from `km_product` where `prodCate1`=#{cate1} and `prodCate2`=#{cate2};
+    </select>
+</mapper>
