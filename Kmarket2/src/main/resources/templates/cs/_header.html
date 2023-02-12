@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>케이마켓 고객센터</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/CSstyle.css}">
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div class="top">
+                <div>
+                    <p>
+                        <a href="#">로그인</a>
+                        <a href="#">회원가입</a>
+                        <a href="#">마이페이지</a>
+                        <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>장바구니</a>
+                    </p>
+                </div>
+            </div>
+            <div class="logo">
+                <div>
+                    <a href="../index.html">
+                        <img th:src="@{/img/logo.png}" alt="로고">
+                        고객센터
+                    </a>
+                </div>
+            </div>
+        </header>
+  </html>
