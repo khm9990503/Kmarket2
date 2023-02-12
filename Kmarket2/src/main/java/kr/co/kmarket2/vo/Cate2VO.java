@@ -19,9 +19,10 @@ import lombok.ToString;
 public class Cate2VO {
 	private int cate1;
 	private int cate2;
+	private String c1Name;
 	private String c2Name;
 	
-	private String artiCate;
-	private String artiCate2;
+	//private String artiCate;
+	//private String artiCate2;
 	
 }

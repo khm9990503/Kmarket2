@@ -45,6 +45,9 @@ main > aside{
     color: #ccc;
     font-size: 1em;
 }
+.category > li:hover ol{
+    display: block;
+}
 .category ol{
     position: absolute;
     left: 215px;
@@ -205,13 +208,29 @@ ins::after{content: '원';}
 .discount::after{
     content: "↓";
 }
+.list > table tr > td:nth-child(3) > ul{
+	position: relative;
+}
 .free-delivery{
-    display: inline-block;
+	position: absolute;
+	left: 0;
+	top: 35px;
+    color: transparent;
     font-size: 0;
     vertical-align: text-bottom;
     width: 55px;
     height: 13px;
     background: url(../img/ico_free_delivery.gif) no-repeat;
+    margin-top: 4px;
+}
+.delivery-fee{
+	position: absolute;
+	left: 0;
+	top: 35px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: 55px;
+    height: 13px;
     margin-top: 4px;
 }
 .seller{
@@ -232,9 +251,9 @@ h6.rating{
     background-position: 36px 0px;
     background-size: auto 100%;
 }
-h6.rating.star1{width: 55px;}
-h6.rating.star2{width: 70px;}
-h6.rating.star3{width: 85px;}
+h6.rating.star1{width: 53px;}
+h6.rating.star2{width: 68px;}
+h6.rating.star3{width: 83px;}
 h6.rating.star4{width: 100px;}
 h6.rating.star5{width: 120px;}
 
