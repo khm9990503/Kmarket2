@@ -5,9 +5,9 @@
                     <h1>상품보기</h1>
                     <p>
                         HOME > 
-                        <span>패션·의류·뷰티</span>
+                        <span>[[${cates.c1Name}]]</span>
                          > 
-                        <strong>남성의류</strong>
+                        <strong>[[${cates.c2Name}]]</strong>
                     </p>
                 </nav>
                 <article class="info">
@@ -16,31 +16,35 @@
                     </div>
                     <div class="summary">
                         <nav>
-                            <h1>(주)판매자명</h1>
+                            <h1>[[${product.seller}]]</h1>
                             <h2>
                                 상품번호&nbsp;:&nbsp;
-                                <span>10010118412</span>
+                                <span>[[${product.prodNo}]]</span>
                             </h2>
                         </nav>
                         <nav>
-                            <h3>상품명</h3>
-                            <p>상품설명 출력</p>
-                            <h5 class="rating star4">
-                                <a href="#">상품평보기</a>
-                            </h5>
+                            <h3>[[${product.prodName}]]</h3>
+                            <p>[[${product.descript}]]</p>
+                            <th:block th:switch="${product.score}">
+                           		<h5 th:case="1" class="rating star1"><a href="#">상품평보기</a></h5>
+                           		<h5 th:case="2" class="rating star2"><a href="#">상품평보기</a></h5>
+                           		<h5 th:case="3" class="rating star3"><a href="#">상품평보기</a></h5>
+                           		<h5 th:case="4" class="rating star4"><a href="#">상품평보기</a></h5>
+                           		<h5 th:case="5" class="rating star5"><a href="#">상품평보기</a></h5>
+                           	</th:block>
                         </nav>
                         <nav>
                             <div class="org_price">
-                                <del>30,000</del>
-                                <span>10%</span>
+                                <del>[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</del>
+                                <span>[[${product.discount}]]%</span>
                             </div>
                             <div class="dis_price">
-                                <ins>27,000</ins>
+                                <ins>[[${#numbers.formatInteger(product.disPrice, 3, 'COMMA')}]]</ins>
                             </div>
                         </nav>
                         <nav>
-                            <span class="delivery">무료배송</span>
-                            <span class="arrival">모레(금) 7/8 도착예정</span>
+                            <span th:class="${product.delivery == 0? 'view-free-delivery': 'view-delivery-fee'}">배송비 [[${#numbers.formatInteger(product.delivery, 3, 'COMMA')}]]원</span>
+                            <span class="arrival">[[${estimatedDeliveryInfo[2]}]]([[${estimatedDeliveryInfo[1]}]]) [[${estimatedDeliveryInfo[0]}]] 도착예정</span>
                             <span class="desc">본 상품은 국내배송만 가능합니다.</span>
                         </nav>
                         <nav>
@@ -60,19 +64,17 @@
                         <nav></nav>
                         <img th:src="@{/img/vip_plcc_banner.png}" alt="100원만 결제해도 1만원 적립 배너" class="banner">
                         <div class="count">
-                            <button class="decrease">-</button>
+                            <button class="decrease" onclick="decrease()">-</button>
                             <input type="text" name="num" value="1" readonly>
-                            <button class="increase">+</button>
+                            <button class="increase" onclick="increase()">+</button>
                         </div>
                         <div class="total">
-                            <span>
-                                35,000
-                            </span>
+                            <span></span>
                             <em>총 상품금액</em>
                         </div>
                         <div class="button">
-                            <button class="cart">장바구니</button>
-                            <button class="order">구매하기</button>
+                            <button class="cart" onclick="cart()">장바구니</button>
+                            <button class="order" onclick="singlePurchase()">구매하기</button>
                         </div>
                     </div>
                 </article>
@@ -92,31 +94,31 @@
                     <table>
                         <tr>
                             <td>상품번호</td>
-                            <td>10110125435</td>
+                            <td>[[${product.prodNo}]]</td>
                         </tr>
                         <tr>
                             <td>상품상태</td>
-                            <td>새상품</td>
+                            <td>[[${product.status}]]</td>
                         </tr>
                         <tr>
                             <td>부가세 면세여부</td>
-                            <td>과세상품</td>
+                            <td>[[${product.duty}]]</td>
                         </tr>
                         <tr>
                             <td>영수증발행</td>
-                            <td>발행가능 - 신용카드 전표, 온라인 현금영수증</td>
+                            <td>[[${product.receipt}]]</td>
                         </tr>
                         <tr>
                             <td>사업자구분</td>
-                            <td>사업자 판매자</td>
+                            <td>[[${product.bizType}]]</td>
                         </tr>
                         <tr>
                             <td>브랜드</td>
-                            <td>블루포스</td>
+                            <td>[[${product.company}]]</td>
                         </tr>
                         <tr>
                             <td>원산지</td>
-                            <td>국내생산</td>
+                            <td>[[${product.origin}]]</td>
                         </tr>
                     </table>
                     <table>
@@ -259,4 +261,40 @@
                 </article>
             </section>
         </main>
+<script>
+let num = parseInt(document.querySelector('input[name="num"]').value, 10);
+let disPrice = [[${product.disPrice}]];
+	
+function decrease(){
+	if(num > 1){
+		num -= 1;
+	}
+	document.querySelector('input[name="num"]').value = num;
+	document.querySelector('.total').children[0].textContent = (num * disPrice).toLocaleString();
+}
+
+function increase(){
+	num += 1;
+	document.querySelector('input[name="num"]').value = num;
+	document.querySelector('.total').children[0].textContent = (num * disPrice).toLocaleString();
+}
+
+function cart(){
+	// cart 테이블에 항목 담기(ajax)
+	
+	// 사용자가 원할 경우 카트 페이지로 이동
+	let response = confirm('상품이 장바구니에 담겼습니다\n장바구니로 이동하시겠습니까?')
+	if(response){
+		window.location.href = "/Kmarket2/product/cart";
+	}
+}
+
+function singlePurchase(){
+	window.location.href = "/Kmarket2/product/order?prodNo=" + [[${product.prodNo}]] + "&qty=" + num + "&disPrice=" + disPrice;
+}
+
+window.onload = () =>{
+	document.querySelector('.total').children[0].textContent = disPrice.toLocaleString();
+};
+</script>
 <th:block th:include="@{product/_footer.html}"/>

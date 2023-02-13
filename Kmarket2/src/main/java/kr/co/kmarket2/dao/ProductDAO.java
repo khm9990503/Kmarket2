@@ -21,4 +21,8 @@ public interface ProductDAO {
 	
 	// 페이징
 	public int selectCountTotal(@Param("cate1") String cate1, @Param("cate2") String cate2);
+	
+	// view
+	// prodNo값으로 상품 정보 불러오기
+	public ProductVO selectProduct(String prodNo);
 }
