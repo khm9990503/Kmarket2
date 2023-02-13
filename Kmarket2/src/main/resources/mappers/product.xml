@@ -36,4 +36,8 @@
     <select id="selectCountTotal" resultType="int">
     	select count(`prodNo`) from `km_product` where `prodCate1`=#{cate1} and `prodCate2`=#{cate2};
     </select>
+    
+    <select id="selectProduct" resultType="kr.co.kmarket2.vo.ProductVO">
+    	select * from `km_product` where `prodNo`=#{prodNo};
+    </select>
 </mapper>
