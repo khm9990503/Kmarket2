@@ -309,7 +309,11 @@ h5.rating{
     background-position: 36px 0px;
     text-indent: 86px;
 }
+h5.rating.star1{background-position: 0 -40px;}
+h5.rating.star2{background-position: 0 -80px;}
+h5.rating.star3{background-position: 0 -120px;}
 h5.rating.star4{background-position: 0 -160px;}
+h5.rating.star5{background-position: 0 -200px;}
 .rating > a{
     color: #346aff;
     text-decoration: underline;
@@ -329,9 +333,12 @@ h5.rating.star4{background-position: 0 -160px;}
     font-weight: bold;
     text-decoration: none;
 }
-.summary .delivery{
+.view-free-delivery{
     font-size: 16px;
     color: #2e8de5;
+}
+.view-delivery-fee{
+    font-size: 16px;
 }
 .summary .arrival{
     font-size: 14px;
@@ -341,15 +348,17 @@ h5.rating.star4{background-position: 0 -160px;}
     display: block;
     color: #aaa;
 }
-.summary .card > i{
+.summary .card> i{
     display: inline-block;
     width: 30px;
     height: 18px;
-    background-image: url(../img/sp_icon.png);
+    background-image: url(../img/ico_sprites.png);
     font-size: 0;
     vertical-align: text-top;
     margin-right: 2px;
 }
+.summary .cardfree > i{ background-position: -125px 0;}
+.summary .cardadd > i{background-position: -50px -22.5px;}
 .summary .origin{font-size: 16px;}
 .summary .banner{width: 100%;}
 .summary .count{

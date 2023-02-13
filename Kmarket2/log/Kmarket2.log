@@ -277,39 +277,4 @@ This generated password is for development use only. Your security configuration
 2023-02-13 01:49:32.812  INFO 10276 --- [RMI TCP Connection(6)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-02-13 01:49:32.814  INFO 10276 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-02-13 01:49:32.819  INFO 10276 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2023-02-13 09:13:54.251  INFO 14616 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Starting Kmarket2Application using Java 17.0.5 on DESKTOP-8N3GG4O with PID 14616 (C:\Users\java1\Desktop\workspace\Kmarket2\Kmarket2\target\classes started by java1 in C:\Users\java1\Desktop\workspace\Kmarket2\Kmarket2)
-2023-02-13 09:13:54.252  INFO 14616 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : No active profile set, falling back to 1 default profile: "default"
-2023-02-13 09:13:54.286  INFO 14616 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2023-02-13 09:13:54.287  INFO 14616 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2023-02-13 09:13:54.695  INFO 14616 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-02-13 09:13:54.707  INFO 14616 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
-2023-02-13 09:13:55.119  INFO 14616 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8181 (http)
-2023-02-13 09:13:55.126  INFO 14616 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-02-13 09:13:55.127  INFO 14616 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
-2023-02-13 09:13:55.180  INFO 14616 --- [restartedMain] o.a.c.c.C.[.[localhost].[/Kmarket2]      : Initializing Spring embedded WebApplicationContext
-2023-02-13 09:13:55.180  INFO 14616 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 893 ms
-2023-02-13 09:13:55.310  INFO 14616 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-02-13 09:13:55.344  INFO 14616 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
-2023-02-13 09:13:55.449  INFO 14616 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-02-13 09:13:55.513  INFO 14616 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-02-13 09:13:55.703  INFO 14616 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-02-13 09:13:55.713  INFO 14616 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-2023-02-13 09:13:56.228  INFO 14616 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-02-13 09:13:56.235  INFO 14616 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-02-13 09:13:56.414  WARN 14616 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-02-13 09:13:56.509  INFO 14616 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2023-02-13 09:13:56.635  WARN 14616 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: fe0d77da-578e-4e94-a692-12ff0cd6b1fc
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2023-02-13 09:13:56.722  INFO 14616 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1059eadb, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7fdf9231, org.springframework.security.web.context.SecurityContextPersistenceFilter@6367ce4e, org.springframework.security.web.header.HeaderWriterFilter@2e98f370, org.springframework.security.web.csrf.CsrfFilter@2fd81d8e, org.springframework.security.web.authentication.logout.LogoutFilter@5a33b08a, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7296ff98, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@6e1da611, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@53225a02, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@7ff20372, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4271a7fc, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@430a0910, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6461020c, org.springframework.security.web.session.SessionManagementFilter@51a975ef, org.springframework.security.web.access.ExceptionTranslationFilter@6c8713f5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@131f0f7a]
-2023-02-13 09:13:56.766  INFO 14616 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2023-02-13 09:13:56.794  INFO 14616 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8181 (http) with context path '/Kmarket2'
-2023-02-13 09:13:56.802  INFO 14616 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Started Kmarket2Application in 2.822 seconds (JVM running for 3.339)
-2023-02-13 09:14:08.621  INFO 14616 --- [RMI TCP Connection(2)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2023-02-13 09:14:08.631  INFO 14616 --- [RMI TCP Connection(2)-127.0.0.1] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2023-02-13 09:14:08.638  INFO 14616 --- [RMI TCP Connection(2)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-02-13 09:14:08.640  INFO 14616 --- [RMI TCP Connection(2)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2023-02-13 09:14:08.645  INFO 14616 --- [RMI TCP Connection(2)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
