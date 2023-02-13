@@ -62,9 +62,11 @@ public class CsController {
     }
 
     @GetMapping("cs/notice/view")
-    public String noticeView(int no, String cate) {
+    public String noticeView(int no, String cate, Model model) {
     	
     	ArticleVO article = service.selectArticle(no);
+    	model.addAttribute("article", article);
+    	model.addAttribute("cate",cate);
     	
         return "cs/notice/view";
     }
