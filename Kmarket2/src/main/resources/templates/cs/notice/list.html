@@ -10,61 +10,52 @@
                     <aside>
                         <h2>공지사항</h2>
                         <ul>
-                            <li th:classappend="${cate} eq null?'on':'off'"><a href="@{/cs/notice/list}">전체</a></li>
-                            <li th:classappend="${cate} eq 'service'?'on':'off'"><a th:href="@{/cs/notice/list?cate=service}">고객서비스</a></li>
-                            <li th:classappend="${cate} eq 'deal'?'on':'off'"><a th:href="@{/cs/notice/list?cate=deal}">안전거래</a></li>
-                            <li th:classappend="${cate} eq 'danger'?'on':'off'"><a th:href="@{/cs/notice/list?cate=danger}">위해상품</a></li>
-                            <li th:classappend="${cate} eq 'lucky'?'on':'off'"><a th:href="@{/cs/notice/list?cate=lucky}">이벤트당첨</a></li>
+                            <li th:classappend="${cate} eq null?'on':'off'"><a th:href="@{/cs/notice/list?group=notice}">전체</a></li>
+                            <li th:classappend="${cate} eq 'service'?'on':'off'"><a th:href="@{/cs/notice/list?group=notice&cate=service}">고객서비스</a></li>
+                            <li th:classappend="${cate} eq 'deal'?'on':'off'"><a th:href="@{/cs/notice/list?group=notice&cate=deal}">안전거래</a></li>
+                            <li th:classappend="${cate} eq 'danger'?'on':'off'"><a th:href="@{/cs/notice/list?group=notice&cate=danger}">위해상품</a></li>
+                            <li th:classappend="${cate} eq 'lucky'?'on':'off'"><a th:href="@{/cs/notice/list?group=notice&cate=lucky}">이벤트당첨</a></li>
                         </ul>
                     </aside>
                     <article>
-                        <nav>
+                        <nav th:if="${cate} eq null">
                             <h1>전체</h1>
                             <h2>공지사항 전체 내용입니다.</h2>
                         </nav>
+                        <nav th:if="${cate} eq 'service'">
+                            <h1>고객서비스</h1>
+                            <h2>공지사항 고객서비스 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq 'deal'">
+                            <h1>안전거래</h1>
+                            <h2>공지사항 안전거래 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq 'danger'">
+                            <h1>위해상품</h1>
+                            <h2>공지사항 위해상품 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq 'lucky'">
+                            <h1>이벤트당첨</h1>
+                            <h2>공지사항 이벤트당첨 내용입니다.</h2>
+                        </nav>
+                        
                         <table>
-                            <tr>
-                                <td><a href="./view.html">[안내] 해외결제 사칭 문자 주의</a></td>
-                                <td>2022.11.21</td>
+                        	<th:block th:if="${cate} eq null">
+                            <tr th:each="articles : ${articles}">
+                                <td><a th:href="@{/cs/notice/view(group=${articles.group},no=${articles.no},cate=${articles.cate})}">[[${articles.title}]]</a></td>
+                                <td>[[${articles.rdate.substring(2, 10)}]]</td>
                             </tr>
-                            <tr>
-                                <td><a href="./view.html">[발표]『G.Live X SK스토아(하남쭈꾸미)』 이벤트 당첨자</a></td>
-                                <td>2022.11.21</td>
+                           </th:block>
+                           
+                           	<th:block th:if="${cate} ne null">
+                            <tr th:each="article : ${article}">
+                                <td><a th:href="@{/cs/notice/view(group=${article.group},no=${article.no},cate=${article.cate})}">[[${article.title}]]</a></td>
+                                <td>[[${article.rdate.substring(2, 10)}]]</td>
                             </tr>
-                            <tr>
-                                <td><a href="./view.html">[안내] 로젠택배 반품/교환 수거지시 지연 안내</a></td>
-                                <td>2022.11.21</td>
-                            </tr>
-                            <tr>
-                                <td><a href="./view.html">[안내] 해외직구셀러 특별약관 개정</a></td>
-                                <td>2022.11.21</td>
-                            </tr>
-                            <tr>
-                                <td><a href="./view.html">[안내] 위치정보이용 약관 개정 공지</a></td>
-                                <td>2022.11.21</td>
-                            </tr>
-                            <tr>
-                                <td><a href="./view.html">[발표]『써모스 상품 구매』 이벤트 당첨자</a></td>
-                                <td>2022.11.21</td>
-                            </tr>
-                            <tr>
-                                <td><a href="./view.html">한국소비자원, '22년 OECD 글로벌 제품안전 캠페인</a></td>
-                                <td>2022.11.21</td>
-                            </tr>
-                            <tr>
-                                <td><a href="./view.html">[점검] G마켓 사이트 이용 일시 중단</a></td>
-                                <td>2022.11.21</td>
-                            </tr>
-                            <tr>
-                                <td><a href="./view.html">[안내] 구매회원 이용약관 개정</a></td>
-                                <td>2022.11.21</td>
-                            </tr>
-                            <tr>
-                                <td><a href="./view.html">[안내] 씨티은행 시스템 점검에 따른 계좌, 체크카드결제 서비스 일시 중단</a></td>
-                                <td>2022.11.21</td>
-                            </tr>
+                           </th:block>
                         </table>
-                        <div class="page">
+                        
+	                     <div class="page">
                             <a href="#" class="prev">이전</a>
                             <a href="#" class="num on">1</a>
                             <a href="#" class="num">2</a>
