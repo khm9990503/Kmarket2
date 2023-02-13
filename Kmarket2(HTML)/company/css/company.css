@@ -1,0 +1,136 @@
+/* Introduce*/
+#introduce > .cover {
+    background-image: url(../img/bg_company_introduce.jpg);
+}
+
+
+
+#introduce img {
+    display: block;
+    width: 80%;
+    margin: 28px auto;
+}
+
+
+/* Notice */
+#notice > .cover {
+    background-image: url(../img/bg_company_notice.jpg);
+}
+
+#notice > .cover > div {
+    position: relative;
+    width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#notice > .cover > div > h1 {
+    position: absolute;
+    left: 10px;
+    top: 280px;
+    font-size: 52px;
+    font-weight: bold;
+    color: #fff;
+}
+
+#notice > .cover > div > p {
+    position: absolute;
+    left: 10px;
+    top: 380px;
+    font-size: 22px;
+    font-weight: 500;
+    color: #fff;
+}
+
+#notice img {
+    display: block;
+    width: 80%;
+    margin: 28px auto;
+}
+
+
+/* Promote */
+#promote > .cover {
+    background-image: url(../img/bg_company_promote.jpg);  
+}
+
+#promote > .cover > div {
+    position: relative;
+    width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#promote > .content > article {
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    margin-bottom: 26px;
+}
+
+#promote > .content > article > h3 {
+    position: absolute;
+    left: 740px;
+    top: 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#promote > .content > article > p {
+    position: absolute;
+    left: 740px;
+    top: 40px;
+    font-size: 18px;
+}
+
+
+/* Manage */
+#manage > .cover {
+    background-image: url(../img/bg_company_manage.jpg);
+}
+
+#manage > .cover > div {
+    position: relative;
+    width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#manage > .content > ul {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 56px;
+}
+
+#manage > .content > ul > li {
+    float: left;
+    width: 25%;
+    height: 300px;
+    text-align: center;
+}
+
+#manage > .content > ul > li > h4 {
+    margin: 12px 0;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+#manage > .content > ul > li > p {
+    width: 200px;
+    margin: 0 auto;
+}
+
+#manage > .content > h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 16px;
+}
+
+#manage > .content > p {
+    font-size: 19px;
+    line-height: 28px;
+    margin-bottom: 80px;
+}
