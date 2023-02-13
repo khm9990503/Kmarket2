@@ -29,6 +29,8 @@ package kr.co.kmarket2.vo;
  * rdate		DATETIME
  */
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,6 +63,10 @@ public class ProductVO {
 	private String thumb2;
 	private String thumb3;
 	private String detail;
+	private MultipartFile thumb1_;
+	private MultipartFile thumb2_;
+	private MultipartFile thumb3_;
+	private MultipartFile detail_;
 	private String status;
 	private String duty;
 	private String receipt;
