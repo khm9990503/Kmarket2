@@ -23,4 +23,5 @@ public interface CsDAO {
 	public int selectCountCateTotal(String group, String cate);
 	
 	public ArticleVO selectArticle(int no);
+
 }
