@@ -277,6 +277,7 @@ This generated password is for development use only. Your security configuration
 2023-02-13 01:49:32.812  INFO 10276 --- [RMI TCP Connection(6)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-02-13 01:49:32.814  INFO 10276 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-02-13 01:49:32.819  INFO 10276 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+<<<<<<< HEAD
 2023-02-13 09:18:40.387  INFO 2036 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Starting Kmarket2Application using Java 17.0.5 on DESKTOP-QOTDKI5 with PID 2036 (C:\Users\java1\Desktop\WorkSapce1\Kmarket2\Kmarket2\target\classes started by java1 in C:\Users\java1\Desktop\WorkSapce1\Kmarket2\Kmarket2)
 2023-02-13 09:18:40.388  INFO 2036 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : No active profile set, falling back to 1 default profile: "default"
 2023-02-13 09:18:40.437  INFO 2036 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
@@ -17276,3 +17277,4 @@ This generated password is for development use only. Your security configuration
 2023-02-13 13:40:24.383  INFO 13480 --- [http-nio-8181-exec-1] o.a.c.c.C.[.[localhost].[/Kmarket2]      : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2023-02-13 13:40:24.383  INFO 13480 --- [http-nio-8181-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2023-02-13 13:40:24.385  INFO 13480 --- [http-nio-8181-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+

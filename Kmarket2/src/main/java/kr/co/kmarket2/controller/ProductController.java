@@ -57,7 +57,7 @@ public class ProductController {
 		model.addAttribute("sort", sort);
 		
 		// cate1, cate2 값에 따라 카테고리 및 하위 카테고리 이름 불러오기
-		// 애초에 list 메서드를 호출할 때 카테고리 및 하위 카테고리 이름 자체를 파라미터로 던질 수도 있지만 여기서는 DB에서 받아오는 방식을 사용해서 url을 깔끔하게 유지
+		// 파라미터로 받아온 cate1, cate2값(실질적으로 int)을 이용해 DB에서 카테고리 및 하위카테고리 이름을 가져오기
 		List<Cate2VO> cates = service.selectCates(cate1, cate2);
 		model.addAttribute("cates", cates.get(0));
 		
@@ -70,7 +70,21 @@ public class ProductController {
 	}
 	
 	@GetMapping("product/view")
-	public String view() {
+	public String view(String prodNo, String cate1, String cate2, Model model) {
+		// cate1, cate2 값에 따라 카테고리 및 하위 카테고리 이름 불러오기(list() 참조)
+		List<Cate2VO> cates = service.selectCates(cate1, cate2);
+		model.addAttribute("cates", cates.get(0));
+		
+		// 파라미터로 받아온 prodNo값을 이용해 상품정보 DB에서 불러오기
+		ProductVO product = service.selectProduct(prodNo);
+		model.addAttribute("product", product);
+		// 할인된 가격 적용
+		product.setDisPrice((int) Math.ceil(product.getPrice() * (1 - product.getDiscount() * 0.01)));
+		
+		// 배송 예정 날짜 구하기
+		String[] estimatedDeliveryInfo = service.getEstimatedDeliveryDate();
+		model.addAttribute("estimatedDeliveryInfo", estimatedDeliveryInfo);
+		
 		return "product/view";
 	}
 	
