@@ -345,7 +345,7 @@ main > section > article section > p {
     margin: 10px 0;
     box-sizing: border-box;
 }
-main table tr > td:nth-child(1) {
+#admin_product_register table tr > td:nth-child(1) {
     width: 160px;
     border-top: 1px solid #e6e6e6;
     border-bottom: 1px solid #e6e6e6;
