@@ -34,4 +34,72 @@
 								`ip` = #{ip}, 
 								`rdate`=NOW();
    </insert>
+   <select id="selectCountTotal" resultType="int">
+   	SELECT COUNT(*) FROM `km_product`;
+   </select>
+   <select id="selectCountTotalSeller" resultType="int">
+   	SELECT COUNT(*) FROM `km_product` where `seller`=#{seller};
+   </select>
+   <select id="selectProducts" resultType="kr.co.kmarket2.vo.ProductVO">
+   	SELECT * FROM `km_product` ORDER BY `prodNo` DESC LIMIT #{start},10;
+   </select>
+   <select id="selectProductsSeller" resultType="kr.co.kmarket2.vo.ProductVO">
+   	SELECT * FROM `km_product` WHERE `seller`=#{seller} ORDER BY `prodNo` DESC LIMIT #{start},10;
+   </select>
+   <select id="searchProducts" resultType="kr.co.kmarket2.vo.ProductVO">
+   	SELECT * FROM `km_product` WHERE 
+								<choose>
+					    			<when test="sort == 1">
+					    				`prodName`
+					    			</when>
+					    			<when test="sort == 2">
+					    				`prodCode`
+					    			</when>
+					    			<when test="sort == 3">
+					    				`make` 
+					    			</when>
+					    			<when test="sort == 4">
+					    				`seller`
+					    			</when>
+					    		</choose>
+							 	LIKE CONCAT('%',#{search},'%') ORDER BY `prodNo` DESC LIMIT 10;
+   </select>
+   <select id="searchProductSeller">
+   	SELECT * FROM `km_product` WHERE `seller`=#{seller} and 
+								<choose>
+					    			<when test="sort == 1">
+					    				`prodName`
+					    			</when>
+					    			<when test="sort == 2">
+					    				`prodCode`
+					    			</when>
+					    			<when test="sort == 3">
+					    				`make` 
+					    			</when>
+					    			<when test="sort == 4">
+					    				`seller`
+					    			</when>
+					    		</choose>
+							 	LIKE CONCAT('%',#{search},'%') ORDER BY `prodNo` DESC LIMIT 10;
+   </select>
+   <update id="updateProduct">
+   	UPDATE `km_product` SET `prodName`=#{prodName}, 
+							 `descript`=#{descript}, 
+							 `company`=#{company}, 
+							 `seller`=#{seller}, 
+							 `price`=#{price}, 
+							 `point`=#{point}, 
+							 `discount`=#{discount}, 
+							 `stock`=#{stock}, 
+							 `delivery`=#{delivery}, 
+							 `thumb1`=#{thumb1}, 
+							 `thumb2`=#{thumb2}, 
+							 `thumb3`=#{thumb3}, 
+							 `detail`=#{detail}, 
+							 `rdate`=now()
+							 WHERE `prodNo` = #{prodNo};
+   </update>
+   <delete id="deleteProduct">
+   	DELETE FROM `km_product` WHERE `prodNo` in #{prodNo};
+   </delete>
 </mapper>
