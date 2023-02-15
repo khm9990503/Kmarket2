@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.kmarket2.service.ProductService;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.ProductVO;
+import kr.co.kmarket2.vo.ReviewVO;
 
 @Controller
 public class ProductController {
@@ -28,10 +29,10 @@ public class ProductController {
 		// 페이징 처리
 		int total = service.selectCountTotal(cate1, cate2);
 		int currentPage = service.getCurrentPage(pg);
-		int start = service.getLimitStart(currentPage);
-		int lastPageNum = service.getLastPageNum(total);
+		int start = service.getLimitStart(currentPage, 10);
+		int lastPageNum = service.getLastPageNum(total, 10);
 		int startPageNum = service.getPageStartNum(total, start);
-		int groups[] = service.getPageGroup(currentPage, lastPageNum);
+		int groups[] = service.getPageGroup(currentPage, lastPageNum, 10);
 		
 		model.addAttribute("groups", groups);
 	    model.addAttribute("currentPage", currentPage);
@@ -70,10 +71,12 @@ public class ProductController {
 	}
 	
 	@GetMapping("product/view")
-	public String view(String prodNo, String cate1, String cate2, Model model) {
+	public String view(String prodNo, String cate1, String cate2, Model model, @RequestParam(value="pg", defaultValue = "1") String pg) {
 		// cate1, cate2 값에 따라 카테고리 및 하위 카테고리 이름 불러오기(list() 참조)
 		List<Cate2VO> cates = service.selectCates(cate1, cate2);
 		model.addAttribute("cates", cates.get(0));
+		model.addAttribute("cate1", cate1);
+		model.addAttribute("cate2", cate2);
 		
 		// 파라미터로 받아온 prodNo값을 이용해 상품정보 DB에서 불러오기
 		ProductVO product = service.selectProduct(prodNo);
@@ -84,6 +87,34 @@ public class ProductController {
 		// 배송 예정 날짜 구하기
 		String[] estimatedDeliveryInfo = service.getEstimatedDeliveryDate();
 		model.addAttribute("estimatedDeliveryInfo", estimatedDeliveryInfo);
+		
+		// 댓글 페이징 처리
+		// 페이징 처리
+		int total = service.selectReviewCountTotal(prodNo);
+		int currentPage = service.getCurrentPage(pg);
+		int start = service.getLimitStart(currentPage, 5);
+		int lastPageNum = service.getLastPageNum(total, 5);
+		int startPageNum = service.getPageStartNum(total, start);
+		int groups[] = service.getPageGroup(currentPage, lastPageNum, 5);
+		
+		model.addAttribute("groups", groups);
+	    model.addAttribute("currentPage", currentPage);
+	    model.addAttribute("lastPageNum", lastPageNum);
+	    model.addAttribute("startPageNum", startPageNum);
+		
+		// 댓글 불러오기
+		List<ReviewVO> reviews = service.selectReviews(prodNo, start);
+		
+		// 댓글 작성자명 마스킹 처리하기(스크립트로도 가능하지만 사용자가 마스킹 전의 오리지널 데이터에 접근할 수도 있음; https://stackoverflow.com/questions/14495290/replace-last-5-character-from-username-with-x)
+		for(ReviewVO review : reviews) {
+			String s = "*";
+			for(int i = 0; i <review.getUid().length() - 4; i++)
+				s += "*";
+			
+			// 맨 처음 셋째 자리까지를 제외하고 나머지 문자는 모두 마스킹 처리
+			review.setUid(review.getUid().replaceAll("(?<=^...)(.*)", s));
+		}
+		model.addAttribute("reviews", reviews);
 		
 		return "product/view";
 	}

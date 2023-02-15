@@ -40,4 +40,15 @@
     <select id="selectProduct" resultType="kr.co.kmarket2.vo.ProductVO">
     	select * from `km_product` where `prodNo`=#{prodNo};
     </select>
+    <select id="selectReviews" resultType="kr.co.kmarket2.vo.ReviewVO">
+    	select a.*, b.prodName from `km_product_review` as a 
+		join `km_product` as b 
+		on a.prodNo = b.prodNo 
+		where a.prodNo = #{prodNo} 
+		order by rdate 
+		limit #{start}, 5;   	
+    </select>
+    <select id="selectReviewCountTotal" resultType="int">
+    	select count(`prodNo`) from `km_product_review` where `prodNo`=#{prodNo};
+    </select>
 </mapper>
