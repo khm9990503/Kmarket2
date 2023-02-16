@@ -381,3 +381,227 @@ footer > div > p {
     font-weight: bold;
     box-sizing: border-box;
 }
+/*게시판*/
+
+/* cs-list */
+#csList {}
+#csList select {
+	margin-bottom: 10px;
+}
+#csList table {
+	border-top: 2px solid #8798a3;
+}
+#csList table th {
+	padding: 10px 0;
+	background: #f6f6f6;
+}
+#csList table td{
+	background: #fff;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 20px;
+}
+#csList table td:nth-child(1){
+	width: 60px;
+}
+#csList table td:nth-child(2){
+	width: 90px;
+}
+#csList table td:nth-child(3){
+	width: 180px;
+}
+#csList table td:nth-child(4){
+	width: 350px;
+}
+#csList table td:nth-child(5){
+	width: 300px;
+}
+#csList table td:nth-child(6){
+	width: 160px;
+}
+#csList table td:nth-child(7){
+	width: 160px;
+}
+#csList table td:nth-child(8){
+	width: 160px;
+}
+#csList .page {
+    width: 100%;
+    padding: 30px 0;
+    text-align: center;
+}
+#csList .page > a {
+    color: rgb(119, 119, 119);
+    font-family: 돋움, Dotum, Tahoma, sans-serif;
+    font-size: 11px;
+    letter-spacing: -1px;
+}
+
+#csList .page > .num {
+    display: inline-block;
+    min-width: 14px;
+    margin: 0 2px;
+    padding: 8px 9px;
+    border: 1px solid #c4c4c4;
+    background: url() 0 0 repeat-x;
+    color: #000;
+    font-family: Tahoma;
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+}
+#csList .page > .on {
+    color: #fe434c;
+    font-weight: bold;
+}
+/* cs-view */
+#csView {}
+#csView table {
+	border-top: 2px solid #8798a3;
+}
+#csView table td{
+	font-size: 18px;
+	padding: 20px;
+}
+#csView table td:nth-child(1) {
+	font-weight: bold;
+}
+#csView table .content {
+	height: 280px;
+}
+#csView table textarea {
+	width: 100%;
+    height: 360px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+#csView div {
+	width: 100%;
+	height: auto;
+	margin-top: 50px;
+}
+/* cs-write */
+#csWrite {}
+#csWrite table {
+	border-top: 2px solid #8798a3;
+}
+#csWrite table td{
+	font-size: 18px;
+	padding: 20px;
+}
+#csWrite table td:nth-child(1) {
+	font-weight: bold;
+}
+#csWrite table tr:nth-child(3) td:nth-child(1) {
+	height: 280px;
+}
+#csWrite div {
+	position:relative;
+	width: 100%;
+	height: auto;
+	margin-top: 50px;
+}
+#csWrite table input {
+	width: 100%;
+    height: 40px;
+    font-size: 16px;
+    box-sizing: border-box;
+    text-indent: 10px;
+}
+#csWrite table textarea {
+	width: 100%;
+    height: 360px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+/* cs-modify */
+#csModify {}
+#csModify table {
+	border-top: 2px solid #8798a3;
+}
+#csModify table td{
+	font-size: 18px;
+	padding: 20px;
+}
+#csModify table td:nth-child(1) {
+	font-weight: bold;
+}
+#csModify table tr:nth-child(3) td:nth-child(1) {
+	height: 280px;
+}
+#csModify div {
+	position:relative;
+	width: 100%;
+	height: auto;
+	margin-top: 50px;
+}
+#csModify table input {
+	width: 100%;
+    height: 40px;
+    font-size: 16px;
+    box-sizing: border-box;
+    text-indent: 10px;
+}
+#csModify table textarea {
+	width: 100%;
+    height: 360px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+/* button */
+.btn {
+	display:inline-block;
+	padding: 10px 20px;
+    text-align: center;
+    margin-top: -40px;
+    background-color: #c0c0c0;
+    border: 1px solid #111;
+    border-radius: 2px;
+    font-size: 20px;
+    color: #eee;
+    box-sizing: border-box;
+}
+.btnDel{
+	float: left;
+}
+.btnDel2{
+	float: right;
+}
+.btnMod{
+	float: right;
+	margin-left: 10px;
+}
+.btnWrite{
+    float: right;
+    background-color: #067dfd;
+    border: 1px solid #0063ce;
+    color: #fff;
+}
+.btnList{
+    float: right;
+    margin-left: 10px;
+    background-color: #067dfd;
+    border: 1px solid #0063ce;
+    color: #fff;
+}
+.btnWrite:hover{
+    background-color: #0063ce;
+}
+.btnSubmit {
+	position:absolute;
+	right:133px;
+    display: inline-block;
+    text-align: center;
+    background-color: #067dfd;
+    border: 1px solid #0063ce;
+    color: #fff;
+}
+.btnSubmit:hover{
+    background-color: #0063ce;
+}

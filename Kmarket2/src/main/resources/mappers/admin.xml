@@ -40,6 +40,42 @@
    <select id="selectCountTotalSeller" resultType="int">
    	SELECT COUNT(*) FROM `km_product` where `seller`=#{seller};
    </select>
+   <select id="selectCountTotalSearch" resultType="int">
+   	SELECT COUNT(*) FROM `km_product` where 
+	   								<choose>
+						    			<when test="type == 1">
+						    				`prodName`
+						    			</when>
+						    			<when test="type == 2">
+						    				`prodNo`
+						    			</when>
+						    			<when test="type == 3">
+						    				`company` 
+						    			</when>
+						    			<when test="type == 4">
+						    				`seller`
+						    			</when>
+						    		</choose>
+   											= #{search};
+   </select>
+   <select id="selectCountTotalSellerSearch" resultType="int">
+   	SELECT COUNT(*) FROM `km_product` where `seller`=#{seller} and 
+   									<choose>
+						    			<when test="type == 1">
+						    				`prodName`
+						    			</when>
+						    			<when test="type == 2">
+						    				`prodNo`
+						    			</when>
+						    			<when test="type == 3">
+						    				`company` 
+						    			</when>
+						    			<when test="type == 4">
+						    				`seller`
+						    			</when>
+						    		</choose>
+   											= #{search};
+   </select>
    <select id="selectProducts" resultType="kr.co.kmarket2.vo.ProductVO">
    	SELECT * FROM `km_product` ORDER BY `prodNo` DESC LIMIT #{start},10;
    </select>
@@ -49,38 +85,38 @@
    <select id="searchProducts" resultType="kr.co.kmarket2.vo.ProductVO">
    	SELECT * FROM `km_product` WHERE 
 								<choose>
-					    			<when test="sort == 1">
+					    			<when test="type == 1">
 					    				`prodName`
 					    			</when>
-					    			<when test="sort == 2">
-					    				`prodCode`
+					    			<when test="type == 2">
+					    				`prodNo`
 					    			</when>
-					    			<when test="sort == 3">
-					    				`make` 
+					    			<when test="type == 3">
+					    				`company` 
 					    			</when>
-					    			<when test="sort == 4">
+					    			<when test="type == 4">
 					    				`seller`
 					    			</when>
 					    		</choose>
-							 	LIKE CONCAT('%',#{search},'%') ORDER BY `prodNo` DESC LIMIT 10;
+							 	LIKE CONCAT('%',#{search},'%') ORDER BY `prodNo` DESC LIMIT #{start},10;
    </select>
    <select id="searchProductSeller">
    	SELECT * FROM `km_product` WHERE `seller`=#{seller} and 
 								<choose>
-					    			<when test="sort == 1">
+					    			<when test="type == 1">
 					    				`prodName`
 					    			</when>
-					    			<when test="sort == 2">
-					    				`prodCode`
+					    			<when test="type == 2">
+					    				`prodNo`
 					    			</when>
-					    			<when test="sort == 3">
-					    				`make` 
+					    			<when test="type == 3">
+					    				`company` 
 					    			</when>
-					    			<when test="sort == 4">
+					    			<when test="type == 4">
 					    				`seller`
 					    			</when>
 					    		</choose>
-							 	LIKE CONCAT('%',#{search},'%') ORDER BY `prodNo` DESC LIMIT 10;
+							 	LIKE CONCAT('%',#{search},'%') ORDER BY `prodNo` DESC LIMIT #{start},10;
    </select>
    <update id="updateProduct">
    	UPDATE `km_product` SET `prodName`=#{prodName}, 
@@ -100,6 +136,6 @@
 							 WHERE `prodNo` = #{prodNo};
    </update>
    <delete id="deleteProduct">
-   	DELETE FROM `km_product` WHERE `prodNo` in #{prodNo};
+   	DELETE FROM `km_product` WHERE `prodNo` in (#{prodNo});
    </delete>
 </mapper>

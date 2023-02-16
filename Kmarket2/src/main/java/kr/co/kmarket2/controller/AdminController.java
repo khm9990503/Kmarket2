@@ -2,7 +2,9 @@ package kr.co.kmarket2.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,20 +34,38 @@ public class AdminController {
 		return "admin/index";
 	}
 	@GetMapping("admin/product/list")
-	public String list(Model model, String pg, Principal principal) {
+	public String list(Model model, String pg, Principal principal, String search, String type) {
 		
 		int currentPage = service.getCurrnetPage(pg);
 		int start = service.getLimitStart(currentPage);
-		int total = service.selectCountTotal();
+		int total = 0;
+		if(search == null) {
+			total = service.selectCountTotal();
+		}else {
+			total = service.selectCountTotalSearch(search, type);
+		}
 		int pageStartNum = service.getPageStartNum(total, start);
 		int lastPageNum = service.getLastPageNum(total);
 		
 		// 페이지 그룹 start, end 번호
 		int pageGroupStart = service.getPageGroup(currentPage, lastPageNum)[0];
 		int pageGroupEnd = service.getPageGroup(currentPage, lastPageNum)[1];
+		List<ProductVO> products = null;
+		if(search == null) {
+			products = service.selectProducts(start);
+		}else {
+			products = service.searchProducts(search, type, start);
+		}
 		
-		List<ProductVO> products = service.selectProducts(start);
-		
+		for(ProductVO product : products) {
+			char isJ  = product.getThumb1().charAt(1);
+			if(isJ == 'J') {
+				product.setThumb1(product.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+				product.setThumb2(product.getThumb2().replaceFirst("/Java1_Kmarket1", ""));
+				product.setThumb3(product.getThumb3().replaceFirst("/Java1_Kmarket1", ""));
+				product.setDetail(product.getDetail().replaceFirst("/Java1_Kmarket1", ""));
+			}
+		}
 		model.addAttribute("pg", pg);
 		model.addAttribute("pageStartNum", pageStartNum-1);
 		model.addAttribute("lastPageNum", lastPageNum);
@@ -81,9 +101,36 @@ public class AdminController {
 		int result = service.insertProduct(vo);
 		return "redirect:/admin/product/list";
 	}
-	@PostMapping("admin/product/delete")
-	public String delete(String[] prodNo, HttpServletRequest req) {
-		int result = service.deleteProduct(prodNo);
-		return "redirect:/admin/product/list";
+	@ResponseBody
+	@GetMapping("admin/product/delete")
+	public Map<String, Integer> delete(String prodNo, HttpServletRequest req) {
+		List<String> list = Arrays.asList(prodNo.split(","));
+		int result = 0;
+		for(String no : list) {
+			result = service.deleteProduct(no);
+		}
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
+		return map;
+	}
+	/////// 관리자 고객센터 관련 /////////////////////////////////////////////
+	@GetMapping("admin/cs/list")
+	public String list(Model model,String group, String cate) {
+		Map<String,String> groups = new LinkedHashMap<>();
+		groups.put("service", "고객서비스");
+		model.addAttribute("groups",groups);
+		return "admin/cs/list";
+	}
+	@GetMapping("admin/cs/write")
+	public String write() {
+		return "admin/cs/write";
+	}
+	@GetMapping("admin/cs/modify")
+	public String modify() {
+		return "admin/cs/modify";
+	}
+	@GetMapping("admin/cs/view")
+	public String view() {
+		return "admin/cs/view";
 	}
 }
