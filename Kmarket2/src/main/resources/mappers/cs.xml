@@ -31,8 +31,24 @@
     	SELECT a.*, b.c2Name FROM `km_article` AS a JOIN `km_article_cate` AS b ON a.cate2=b.cate2 WHERE `group`=#{group} and a.cate =#{cate} ORDER BY `no` DESC;
     </select>
     
-    <select id="selectFaqCates" resultType="kr.co.kmarket2.vo.ArticleVO">
+    <select id="selectCates" resultType="kr.co.kmarket2.vo.ArticleVO">
     	SELECT * FROM `km_article_cate` WHERE cate=#{cate};
     </select>
+    
+    <select id="selectQnaArticle" resultType="kr.co.kmarket2.vo.ArticleVO">
+    	SELECT a.*, b.c2Name FROM `km_article` AS a JOIN `km_article_cate` AS b ON a.cate2=b.cate2 WHERE `no`=#{no};
+    </select>
+    
+    <select id="selectAnswer" resultType="kr.co.kmarket2.vo.ArticleVO">
+    	SELECT `content` FROM `km_article` WHERE `parent`=#{no};
+    </select>
+    
+    <select id="selectQnaArticles" resultType="kr.co.kmarket2.vo.ArticleVO">
+    	SELECT a.*, b.c2Name FROM `km_article` AS a JOIN `km_article_cate` AS b ON a.cate2=b.cate2 WHERE `group`=#{group} and a.cate=#{cate} ORDER BY `no` DESC LIMIT #{start},10;
+    </select>
+  
+    
+    
+    
     
 </mapper>

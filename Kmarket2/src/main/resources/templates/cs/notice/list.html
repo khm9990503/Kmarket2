@@ -10,11 +10,11 @@
                     <aside>
                         <h2>공지사항</h2>
                         <ul>
-                            <li th:classappend="${cate} eq null?'on':'off'"><a th:href="@{/cs/notice/list?pg=1&group=notice}">전체</a></li>
-                            <li th:classappend="${cate} eq 'service'?'on':'off'"><a th:href="@{/cs/notice/list?pg=1&group=notice&cate=service}">고객서비스</a></li>
-                            <li th:classappend="${cate} eq 'deal'?'on':'off'"><a th:href="@{/cs/notice/list?pg=1&group=notice&cate=deal}">안전거래</a></li>
-                            <li th:classappend="${cate} eq 'danger'?'on':'off'"><a th:href="@{/cs/notice/list?pg=1&group=notice&cate=danger}">위해상품</a></li>
-                            <li th:classappend="${cate} eq 'lucky'?'on':'off'"><a th:href="@{/cs/notice/list?pg=1&group=notice&cate=lucky}">이벤트당첨</a></li>
+                            <li th:classappend="${cate} eq null?'on':'off'"><a th:href="@{/cs/notice/list?group=notice}">전체</a></li>
+                            <li th:classappend="${cate} eq 'service'?'on':'off'"><a th:href="@{/cs/notice/list?group=notice&cate=service}">고객서비스</a></li>
+                            <li th:classappend="${cate} eq 'deal'?'on':'off'"><a th:href="@{/cs/notice/list?group=notice&cate=deal}">안전거래</a></li>
+                            <li th:classappend="${cate} eq 'danger'?'on':'off'"><a th:href="@{/cs/notice/list?group=notice&cate=danger}">위해상품</a></li>
+                            <li th:classappend="${cate} eq 'lucky'?'on':'off'"><a th:href="@{/cs/notice/list?group=notice&cate=lucky}">이벤트당첨</a></li>
                         </ul>
                     </aside>
                     <article>
@@ -61,10 +61,10 @@
                             </th:block>
                             <th:block th:each="num,iterStat : ${#numbers.sequence(pageGroupStart, pageGroupEnd)}">
                             <th:block th:if="${cate eq null}">
-                            	<a th:href="@{/cs/notice/list(pg=${num},group='notice')}" class="num">[[${num}]]</a>
+                            	<a th:href="@{/cs/notice/list(pg=${num},group='notice')}" th:class="${num} eq ${currentPage} ? 'num on':'num'">[[${num}]]</a>
                             </th:block>
                             <th:block th:unless="${cate eq null}">
-                            	<a th:href="@{/cs/notice/list(pg=${num},cate=${cate},group='notice')}" class="num ">[[${num}]]</a>
+                            	<a th:href="@{/cs/notice/list(pg=${num},cate=${cate},group='notice')}" th:class="${num} eq ${currentPage} ? 'num on':'num'">[[${num}]]</a>
                             </th:block>
                             </th:block>
                             <th:block th:if="${pageGroupEnd < lastPageNum}">
