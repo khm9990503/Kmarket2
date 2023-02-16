@@ -22,4 +22,12 @@ public class MyController {
 	public String coupon() {
 		return "my/coupon";
 	}
+	@GetMapping("my/info")
+	public String info() {
+		return "my/info";
+	}
+	@GetMapping("my/qna")
+	public String qna() {
+		return "my/qna";
+	}
 }
