@@ -21,4 +21,10 @@ public class ReviewVO {
 	private	String rdate;
 	private String prodName;
 	
+	
+	// 댓글 ajax 불러오기
+	private int groupStart;
+	private int groupEnd;
+	private int lastPageNum;
+	private int currentPage;
 }
