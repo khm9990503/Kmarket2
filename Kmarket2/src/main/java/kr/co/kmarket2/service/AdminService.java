@@ -33,10 +33,10 @@ public class AdminService {
 	};
 	public int insertProduct (ProductVO vo) {
 		List<String> names = fileUpload(vo);
-		vo.setThumb1("/Kmarket2/thumb/"+names.get(0));
-		vo.setThumb2("/Kmarket2/thumb/"+names.get(1));
-		vo.setThumb3("/Kmarket2/thumb/"+names.get(2));
-		vo.setDetail("/Kmarket2/thumb/"+names.get(3));
+		vo.setThumb1("/thumb/"+names.get(0));
+		vo.setThumb2("/thumb/"+names.get(1));
+		vo.setThumb3("/thumb/"+names.get(2));
+		vo.setDetail("/thumb/"+names.get(3));
 		int result = 0;
 		if(vo.getThumb1() != null) {
 			result = dao.insertProduct(vo);
@@ -50,16 +50,16 @@ public class AdminService {
 	public List<ProductVO> selectProductsSeller(int start){
 		return dao.selectProductsSeller(start);
 	};
-	public List<ProductVO> searchProducts(String search, String sort){
-		return dao.searchProducts(search,sort);
+	public List<ProductVO> searchProducts(String search, String type, int start){
+		return dao.searchProducts(search,type,start);
 	};
-	public List<ProductVO> searchProductsSeller(String search,String sort,String seller){
-		return dao.searchProductsSeller(search,sort,seller);
+	public List<ProductVO> searchProductsSeller(String seller,String search,String type,int start){
+		return dao.searchProductsSeller(seller,search,type,start);
 	};
 	public int updateProduct (ProductVO vo){
 		return dao.updateProduct(vo);
 	};
-	public int deleteProduct (String[] prodNo){
+	public int deleteProduct (String prodNo){
 		return dao.deleteProduct(prodNo);
 	};
 	// 썸네일 업로드 ////////////
@@ -113,6 +113,13 @@ public class AdminService {
 		public int selectCountTotalSeller(String seller) {
 			return dao.selectCountTotalSeller(seller);
 		}
+		// 검색 게시물 총 갯수
+		public int selectCountTotalSearch (String search,String type) {
+			return dao.selectCountTotalSearch(search,type);
+		};
+		public int selectCountTotalSearchSeller (String seller, String search, String type) {
+			return dao.selectCountTotalSearchSeller(seller, search, type);
+		};
 		// 마지막 페이지 번호
 		public int getLastPageNum(int total) {
 			int lastPageNum = 0;
@@ -139,4 +146,5 @@ public class AdminService {
 			return result;
 		}
 		// 페이징 처리 끝 ///////////////////////////////////////////////////////
+	/////// 관리자 고객센터 관련 /////////////////////////////////////////////
 }

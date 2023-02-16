@@ -26,16 +26,16 @@
 <script>
 	// 판매가격의 1%를 포인트로 자동 계상
 	$(function(){
-		$('input[name=price]').keydown(function(){
+		$('input[name=price]').change(function(){
 			autoPoint();
 			discount();
 		});
 		
 		function autoPoint(){
 			let price = $('input[name=price]').val();
-			console.log(price);
+			//console.log(price);
 			let point = (price/100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-			console.log(point);
+			//console.log(point);
 			$('input[name=point]').val(point);
 		}
 		

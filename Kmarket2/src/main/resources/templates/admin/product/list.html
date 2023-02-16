@@ -35,11 +35,11 @@
 	    	});
 		    if (confirm('선택된 상품을 삭제하시겠습니까?')) {
 		    	let jsonData = {
-	    			'prodNo': prodNo
+	    			'prodNo': prodNo.toString()
     			};
-// 		    	console.log(jsonData);
+ 		    	console.log(jsonData);
 		    	$.ajax({
-		    		type: 'post',
+		    		type: 'get',
 		        	url: '/Kmarket2/admin/product/delete',
 		        	data: jsonData,
 		        	dataType: 'json',
@@ -63,7 +63,7 @@
 		
 </script>
 
-    <section id="admin-product-list">
+    <section id="admin_product_list">
         <nav>
             <h3>상품목록</h3>
             <p>
@@ -77,10 +77,10 @@
             <div>
             	<form th:action="@{/admin/product/list}" method="get">
 	                <select name="type">
-	                    <option value="prodName">상품명</option>
-	                    <option value="prodCode">상품코드</option>
-	                    <option value="make">제조사</option>
-	                    <option value="seller">판매자</option>                               
+	                    <option value="1">상품명</option>
+	                    <option value="2">상품코드</option>
+	                    <option value="3">제조사</option>
+	                    <option value="4">판매자</option>                               
 	                </select>
 	                <input type="text" name="search">
 	                <button type="submit">검색</button>
@@ -102,7 +102,7 @@
                 </tr>
 	                <tr th:each="product : ${products}">
 	                    <td><input type="checkbox" name="check" th:data-no="${product.prodNo}"/><input type="hidden" name="size" th:value="${products.size()}"/></td>
-	                    <td><img src="${product.thumb1}" class="thumb"></td>
+	                    <td><img th:src="@{${product.thumb1}}" class="thumb"></td>
 	                    <td><a th:href="@{#}">[[${product.prodNo}]]</a></td>
 	                    <td><a th:href="@{#}">[[${product.prodName}]]</a> </td>
 	                    <td>[[${product.price}]]</td>
@@ -121,11 +121,16 @@
             <input type="button" id="delete" value="선택삭제" />
 
 			<div class="paging">
-		            <a th:if="${pageGroupStart gt 1}" th:href="@{/admin/product/list(pg=${pageGroupStart-1})}" class="prev"><&nbsp;이전</a>
-		            <a th:each="num,numStat : ${#numbers.sequence(pageGroupStart,pageGroupEnd)}" th:href="@{/admin/product/list(pg=${num})}" class="num ${num == currentPage ? 'on':'off'} ">[[${num}]]</a>
-		            <a th:if="${pageGroupEnd lt lastPageNum}" th:href="@{/admin/product/list(pg=${pageGroupEnd + 1})}" class="next">다음&nbsp;></a>
-	        </div>
-
+               <span th:if="${pageGroupStart > 1}" class="prev">
+                   <a th:href="@{/admin/product/list(pg=${pageGroupStart-1})}"><&nbsp;이전</a>
+               </span>
+               <span th:each="num,numStat : ${#numbers.sequence(pageGroupStart,pageGroupEnd)}" class="num">
+                   <a th:href="@{/admin/product/list(pg=${num})}" class="" th:classappend="${currentPage}==${num}?'on':''">[[${num}]]</a>
+               </span>
+               <span th:if="${pageGroupEnd lt lastPageNum}" class="next">
+                   <a th:href="@{/admin/product/list(pg=${pageGroupEnd + 1})}">다음&nbsp;></a>
+               </span>
+           </div>
         </section>                
         <p class="ico info">
             <strong>Tip!</strong>
