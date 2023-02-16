@@ -46,9 +46,15 @@ public class CsService {
 		return dao.selectFaqArticles(group, cate);
 	}
 	
-	public List<ArticleVO> selectFaqCates(String cate){
-		return dao.selectFaqCates(cate);
+	public List<ArticleVO> selectCates(String cate){
+		return dao.selectCates(cate);
 	}
+	
+	// 문의하기 리스트
+	public List<ArticleVO> selectQnaArticles(String group, String cate, int start){
+		return dao.selectQnaArticles(group, cate, start);
+	}
+	
 	
 	/* View */
 	
@@ -56,7 +62,13 @@ public class CsService {
 		return dao.selectArticle(no);
 	}
 	
+	public ArticleVO selectQnaArticle(int no) {
+		return dao.selectQnaArticle(no);
+	}
 	
+	public ArticleVO selectAnswer(int no) {
+		return dao.selectAnswer(no);
+	}
 	
 	// 페이징
 		public int getLastPageNum(int total) {

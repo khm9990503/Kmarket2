@@ -21,18 +21,26 @@ public interface CsDAO {
 	// list paging
 	public int selectCountTotal(String group);
 	
-	// 카테고리별 리스트 페이징
+	// 카테고리별 list paging
 	public int selectCountCateTotal(String group, String cate);
 	
 	// view
 	public ArticleVO selectArticle(int no);
 	
 	
-	//faq list
+	//faq,qna list
 	public List<ArticleVO> selectFaqArticles(String group, String cate);
 	
-	//faq category
-	public List<ArticleVO> selectFaqCates(String cate);
+	//category
+	public List<ArticleVO> selectCates(String cate);
+	
+	//qna list
+	public List<ArticleVO> selectQnaArticles(String group, String cate, int start);
+	
+	//qna view
+	public ArticleVO selectQnaArticle(int no);
+	
+	public ArticleVO selectAnswer(int no);
 	
 	//index notice list
 	public List<ArticleVO> selectNotices(String group);

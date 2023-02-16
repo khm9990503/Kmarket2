@@ -6,7 +6,7 @@
     	        e.preventDefault();
     	        let status = $(this).prev().css('display') === 'none';
     	      if (status) {
-    	        $(this).siblings('li:nth-child(n+4)').css('display','block');
+    	        $(this).siblings('li:nth-child(n+4):nth-child(-n+10)').css('display','block');
     	        $(this).children('a').text('간단히 보기');
     	      } else{
     	        $(this).siblings('li:nth-child(n+4)').css('display','none');

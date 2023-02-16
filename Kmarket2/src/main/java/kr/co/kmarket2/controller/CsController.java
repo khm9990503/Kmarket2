@@ -55,10 +55,10 @@ public class CsController {
 		model.addAttribute("pageGroupEnd", result[1]);
 		model.addAttribute("pageStartNum", pageStartNum+1);
     			
-		//전체 글 가져오기
+		//전체 목록 가져오기
 		List<ArticleVO> articles = service.selectArticles(group, start);
 		
-    	//카테고리별 글 가져오기
+    	//카테고리별 목록 가져오기
     	List<ArticleVO> article = service.selectCateArticles(group ,cate ,start);
     	
     	model.addAttribute("cate",cate);
@@ -72,7 +72,9 @@ public class CsController {
     @GetMapping("cs/notice/view")
     public String noticeView(int no, String cate, Model model) {
     	
+    	// 해당 글 가져오기
     	ArticleVO article = service.selectArticle(no);
+    	
     	model.addAttribute("article", article);
     	model.addAttribute("cate",cate);
     	
@@ -82,9 +84,10 @@ public class CsController {
     @GetMapping("cs/faq/list")
     public String faqList(Model model, String cate, String group) {
     	
+    	//카테고리 가져오기
+    	List<ArticleVO> cates = service.selectCates(cate);
     	
-    	List<ArticleVO> cates = service.selectFaqCates(cate);
-    	
+    	//목록 가져오기
     	List<ArticleVO> articles = service.selectFaqArticles(group, cate);
     	
     	model.addAttribute("cates", cates);
@@ -96,6 +99,7 @@ public class CsController {
     @GetMapping("cs/faq/view")
     public String faqView(Model model, String cate, String group, int no) {
     	
+    	// 해당 글 가져오기
     	ArticleVO article = service.selectArticle(no);
     	
     	model.addAttribute("article", article);
@@ -104,12 +108,50 @@ public class CsController {
     }
 
     @GetMapping("cs/qna/list")
-    public String qnaList() {
+    public String qnaList(Model model,String group, String cate, String pg) {
+    	
+    	//페이징 
+    	int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
+		int total = 0;
+		
+		
+		total = service.selectCountCateTotal(group, cate); //카테고리별 게시물 갯수
+		
+		
+		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
+		int[] result = service.getPageGroupNum(currentPage, lastPageNum); // 페이지 그룹번호
+		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작번호
+		int start = service.getStartNum(currentPage); // 시작 인덱스
+		
+		model.addAttribute("lastPageNum", lastPageNum);		
+		model.addAttribute("currentPage", currentPage);		
+		model.addAttribute("pageGroupStart", result[0]);
+		model.addAttribute("pageGroupEnd", result[1]);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+    			
+		
+		
+    	
+    	//카테고리별 목록 가져오기
+    	List<ArticleVO> articles = service.selectQnaArticles(group,cate,start);
+    	
+    	model.addAttribute("cate",cate);
+    	
+    	model.addAttribute("articles", articles);
+    	
         return "cs/qna/list";
     }
 
     @GetMapping("cs/qna/view")
-    public String qnaView() {
+    public String qnaView(Model model, String cate, int no) {
+    	
+    	ArticleVO article = service.selectQnaArticle(no);
+    	
+    	ArticleVO answer = service.selectAnswer(no);
+    	
+    	model.addAttribute("answer",answer);
+    	model.addAttribute("article",article);
+    	model.addAttribute("cate", cate);
         return "cs/qna/view";
     }
 
