@@ -1,6 +1,7 @@
 package kr.co.kmarket2.controller;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -64,11 +66,6 @@ public class ProductController {
 		
 		return "product/list";
 	}
-
-	@GetMapping("product/cart")
-	public String cart() {
-		return "product/cart";
-	}
 	
 	@GetMapping("product/view")
 	public String view(String prodNo, String cate1, String cate2, Model model, @RequestParam(value="pg", defaultValue = "1") String pg) {
@@ -102,7 +99,7 @@ public class ProductController {
 	    model.addAttribute("lastPageNum", lastPageNum);
 	    model.addAttribute("startPageNum", startPageNum);
 		
-		// 댓글 불러오기
+		// 댓글 불러오기(페이지 최초 로드시)
 		List<ReviewVO> reviews = service.selectReviews(prodNo, start);
 		
 		// 댓글 작성자명 마스킹 처리하기(스크립트로도 가능하지만 사용자가 마스킹 전의 오리지널 데이터에 접근할 수도 있음; https://stackoverflow.com/questions/14495290/replace-last-5-character-from-username-with-x)
@@ -117,6 +114,55 @@ public class ProductController {
 		model.addAttribute("reviews", reviews);
 		
 		return "product/view";
+	}
+	
+	@ResponseBody
+	@GetMapping("product/retrieveReviews")
+	public Map<String, List<ReviewVO>> retrieveReviews(String prodNo, String pg){
+		// 페이징 처리
+		int total = service.selectReviewCountTotal(prodNo);
+		int currentPage = service.getCurrentPage(pg);
+		int start = service.getLimitStart(currentPage, 5);
+		int lastPageNum = service.getLastPageNum(total, 5);
+		int startPageNum = service.getPageStartNum(total, start);
+		int groups[] = service.getPageGroup(currentPage, lastPageNum, 5);
+		
+		// 댓글 불러오기(ajax)
+		List<ReviewVO> reviews = service.selectReviews(prodNo, start);
+		System.out.println(reviews);
+		// 페이징 처리를 위해 페이지 관련 정보 vo 객체에 저장하기
+		for(ReviewVO review: reviews) {
+			review.setGroupStart(groups[0]);
+			review.setGroupEnd(groups[1]);
+			review.setLastPageNum(lastPageNum);
+			review.setCurrentPage(currentPage);
+		}
+		
+		// 댓글 작성자명 마스킹 처리하기(스크립트로도 가능하지만 사용자가 마스킹 전의 오리지널 데이터에 접근할 수도 있음; https://stackoverflow.com/questions/14495290/replace-last-5-character-from-username-with-x)
+		for(ReviewVO review : reviews) {
+			String s = "*";
+			for(int i = 0; i <review.getUid().length() - 4; i++)
+				s += "*";
+			
+			// 맨 처음 셋째 자리까지를 제외하고 나머지 문자는 모두 마스킹 처리
+			review.setUid(review.getUid().replaceAll("(?<=^...)(.*)", s));
+		}
+		
+		// 뷰로 ajax 처리값 전송하기
+		Map<String, List<ReviewVO>> result = new HashMap<>();
+		result.put("reviews", reviews);
+		return result;
+	}
+	
+	@GetMapping("product/cart")
+	public String cart() {
+		return "product/cart";
+	}
+	
+	@ResponseBody
+	@PostMapping("product/putInCart")
+	public void putInCart() {
+		System.out.println("1");
 	}
 	
 	@GetMapping("product/order")

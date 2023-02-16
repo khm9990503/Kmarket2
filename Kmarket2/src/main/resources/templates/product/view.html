@@ -177,15 +177,15 @@
                     <nav>
                         <h1>상품리뷰</h1>
                     </nav>
-                    <ul th:each = "review : ${reviews}">
+                    <ul th:each = "review : ${reviews}" class="reviewAppend">
                         <li>
                             <div>
                             	<th:block th:switch="${review.rating}">
-	                           		<h5 th:case="1" class="rating star1">상품평</a></h5>
-	                           		<h5 th:case="2" class="rating star2">상품평</a></h5>
-	                           		<h5 th:case="3" class="rating star3">상품평</a></h5>
-	                           		<h5 th:case="4" class="rating star4">상품평</a></h5>
-	                           		<h5 th:case="5" class="rating star5">상품평</a></h5>
+	                           		<h5 th:case="1" class="rating star1">상품평</h5>
+	                           		<h5 th:case="2" class="rating star2">상품평</h5>
+	                           		<h5 th:case="3" class="rating star3">상품평</h5>
+	                           		<h5 th:case="4" class="rating star4">상품평</h5>
+	                           		<h5 th:case="5" class="rating star5">상품평</h5>
                            		</th:block>
                                 <span>[[${review.uid}]]	[[${review.rdate.substring(0, 10)}]]</span>
                             </div>
@@ -236,6 +236,29 @@ function increase(){
 
 function cart(){
 	// cart 테이블에 항목 담기(ajax)
+	let prodNo = [[${product.prodNo}]];
+	let count = parseInt(document.querySelector('input[name="num"]').value, 10);
+	let price = [[${product.price}]];
+	let discount = [[${product.discount}]];
+	let point = [[${product.point}]];
+	let delivery = [[${product.delivery}]];
+	let disPrice = price * (1 - discount/100) * count;
+	
+	let postObj = {
+			prodNo: prodNo,
+			count: count,
+			price: price,
+			discount: discount,
+			point: point,
+			delivery: delivery,
+			disPrice: disPrice
+	}
+	
+	let post = JSON.stringify(postObj);
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", "/Kmarket2/product/putInCart");
+	xhr.send();
 	
 	// 사용자가 원할 경우 카트 페이지로 이동
 	let response = confirm('상품이 장바구니에 담겼습니다\n장바구니로 이동하시겠습니까?')
@@ -249,22 +272,308 @@ function singlePurchase(){
 }
 
 function reviewPrev(){
+	let pg = document.querySelectorAll('.num')[0].innerText;
 	let xhr = new XMLHttpRequest();
-	xhr.open("GET", "/Kmarket2/product/view?prodNo=" + [[${product.prodNo}]] + "&cate1=" + [[${cate1}]] + "&cate2=" + [[${cate2}]] + "&pg=" + [[${groups[0]}]]);
+	xhr.open("GET", "/Kmarket2/product/retrieveReviews?prodNo=" + [[${product.prodNo}]] + "&pg=" + (pg -1));
+	xhr.responseType = "json";
 	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState === XMLHttpRequest.DONE){
+			if(xhr.status ===200){
+				const data = xhr.response;
+				const reviews = data.reviews;
+				
+				// 기존 댓글 내용 화면에서 지우기
+				document.querySelector('.review').innerHTML = '';
+				
+				// nav는 최초 1회만 출력
+				if (document.querySelector('.reviewNav') == null){
+					let nav = `
+						<nav>
+	                    	<h1 class="reviewNav">상품리뷰</h1>
+	                	</nav>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('beforebegin', nav);
+				}
+				
+				for(let i =0; i <reviews.length; i++){
+					// 불러온 댓글 내용 화면에 출력하기
+					// rating
+					let html = `
+                    	<ul>
+							<li>
+		                        <div>
+		                       		<h5 class="rating star${reviews[i].rating}">상품평</a></h5>
+		                            <span>${reviews[i].uid}	${reviews[i].rdate.substring(0, 10)}</span>
+		                        </div>
+		                        <h3>${reviews[i].prodName}/BLUE/L</h3>
+		                        <p>${reviews[i].content}</p>
+	                    	</li>
+	                    </ul>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('afterbegin', html);
+					
+					// 페이지 버튼 추가하기
+					if(i == (reviews.length - 1)){
+						let start = `
+							<div class="paging">
+		                `;
+		                
+		               	let prev = `
+		            	   <span class="prev">
+	                        	<a onclick="reviewPrev();">&#60;이전</a>
+	                       </span>
+		               	`;
+		               
+		               	let num = '';
+		               	for(let j = reviews[i].groupStart; j <= reviews[i].groupEnd; j++){
+		               		num += '<span class="num">';
+		               		
+		               		if(j == reviews[i].currentPage){
+		               			num += '<a class="on" onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}else{
+		               			num += '<a onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}
+	                       	
+		                    num += '</span>';
+		               	}
+		               
+		               	let next = `
+		            	   <span class="next">
+	                        	<a onclick="reviewNext();">다음&#62;</a>
+	                       </span>
+		               	`;
+		               
+		               	let end = `
+		               		</div>
+						`;
+						
+						let paging = '';
+						
+		                if(reviews[i].groupStart >1){
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + prev + num + next + end;
+							}else{
+								paging = start + prev + num + end;
+							}
+						}else{
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + num + next + end;
+							}else{
+								paging = start + num + end;
+							}
+						}
+						
+						document.querySelector('.review').insertAdjacentHTML('beforeend', paging);
+					}
+				}
+			}
+		}
+	}
 }
 
 function reviewNum(data){
 	let xhr = new XMLHttpRequest();
-	xhr.open("GET", "/Kmarket2/product/view?prodNo=" + [[${product.prodNo}]] + "&cate1=" + [[${cate1}]] + "&cate2=" + [[${cate2}]] + "&pg=" + data);
+	xhr.open("GET", "/Kmarket2/product/retrieveReviews?prodNo=" + [[${product.prodNo}]] + "&pg=" + data);
+	xhr.responseType = "json";
 	xhr.send();
-	console.log(data);
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState === XMLHttpRequest.DONE){
+			if(xhr.status ===200){
+				const data = xhr.response;
+				const reviews = data.reviews;
+				
+				// 기존 댓글 내용 화면에서 지우기
+				document.querySelector('.review').innerHTML = '';
+				
+				// nav는 최초 1회만 출력
+				if (document.querySelector('.reviewNav') == null){
+					let nav = `
+						<nav>
+	                    	<h1 class="reviewNav">상품리뷰</h1>
+	                	</nav>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('beforebegin', nav);
+				}
+				
+				for(let i =0; i <reviews.length; i++){
+					// 불러온 댓글 내용 화면에 출력하기
+					// rating
+					let html = `
+                    	<ul>
+							<li>
+		                        <div>
+		                       		<h5 class="rating star${reviews[i].rating}">상품평</a></h5>
+		                            <span>${reviews[i].uid}	${reviews[i].rdate.substring(0, 10)}</span>
+		                        </div>
+		                        <h3>${reviews[i].prodName}/BLUE/L</h3>
+		                        <p>${reviews[i].content}</p>
+	                    	</li>
+	                    </ul>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('afterbegin', html);
+					
+					// 페이지 버튼 추가하기
+					if(i == (reviews.length - 1)){
+						let start = `
+							<div class="paging">
+		                `;
+		                
+		               	let prev = `
+		            	   <span class="prev">
+	                        	<a onclick="reviewPrev();">&#60;이전</a>
+	                       </span>
+		               	`;
+		               
+		               	let num = '';
+		               	for(let j = reviews[i].groupStart; j <= reviews[i].groupEnd; j++){
+		               		num += '<span class="num">';
+		               		
+		               		if(j == reviews[i].currentPage){
+		               			num += '<a class="on" onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}else{
+		               			num += '<a onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}
+	                       	
+		                    num += '</span>';
+		               	}
+		               
+		               	let next = `
+		            	   <span class="next">
+	                        	<a onclick="reviewNext();">다음&#62;</a>
+	                       </span>
+		               	`;
+		               
+		               	let end = `
+		               		</div>
+						`;
+						
+						let paging = '';
+						
+		                if(reviews[i].groupStart >1){
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + prev + num + next + end;
+							}else{
+								paging = start + prev + num + end;
+							}
+						}else{
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + num + next + end;
+							}else{
+								paging = start + num + end;
+							}
+						}
+						
+						document.querySelector('.review').insertAdjacentHTML('beforeend', paging);
+					}
+				}
+			}
+		}
+	}
 }
 
 function reviewNext(){
+	let pg = document.querySelectorAll('.num')[0].innerText;
 	let xhr = new XMLHttpRequest();
-	xhr.open("GET", "/Kmarket2/product/view?prodNo=" + [[${product.prodNo}]] + "&cate1=" + [[${cate1}]] + "&cate2=" + [[${cate2}]] + "&pg=" + [[${groups[1]}]]);
+	xhr.open("GET", "/Kmarket2/product/retrieveReviews?prodNo=" + [[${product.prodNo}]] + "&pg=" + (pg+10));
+	xhr.responseType = "json";
 	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState === XMLHttpRequest.DONE){
+			if(xhr.status ===200){
+				const data = xhr.response;
+				const reviews = data.reviews;
+				
+				// 기존 댓글 내용 화면에서 지우기
+				document.querySelector('.review').innerHTML = '';
+				
+				// nav는 최초 1회만 출력
+				if (document.querySelector('.reviewNav') == null){
+					let nav = `
+						<nav>
+	                    	<h1 class="reviewNav">상품리뷰</h1>
+	                	</nav>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('beforebegin', nav);
+				}
+				
+				for(let i =0; i <reviews.length; i++){
+					// 불러온 댓글 내용 화면에 출력하기
+					// rating
+					let html = `
+                    	<ul>
+							<li>
+		                        <div>
+		                       		<h5 class="rating star${reviews[i].rating}">상품평</a></h5>
+		                            <span>${reviews[i].uid}	${reviews[i].rdate.substring(0, 10)}</span>
+		                        </div>
+		                        <h3>${reviews[i].prodName}/BLUE/L</h3>
+		                        <p>${reviews[i].content}</p>
+	                    	</li>
+	                    </ul>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('afterbegin', html);
+					
+					// 페이지 버튼 추가하기
+					if(i == (reviews.length - 1)){
+						let start = `
+							<div class="paging">
+		                `;
+		                
+		               	let prev = `
+		            	   <span class="prev">
+	                        	<a onclick="reviewPrev();">&#60;이전</a>
+	                       </span>
+		               	`;
+		               
+		               	let num = '';
+		               	for(let j = reviews[i].groupStart; j <= reviews[i].groupEnd; j++){
+		               		num += '<span class="num">';
+		               		
+		               		if(j == reviews[i].currentPage){
+		               			num += '<a class="on" onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}else{
+		               			num += '<a onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}
+	                       	
+		                    num += '</span>';
+		               	}
+		               
+		               	let next = `
+		            	   <span class="next">
+	                        	<a onclick="reviewNext();">다음&#62;</a>
+	                       </span>
+		               	`;
+		               
+		               	let end = `
+		               		</div>
+						`;
+						
+						let paging = '';
+						
+		                if(reviews[i].groupStart >1){
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + prev + num + next + end;
+							}else{
+								paging = start + prev + num + end;
+							}
+						}else{
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + num + next + end;
+							}else{
+								paging = start + num + end;
+							}
+						}
+						
+						document.querySelector('.review').insertAdjacentHTML('beforeend', paging);
+					}
+				}
+			}
+		}
+	}
 }
 
 window.onload = () =>{
