@@ -3,57 +3,42 @@
         <div class="main">
             <h1 class="title"><strong>케이마켓</strong>이 도와드릴게요!</h1>
             <section class="notice">
-<<<<<<< HEAD
+
                 <h1>공지사항<a th:href="@{notice/list(group='notice')}">전체보기</a></h1>
-=======
-                <h1>공지사항<a th:href="#">전체보기</a></h1>
->>>>>>> d128f8cba9093a0275ae28dff321f5b3c704d460
+
+
                 <ul>
+                	<th:block th:each="article : ${articles}">
                     <li>
-                        <a href="#" class="title">[안내] 해외결제 사칭 문자 주의</a>
-                        <span class="date">22.10.31</span>
+                        <a th:href="@{/cs/notice/view(group=${article.group},no=${article.no},cate=${article.cate})}" class="title">[[${article.title}]]</a>
+                        <span class="date">[[${article.rdate.substring(2, 10)}]]</span>
                     </li>
-                    <li>
-                        <a href="#" class="title">[안내] 해외결제 사칭 문자 주의</a>
-                        <span class="date">22.10.31</span>
-                    </li>
-                    <li>
-                        <a href="#" class="title">[안내] 해외결제 사칭 문자 주의</a>
-                        <span class="date">22.10.31</span>
-                    </li>
-                    <li>
-                        <a href="#" class="title">[안내] 해외결제 사칭 문자 주의</a>
-                        <span class="date">22.10.31</span>
-                    </li>
-                    <li>
-                        <a href="#" class="title">[안내] 해외결제 사칭 문자 주의</a>
-                        <span class="date">22.10.31</span>
-                    </li>
+                    </th:block>
                 </ul>
             </section>
             <section class="faq">
-                <h1>자주 묻는 질문<a href="./faq/list.html">전체보기</a></h1>
+                <h1>자주 묻는 질문<a th:href="@{faq/list(group='faq',cate='member')}">전체보기</a></h1>
                 <ol>
                     <li>
-                        <a href="#"><span>회원</span></a>
+                        <a th:href="@{faq/list(group='faq',cate='member')}"><span>회원</span></a>
                     </li>
                     <li>
-                        <a href="#"><span>쿠폰/이벤트</span></a>
+                        <a th:href="@{faq/list(group='faq',cate='event')}"><span>쿠폰/이벤트</span></a>
                     </li>
                     <li>
-                        <a href="#"><span>주문/결제</span></a>
+                        <a th:href="@{faq/list(group='faq',cate='order')}"><span>주문/결제</span></a>
                     </li>
                     <li>
-                        <a href="#"><span>배송</span></a>
+                        <a th:href="@{faq/list(group='faq',cate='deli')}"><span>배송</span></a>
                     </li>
                     <li>
-                        <a href="#"><span>취소/반품/교환</span></a>
+                        <a th:href="@{faq/list(group='faq',cate='cancle')}"><span>취소/반품/교환</span></a>
                     </li>
                     <li>
-                        <a href="#"><span>여행/숙박/항공</span></a>
+                        <a th:href="@{faq/list(group='faq',cate='trip')}"><span>여행/숙박/항공</span></a>
                     </li>
                     <li>
-                        <a href="#"><span>안전거래</span></a>
+                        <a th:href="@{faq/list(group='faq',cate='safe')}"><span>안전거래</span></a>
                     </li>
                 </ol>
             </section>

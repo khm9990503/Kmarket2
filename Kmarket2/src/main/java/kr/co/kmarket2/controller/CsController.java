@@ -20,7 +20,13 @@ public class CsController {
 	
 	
 	@GetMapping("cs/index")
-	public String csIndex() {
+	public String csIndex(Model model, String group) {
+		
+		// 공지사항 목록 가져오기
+		List<ArticleVO> articles = service.selectNotices(group);
+		
+		model.addAttribute("articles", articles);
+		
 		return "cs/index";
 	}
 	
@@ -74,12 +80,26 @@ public class CsController {
     }
 
     @GetMapping("cs/faq/list")
-    public String faqList() {
+    public String faqList(Model model, String cate, String group) {
+    	
+    	
+    	List<ArticleVO> cates = service.selectFaqCates(cate);
+    	
+    	List<ArticleVO> articles = service.selectFaqArticles(group, cate);
+    	
+    	model.addAttribute("cates", cates);
+    	model.addAttribute("articles", articles);
+    	model.addAttribute("cate", cate);
         return "cs/faq/list";
     }
 
     @GetMapping("cs/faq/view")
-    public String faqView() {
+    public String faqView(Model model, String cate, String group, int no) {
+    	
+    	ArticleVO article = service.selectArticle(no);
+    	
+    	model.addAttribute("article", article);
+    	model.addAttribute("cate", cate);
         return "cs/faq/view";
     }
 

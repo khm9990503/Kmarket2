@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import kr.co.kmarket2.dao.ProductDAO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.ProductVO;
+import kr.co.kmarket2.vo.ReviewVO;
 
 @Service
 public class ProductService {
@@ -79,11 +80,20 @@ public class ProductService {
 		return estimatedDateInfo;
 	}
 	
+	// 댓글 불러오기
+	public List<ReviewVO> selectReviews(String prodNo, int start){
+		return dao.selectReviews(prodNo, start);
+	}
 	
 	// 페이징
 	// 글 총 갯수(total)
 	public int selectCountTotal(String cate1, String cate2) {
 		return dao.selectCountTotal(cate1, cate2);
+	}
+	
+	// 댓글 총 갯수(total)
+	public int selectReviewCountTotal(String prodNo) {
+		return dao.selectReviewCountTotal(prodNo);
 	}
 	
 	// 현재 페이지 번호
@@ -97,18 +107,18 @@ public class ProductService {
 	}
 	
 	// 페이지 시작값
-	public int getLimitStart(int currentPage) {
-		return (currentPage -1 ) * 10;
+	public int getLimitStart(int currentPage, int articlesPerPage) {
+		return (currentPage -1 ) * articlesPerPage;
 	}
 	
 	// 마지막 페이지 번호
-	public int getLastPageNum(int total) {
+	public int getLastPageNum(int total, int articlesPerPage) {
 		int lastPageNum = 0;
 		
-		if(total % 10 == 0)
-			lastPageNum = total /10;
+		if(total % articlesPerPage == 0)
+			lastPageNum = total /articlesPerPage;
 		else
-			lastPageNum = total /10 + 1;
+			lastPageNum = total /articlesPerPage + 1;
 		
 		return lastPageNum;
 	}
@@ -119,10 +129,10 @@ public class ProductService {
 	}
 	
 	// 페이지 그룹
-	public int[] getPageGroup(int currentPage, int lastPageNum) {
-		int groupCurrent = (int) Math.ceil(currentPage/10.0);
-		int groupStart = (groupCurrent - 1)*10 + 1;
-		int groupEnd = groupCurrent * 10;
+	public int[] getPageGroup(int currentPage, int lastPageNum, int articlesPerPage) {
+		int groupCurrent = (int) Math.ceil(currentPage/Double.valueOf(articlesPerPage));
+		int groupStart = (groupCurrent - 1)*articlesPerPage + 1;
+		int groupEnd = groupCurrent * articlesPerPage;
 		
 		if(groupEnd > lastPageNum)
 			groupEnd = lastPageNum;

@@ -92,7 +92,7 @@
                     </th:block>
                     <th:block th:if="${groups[1]<lastPageNum}">
 	                    <span class="next">
-	                        <a th:href="@{/product/list}">다음&#62;</a>
+	                        <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=${sort},pg=${groups[1]+1})}">다음&#62;</a>
 	                    </span>
                     </th:block>
                 </div>

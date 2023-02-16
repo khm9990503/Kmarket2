@@ -1,16 +1,33 @@
 * {
     margin: 0;
     padding: 0;
-    font: normal 12px "맑은 고딕";
+    font: normal 12px "Noto Sans CJK KR";
+}
+ul, ol {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    color: #111;
+}
+input, textarea {
+    outline: none;
+}
+#wrapper {
+    width: 100%;
+}
+#my button {
+    padding: 2px;
+    border: 1px solid #999;
+}
+option {
+    font-weight: normal;
+    display: block;
+    white-space: nowrap;
+    min-height: 1.2em;
+    padding: 0px 2px 1px;
 }
 
-ul,ol {list-style: none;}
-
-a {text-decoration: none;color: #111;}
-
-input,textarea {outline: none;}
-
-#wrapper {width: 100%;}
 
 /*header*/
 header{
@@ -919,6 +936,210 @@ footer > div > p:nth-of-type(2){
             background: url(../img/my_sprites2.png) no-repeat -120px -300px;
             font-size: 0;
         } 
+        
+
+/* info */
+#my > div > section > article {
+    margin-top: 20px;
+}
+
+#my > div > section > article > h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #444;
+}
+
+#my > div > section > article > table {
+    width: 100%;
+    height: auto;
+    border-top: 2px solid #444;
+    margin-top: 6px;
+    border-collapse: collapse;
+}
+
+#my > div > section > article > table * {
+    font-family: 돋움;
+}
+
+#my > div > section > article > table td {
+    padding: 10px;
+    border-left: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#my > div > section > article > table td:first-child {
+    width: 120px;
+    border-left: none;
+    background-color: #f7f7f7;
+}
+
+#my > div > section > article > table input {
+    padding: 2px;
+    box-sizing: border-box;
+    border: 1px solid #999;
+}
+
+#my > div > section > article > table select {
+    padding: 2px;
+}
+
+#my > div > section > article > table .hp input {
+    width: 60px;
+}
+
+#my > div > section > article > table input {
+    padding: 2px;
+    box-sizing: border-box;
+    border: 1px solid #999;
+}
+
+#my > .info > section > article > table .address > input {
+    display: block;
+    width: 300px;
+    margin-top: 2px;
+}
+
+#my #btnWithdraw {
+    background: #e74929;
+    border: 1px solid #c84f3c;
+    color: #fff;
+    cursor: pointer;
+}
+
+#my #btnInfoChange {
+    display: block;
+    width: 160px;
+    height: 30px;
+    background-image: url(../img/btn_my_change.png);
+    color: rgb(255, 255, 255);
+    font-family: 돋움;
+    margin: 10px auto;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+}        
+
+
+/* qna */
+
+#my > div > section > article > table {
+    width: 100%;
+    height: auto;
+    border-top: 2px solid #444;
+    margin-top: 6px;
+    border-collapse: collapse;
+}
+
+#my > div > section > article > table * {
+    font-family: 돋움;
+    color: rgb(68, 68, 68);
+}
+
+#my > div > section > article > table th {
+    padding: 6px;
+    background-color: #a5a7a5;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+#my > div > section > article > table th:first-child {
+    border-left: none;
+}
+
+#my > div > section > article > table td {
+    padding: 10px;
+    border-left: 1px solid #f1f1f1;
+    border-bottom: 1px solid #aaa;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#my > div > section > article > table .notanswerYet {
+    color: #999;
+}
+
+#my > div > section > article > table .answered {
+    color: #01a900;
+}
+
+#my > div > section > article > table .answerRow {
+    display: none;
+    background-color: #fafafa;
+}
+
+#my > div > section > article > table .answerRow div {
+    padding-left: 26px;
+    padding-top: 26px;
+    box-sizing: border-box;
+}
+
+#my > div > section > article > table .answerRow div.question {
+    background: url(../img/my_ico_question.gif) no-repeat 0px 24px;
+}
+
+#my > div > section > article > table .answerRow div > p {
+    margin-bottom: 10px;
+}
+
+#my > div > section > article > table .answerRow div > p.tit {
+    font-weight: bold;
+    color: #666;
+}
+
+#my > div > section > article > table .answerRow div > p.tit > .date {
+    float: right;
+    columns: #888;
+}
+
+#my > div > section > article > table .answerRow div > p.content 
+
+#my > div > section > article > table .answerRow div.answered {
+    background: url(../img/my_ico_answer.gif) no-repeat 0px 24px;
+}
+
+#my > div > section > article > table ul > li {
+    margin: 2px 0;
+}
+
+#my > div > section > article > table ul .prodName > a {
+    font-size: 11px;
+    color: #999;
+}
+
+
+/* page */
+#my > .qna > section > article > .page {
+    margin: 20px 0;
+    text-align: center;
+}
+
+#my > .qna > section > article > .page > a {
+    display: inline-block;
+    width: 19px;
+    height: 19px;            
+    box-sizing: border-box;
+    vertical-align: top;
+    color: #777;
+}
+#my > .qna > section > article > .page > a.on {
+    font-weight: bold;
+    color: #1179ea;
+}
+
+#my > .qna > section > article > .page > .prev {
+    background: url('../img/my_sprites2.png') no-repeat 0 -300px;
+    font-size: 0;
+}
+
+#my > .qna > section > article > .page > .next {
+    background: url('../img/my_sprites2.png') no-repeat -120px -300px;
+    font-size: 0;
+}
+
+        
         
 /* my */
 #my {}

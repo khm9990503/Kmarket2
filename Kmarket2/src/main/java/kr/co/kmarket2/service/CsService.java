@@ -15,13 +15,18 @@ public class CsService {
 	private CsDAO dao;
 	
 	
-	/* List */
+	/* 공지사항 리스트 */
 	public List<ArticleVO> selectArticles(String group, int start){
 		return dao.selectArticles(group ,start);
 	}
 	
 	public List<ArticleVO> selectCateArticles(String group, String cate, int start){
 		return dao.selectCateArticles(group, cate, start);
+	}
+	
+	// index 공지사항 리스트
+	public List<ArticleVO> selectNotices(String group){
+		return dao.selectNotices(group);
 	}
 	
 	
@@ -36,6 +41,14 @@ public class CsService {
 		return dao.selectCountCateTotal(group, cate);
 	}
 	
+	// 자주묻는질문 리스트
+	public List<ArticleVO> selectFaqArticles(String group, String cate) {
+		return dao.selectFaqArticles(group, cate);
+	}
+	
+	public List<ArticleVO> selectFaqCates(String cate){
+		return dao.selectFaqCates(cate);
+	}
 	
 	/* View */
 	
