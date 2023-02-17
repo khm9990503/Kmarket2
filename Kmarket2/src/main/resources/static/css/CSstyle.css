@@ -858,7 +858,7 @@ footer > ul > li {
      font-size: 22px;
      font-weight: bold;
 }
-#cs > .qna > .view > article > nav > .date{
+#cs > .qna > .view > article > nav  .date{
      font-size: 14px;
      color: #777;
 }
