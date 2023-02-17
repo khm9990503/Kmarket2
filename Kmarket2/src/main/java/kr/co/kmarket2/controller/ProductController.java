@@ -161,7 +161,7 @@ public class ProductController {
 	
 	@ResponseBody
 	@PostMapping("product/putInCart")
-	public void putInCart() {
+	public void putInCart(@RequestParam(value="prodNo", required=false) String prodNo) {
 		System.out.println("1");
 	}
 	
