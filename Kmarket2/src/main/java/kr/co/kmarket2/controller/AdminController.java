@@ -116,9 +116,29 @@ public class AdminController {
 	/////// 관리자 고객센터 관련 /////////////////////////////////////////////
 	@GetMapping("admin/cs/list")
 	public String list(Model model,String group, String cate) {
-		Map<String,String> groups = new LinkedHashMap<>();
-		groups.put("service", "고객서비스");
-		model.addAttribute("groups",groups);
+		Map<String,String> cates = new LinkedHashMap<>();
+		if(group == "notice") {
+			cates.put("service", "고객서비스");
+			cates.put("deal", "안전거래");
+			cates.put("danger", "위해상품");
+			cates.put("lucky", "이벤트당첨");
+			if(cate == null) {
+				cate = "service";
+			}
+		}else {
+			cates.put("member", "회원");
+			cates.put("event", "쿠폰/이벤트");
+			cates.put("order", "주문/결제");
+			cates.put("deli", "배송");
+			cates.put("cancle", "취소/반품/교환");
+			cates.put("trip", "여행/항공/숙박");
+			cates.put("safe", "안전거래");
+			if(cate == null) {
+				cate = "member";
+			}
+		}
+		
+		model.addAttribute("cates",cates);
 		return "admin/cs/list";
 	}
 	@GetMapping("admin/cs/write")
