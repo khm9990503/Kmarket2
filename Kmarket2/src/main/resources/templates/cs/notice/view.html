@@ -18,7 +18,27 @@
                          </ul>
                     </aside>
                     <article>
-                        <nav>
+                    <nav th:if="${cate} eq null">
+                            <h1>전체</h1>
+                            <h3>공지사항 전체 내용입니다.</h3>
+                        </nav>
+                        <nav th:if="${cate} eq 'service'">
+                            <h1>고객서비스</h1>
+                            <h3>공지사항 고객서비스 내용입니다.</h3>
+                        </nav>
+                        <nav th:if="${cate} eq 'deal'">
+                            <h1>안전거래</h1>
+                            <h3>공지사항 안전거래 내용입니다.</h3>
+                        </nav>
+                        <nav th:if="${cate} eq 'danger'">
+                            <h1>위해상품</h1>
+                            <h3>공지사항 위해상품 내용입니다.</h3>
+                        </nav>
+                        <nav th:if="${cate} eq 'lucky'">
+                            <h1>이벤트당첨</h1>
+                            <h3>공지사항 이벤트당첨 내용입니다.</h3>
+                        </nav>
+                        <nav class="main">
                             <h2 class="title">[[${article.title}]]</h2>
                             <span class="date">[[${article.rdate.substring(2, 10)}]]</span>
                         </nav>
