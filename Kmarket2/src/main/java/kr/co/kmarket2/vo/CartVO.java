@@ -30,4 +30,6 @@ public class CartVO {
 	private int prodCate1;
 	private int prodCate2;
 	
+	// view에서 ajax로 넘길 때 필요한 정보
+	private int disPrice;
 }

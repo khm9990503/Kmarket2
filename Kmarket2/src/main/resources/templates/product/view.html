@@ -242,23 +242,30 @@ function cart(){
 	
 	// cart 테이블에 항목 담기(ajax)
 	let prodNo = [[${product.prodNo}]];
-	//let count = parseInt(document.querySelector('input[name="num"]').value, 10);
-	//let price = [[${product.price}]];
-	//let discount = [[${product.discount}]];
-	//let point = [[${product.point}]];
-	//let delivery = [[${product.delivery}]];
-	//let disPrice = price * (1 - discount/100) * count;
+	let count = parseInt(document.querySelector('input[name="num"]').value, 10);
+	let price = [[${product.price}]];
+	let discount = [[${product.discount}]];
+	let point = [[${product.point}]];
+	let delivery = [[${product.delivery}]];
+	let disPrice = price * (1 - discount/100) * count;
 	
 	let postObj = {
-			"prodNo": prodNo,
+			"prodNo" : prodNo,
+			"count" : count,
+			"price" : price,
+			"discount" : discount, 
+			"point" : point, 
+			"delivery" : delivery, 
+			"disPrice" : disPrice
 	}
 	
-	//let post = JSON.stringify(postObj);
+	let post = JSON.stringify(postObj);
 	
 	let xhr = new XMLHttpRequest();
-	xhr.open("POST", "/Kmarket2/product/putInCart");
+	xhr.open("POST", "/Kmarket2/product/putInCart", true);
 	xhr.setRequestHeader(header, token);
-	xhr.send(postObj);
+	xhr.setRequestHeader('Content-type', 'application/json');
+	xhr.send(post);
 	
 	// 사용자가 원할 경우 카트 페이지로 이동
 	let response = confirm('상품이 장바구니에 담겼습니다\n장바구니로 이동하시겠습니까?')

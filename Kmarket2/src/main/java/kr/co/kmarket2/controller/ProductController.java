@@ -1,5 +1,6 @@
 package kr.co.kmarket2.controller;
 
+import java.security.Principal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket2.service.ProductService;
+import kr.co.kmarket2.vo.CartVO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
@@ -158,11 +161,21 @@ public class ProductController {
 	public String cart() {
 		return "product/cart";
 	}
-	
-	@ResponseBody
+
 	@PostMapping("product/putInCart")
-	public void putInCart(@RequestParam(value="prodNo", required=false) String prodNo) {
-		System.out.println("1");
+	@ResponseBody
+	public void putInCart(@RequestBody CartVO cartVO , Principal principal) {
+		// 현재 사용자 정보 가져오기
+		/*
+		String username = null;
+		
+		if(principal != null) 
+			username = ((UserDetails) principal).getUserName();
+		*/
+		String username = "tameImpala1";
+		
+		// cart 테이블에 정보 저장
+		
 	}
 	
 	@GetMapping("product/order")
