@@ -157,25 +157,60 @@ public class ProductController {
 		return result;
 	}
 	
-	@GetMapping("product/cart")
-	public String cart() {
-		return "product/cart";
-	}
-
 	@PostMapping("product/putInCart")
 	@ResponseBody
-	public void putInCart(@RequestBody CartVO cartVO , Principal principal) {
+	public Map<String, Object> putInCart(@RequestBody CartVO cartVO , Principal principal) {
 		// 현재 사용자 정보 가져오기
 		/*
 		String username = null;
+		Map<String, Integer> resultMap = new HashMap<>();
 		
-		if(principal != null) 
+		if(principal != null){ 
 			username = ((UserDetails) principal).getUserName();
+		}else{
+			result.put("result", 0);
+			return resultMap;
+		}
 		*/
-		String username = "tameImpala1";
+		String username = "a123123";
+		Map<String, Object> resultMap = new HashMap<>();
+		cartVO.setUid(username);
 		
 		// cart 테이블에 정보 저장
+		int result = service.insertCart(cartVO);
+		resultMap.put("result", result);
+		resultMap.put("username", cartVO.getUid()); // 로그인 기능 구현 때까지 임시로 사용
+		return resultMap;
+	}
+	
+	@GetMapping("product/cart")
+	public String cart(String uid, Model model) {
+		// 현재 사용자 정보 가져와서 cart 테이블에서 상품 가져오기
+		/*
+		String username = ((UserDetails) principal).getUserName();
+		*/
 		
+		List<CartVO> items = service.selectCartByUsername(uid);
+		
+		model.addAttribute("items", items);
+		return "product/cart";
+	}
+	
+	@ResponseBody
+	@GetMapping("product/remove")
+	public Map<String, String> removeFromCart(String[] items, Principal principal) {
+		// 현재 사용자 username과 prodNo 이용해서 cart 테이블에서 선택한 상품 삭제
+		// 혹시 principal 객체 인식 못하면 뷰 페이지에서 sec:authentication으로 username보내기
+		String username = "a123123";
+		
+		for(int i =0; i < items.length; i++) {
+			service.deleteCartByProdNo(items[i], username);
+		}
+		
+		// uid ajax reponse값으로 설정 => ajax 성공하면 리다이렉트하는데 uid가 파라미터로 필요
+		Map<String, String> result = new HashMap<>();
+		result.put("username", username);
+		return result;
 	}
 	
 	@GetMapping("product/order")
@@ -185,6 +220,8 @@ public class ProductController {
 	
 	@GetMapping("product/complete")
 	public String complete() {
+		// cart 테이블에서 주문 완료한 상품 삭제
+		
 		return "product/complete";
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.kmarket2.dao.ProductDAO;
+import kr.co.kmarket2.vo.CartVO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
@@ -83,6 +84,22 @@ public class ProductService {
 	// 댓글 불러오기
 	public List<ReviewVO> selectReviews(String prodNo, int start){
 		return dao.selectReviews(prodNo, start);
+	}
+	
+	// 선택한 상품 정보를 장바구니 테이블에 저장하기
+	public int insertCart(CartVO cartVO) {
+		return dao.insertCart(cartVO);
+	}
+	
+	// cart
+	// cart 테이블에서 사용자가 담은 상품 불러오기
+	public List<CartVO> selectCartByUsername(String username){
+		return dao.selectCartByUsername(username);
+	}
+	
+	// 선택한 상품을 하나씩 삭제하기
+	public int deleteCartByProdNo(String prodNo, String username) {
+		return dao.deleteCartByProdNo(prodNo, username);
 	}
 	
 	// 페이징

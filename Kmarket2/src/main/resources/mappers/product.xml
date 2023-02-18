@@ -51,4 +51,16 @@
     <select id="selectReviewCountTotal" resultType="int">
     	select count(`prodNo`) from `km_product_review` where `prodNo`=#{prodNo};
     </select>
+    <insert id="insertCart" parameterType="kr.co.kmarket2.vo.CartVO">
+    	insert into `km_product_cart` values (default, #{uid}, #{prodNo}, #{count}, #{price}, #{discount}, #{point}, #{delivery}, #{total}, NOW());
+    </insert>
+    <select id="selectCartByUsername" resultType="kr.co.kmarket2.vo.CartVO">
+    	select a.*, b.prodName, b.prodCate1, b.prodCate2, b.descript from `km_product_cart` as a 
+    	join `km_product` as b 
+    	on a.prodNo = b.prodNo 
+    	where `uid`=#{username};
+    </select>
+    <delete id="deleteCartByProdNo">
+    	delete from `km_product_cart` where `prodNo`=#{prodNo} and `uid`=#{username};
+    </delete>
 </mapper>
