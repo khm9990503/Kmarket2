@@ -28,7 +28,7 @@ public interface CsDAO {
 	public ArticleVO selectArticle(int no);
 	
 	
-	//faq,qna list
+	//faq list
 	public List<ArticleVO> selectFaqArticles(String group, String cate);
 	
 	//category
@@ -41,6 +41,12 @@ public interface CsDAO {
 	public ArticleVO selectQnaArticle(int no);
 	
 	public ArticleVO selectAnswer(int no);
+	
+	//qna write
+	public int insertArticle(ArticleVO vo);
+	
+	public ArticleVO selectc1Name();
+	public ArticleVO selectc2Name(String cate);
 	
 	//index notice list
 	public List<ArticleVO> selectNotices(String group);
