@@ -1,5 +1,7 @@
 <th:block th:include="@{product/_header.html}"/>
 <th:block th:include="@{product/_aside.html}"/>
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
             <section class="view">
                 <nav>
                     <h1>상품보기</h1>
@@ -235,36 +237,59 @@ function increase(){
 }
 
 function cart(){
+	let token = document.querySelector("[name='_csrf']").getAttribute("content");
+	let header = document.querySelector("[name='_csrf_header']").getAttribute("content");
+	
 	// cart 테이블에 항목 담기(ajax)
 	let prodNo = [[${product.prodNo}]];
 	let count = parseInt(document.querySelector('input[name="num"]').value, 10);
 	let price = [[${product.price}]];
 	let discount = [[${product.discount}]];
 	let point = [[${product.point}]];
-	let delivery = [[${product.delivery}]];
-	let disPrice = price * (1 - discount/100) * count;
+	let disPrice = price * (1 - discount/100);
+	let delivery = (count * disPrice >= 50000)? 0 : [[${product.delivery}]];
+	let total = count * disPrice + delivery;
 	
 	let postObj = {
-			prodNo: prodNo,
-			count: count,
-			price: price,
-			discount: discount,
-			point: point,
-			delivery: delivery,
-			disPrice: disPrice
+			"prodNo" : prodNo,
+			"count" : count,
+			"price" : price,
+			"discount" : discount, 
+			"point" : point, 
+			"delivery" : delivery, 
+			"disPrice" : disPrice,
+			"total" : total
 	}
 	
 	let post = JSON.stringify(postObj);
 	
 	let xhr = new XMLHttpRequest();
-	xhr.open("POST", "/Kmarket2/product/putInCart");
-	xhr.send();
+	xhr.open("POST", "/Kmarket2/product/putInCart", true);
+	xhr.setRequestHeader(header, token);
+	xhr.setRequestHeader('Content-type', 'application/json');
+	xhr.responseType = "json";
+	xhr.send(post);
 	
-	// 사용자가 원할 경우 카트 페이지로 이동
-	let response = confirm('상품이 장바구니에 담겼습니다\n장바구니로 이동하시겠습니까?')
-	if(response){
-		window.location.href = "/Kmarket2/product/cart";
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState === XMLHttpRequest.DONE){
+			if(xhr.status ===200){
+				const data = xhr.response;
+				const result = data.result;
+				
+				if(result === 1){
+					// 사용자가 원할 경우 카트 페이지로 이동
+					let response = confirm('상품이 장바구니에 담겼습니다\n장바구니로 이동하시겠습니까?');
+					if(response){
+						window.location.href = "/Kmarket2/product/cart?uid=" + data.username;
+					}
+				}else if(result === 0){
+					alert('로그인 후 이용 가능합니다');
+					window.location.href = "/Kmarket2/member/login";
+				}
+			}
+		}
 	}
+	
 }
 
 function singlePurchase(){
