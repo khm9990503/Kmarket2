@@ -161,6 +161,7 @@ public class CsController {
     @GetMapping("cs/qna/write")
     public String qnaWrite(Model model, String cate) {
     	
+    	model.addAttribute("cate",cate);
     	
         return "cs/qna/write";
     }
