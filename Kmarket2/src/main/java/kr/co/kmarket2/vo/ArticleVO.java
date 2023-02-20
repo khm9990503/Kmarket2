@@ -34,6 +34,7 @@ public class ArticleVO {
 	
 	private String fname;
 	
+	private String c1Name;
 	private String c2Name;
 	
 }
