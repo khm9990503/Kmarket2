@@ -70,6 +70,20 @@ public class CsService {
 		return dao.selectAnswer(no);
 	}
 	
+	
+	/* write */
+	
+	public int insertArticle(ArticleVO vo) {
+		return dao.insertArticle(vo);
+	}
+	
+	public ArticleVO selectc1Name() {
+		return dao.selectc1Name();
+	}
+	public ArticleVO selectc2Name(String cate) {
+		return dao.selectc2Name(cate);
+	}
+	
 	// 페이징
 		public int getLastPageNum(int total) {
 			

@@ -11,27 +11,54 @@
                 <aside>
                     <h2>문의하기</h2>
                     <ul>
-                        <li class="on"><a href="#">회원</a></li>
-                        <li><a href="#">쿠폰/이벤트</a></li>
-                        <li><a href="#">주문/결제</a></li>
-                        <li><a href="#">배송</a></li>
-                        <li><a href="#">취소/반품/교환</a></li>
-                        <li><a href="#">여행/숙박/항공</a></li>
-                        <li><a href="#">안전거래</a></li>
+                        <li th:classappend="${cate} eq 'member'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=member}">회원</a></li>
+	                        <li th:classappend="${cate} eq 'event'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=event}">쿠폰/이벤트</a></li>
+	                        <li th:classappend="${cate} eq 'order'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=order}">주문/결제</a></li>
+	                        <li th:classappend="${cate} eq 'deli'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=deli}">배송</a></li>
+	                        <li th:classappend="${cate} eq 'cancle'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=cancle}">취소/반품/교환</a></li>
+	                        <li th:classappend="${cate} eq 'trip'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=trip}">여행/숙박/항공</a></li>
+	                        <li th:classappend="${cate} eq 'safe'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=safe}">안전거래</a></li>
                     </ul>
                 </aside>
                 <article>
-                    <form action="#">
+                	<nav th:if="${cate} eq member">
+                            <h1>회원</h1>
+                            <h2>회원관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq event">
+                            <h1>쿠폰/이벤트</h1>
+                            <h2>쿠폰/이벤트관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq order">
+                            <h1>주문/결제</h1>
+                            <h2>주문/결제관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq deli">
+                            <h1>배송</h1>
+                            <h2>배송관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq cancle">
+                            <h1>취소/반품/교환</h1>
+                            <h2>취소/반품/교환관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq trip">
+                            <h1>여행/숙박/항공</h1>
+                            <h2>여행/숙박/항공관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq safe">
+                            <h1>안전거래</h1>
+                            <h2>안전거래관련 문의 내용입니다.</h2>
+                        </nav>
+                    <form action="#" method="post">
                         <table>
                             <tr>
                                 <td>문의유형</td>
                                 <td>
-                                    <select name="type">
-                                        <option value="0">선택</option>
-                                        <option>가입</option>
-                                        <option>탈퇴</option>
-                                        <option>회원정보</option>
-                                        <option>로그인</option>
+                                    <select name="c1Name">
+                                        <option value="0">1차 선택</option>
+                                    </select>
+                                    <select name="c2Name">
+                                        <option value="0">2차 선택</option>
                                     </select>
                                 </td>
                             </tr>
@@ -49,7 +76,7 @@
                             </tr>
                         </table>
                         <div>
-                            <a href="./list.html" class="btnList">취소하기</a>
+                            <a th:href="@{/cs/qna/list(group='qna',cate=${cate})}" class="btnList">취소하기</a>
                             <input type="submit" class="btnSubmit" value="등록하기">
                         </div>
                     </form>    
