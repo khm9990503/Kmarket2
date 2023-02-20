@@ -10,7 +10,7 @@
                         <strong>장바구니</strong>
                     </p>
                 </nav>
-                <form action="#">
+                <form th:action="@{/product/order}" method="post" modelAttribute="cartVO">
                     <table>
                         <tr>
                             <th>
@@ -28,6 +28,7 @@
                             <td colspan="7">장바구니에 상품이 없습니다</td>
                         </tr>
                         <tr th:each="item:${items}">
+                        	<input type="hidden" name="prodNo" th:value="${item.prodNo}">
                             <td>
                                 <input type="checkbox" name="individualItem">
                             </td>
@@ -158,40 +159,96 @@ let totalPay = document.querySelector('.totalPay').innerText;
 	let intTotalDelivery = parseInt(totalDelivery, 10);
 	let intTotalPoint = parseInt(totalPoint, 10);
 	let intTotalPay = parseInt(totalPay, 10);
+
+	let nf = new Intl.NumberFormat('en-US'); // increase(), decrease()에서 숫자 포맷위해 사용
 	
 	checkboxes.forEach(function(checkbox){
 		checkbox.addEventListener('change', function(){
 			let i = checkboxes.indexOf(checkbox);
 			
 			if(this.checked){
-				document.querySelector('.totalCount').innerText = intTotalCount + items[i].count;
-				document.querySelector('.totalPrice').innerText = intTotalPrice + items[i].price * items[i].count;
-				document.querySelector('.totalDiscount').innerText = intTotalDiscount + items[i].price * (items[i].discount * 0.01) * items[i].count;
-				document.querySelector('.totalDelivery').innerText = intTotalDelivery + items[i].delivery;
-				document.querySelector('.totalPoint').innerText = intTotalPoint + items[i].point;
-				document.querySelector('.totalPay').innerText = intTotalPay + items[i].price * (1 - items[i].discount * 0.01) * items[i].count;
-				intTotalCount += items[i].count;
-				intTotalPrice += items[i].price * items[i].count;
-				intTotalDiscount += items[i].price * (items[i].discount * 0.01) * items[i].count;
-				intTotalDelivery += items[i].delivery;
-				intTotalPoint += items[i].point;
-				intTotalPay += items[i].price * (1 - items[i].discount * 0.01) * items[i].count;
+				increase(i);
 			}else{
-				document.querySelector('.totalCount').innerText = intTotalCount - items[i].count;
-				document.querySelector('.totalPrice').innerText = intTotalPrice - items[i].price * items[i].count;
-				document.querySelector('.totalDiscount').innerText = intTotalDiscount - items[i].price * (items[i].discount * 0.01) * items[i].count;
-				document.querySelector('.totalDelivery').innerText = intTotalDelivery - items[i].delivery;
-				document.querySelector('.totalPoint').innerText = intTotalPoint - items[i].point;
-				document.querySelector('.totalPay').innerText = intTotalPay - items[i].price * (1 - items[i].discount * 0.01) * items[i].count;
-				intTotalCount -= items[i].count;
-				intTotalPrice -= items[i].price * items[i].count;
-				intTotalDiscount -= items[i].price * (items[i].discount * 0.01) * items[i].count;
-				intTotalDelivery -= items[i].delivery;
-				intTotalPoint -= items[i].point;
-				intTotalPay -= items[i].price * (1 - items[i].discount * 0.01) * items[i].count;
+				decrease(i);
 			}
 		});
 	});
 	
+	// checkAll 체크박스 선택 시 모두 선택, 해제 시 모두 해제
+	let checkAll = document.querySelector("input[name=all]");
+	checkAll.addEventListener('change', function(){
+		
+		if(this.checked){
+			clear();
+			checkboxes.forEach(function(checkbox){
+				let i = checkboxes.indexOf(checkbox);
+				checkbox.checked = true;
+				increase(i);
+			});
+		}else{
+			checkboxes.forEach(function(checkbox){
+				let i = checkboxes.indexOf(checkbox);
+				checkbox.checked = false;
+				decrease(i);
+				document.querySelector('.totalDiscount').innerText = (document.querySelector('.totalDiscount').innerText).replace('-', ''); // decrease()개별 실행할 때는 괜찮은데 여기서 여러 번 돌리면 계속 totalDiscount값이 '-0'으로 인식됨 => '-'빼주는 작업
+			});
+		}
+	});
+	
+	// 전체합계값들 무효화해서 chekcAll 체크박스 선택 시 기존에 체크되어있던 값에 중복 더하기/빼기 되지 않도록
+	function clear(){
+		intTotalCount = 0;
+		intTotalPrice = 0;
+		intTotalDiscount = 0;
+		intTotalDelivery = 0;
+		intTotalPoint = 0;
+		intTotalPay = 0;
+	}
+	
+	// 선택한 체크박스에 해당하는 품목의 값들을 전체합계에 더하기
+	function increase(i){
+		document.querySelector('.totalCount').innerText = nf.format(intTotalCount + items[i].count);
+		document.querySelector('.totalPrice').innerText = nf.format(intTotalPrice + items[i].price * items[i].count);
+		
+		let discount = intTotalDiscount - items[i].price * (items[i].discount * 0.01) * items[i].count;
+		if(discount >0){
+			document.querySelector('.totalDiscount').innerText = "-"+nf.format(discount);
+		}else{
+			document.querySelector('.totalDiscount').innerText = nf.format(discount);
+		}
+		
+		document.querySelector('.totalDelivery').innerText = nf.format(intTotalDelivery + items[i].delivery);
+		document.querySelector('.totalPoint').innerText = nf.format(intTotalPoint + items[i].point);
+		document.querySelector('.totalPay').innerText = nf.format(intTotalPay + items[i].price * (1 - items[i].discount * 0.01) * items[i].count);
+		intTotalCount += items[i].count;
+		intTotalPrice += items[i].price * items[i].count;
+		intTotalDiscount += items[i].price * (items[i].discount * 0.01) * items[i].count;
+		intTotalDelivery += items[i].delivery;
+		intTotalPoint += items[i].point;
+		intTotalPay += items[i].price * (1 - items[i].discount * 0.01) * items[i].count;
+	}
+	
+	// 선택한 체크박스에 해당하는 품목의 값들을 전체합계에 빼기
+	function decrease(i){
+		document.querySelector('.totalCount').innerText = nf.format(intTotalCount - items[i].count);
+		document.querySelector('.totalPrice').innerText = nf.format(intTotalPrice - items[i].price * items[i].count);
+		
+		let discount = intTotalDiscount - items[i].price * (items[i].discount * 0.01) * items[i].count;
+		if(discount >0){
+			document.querySelector('.totalDiscount').innerText = "-"+nf.format(discount);
+		}else{
+			document.querySelector('.totalDiscount').innerText = nf.format(discount);
+		}
+		
+		document.querySelector('.totalDelivery').innerText = nf.format(intTotalDelivery - items[i].delivery);
+		document.querySelector('.totalPoint').innerText = nf.format(intTotalPoint - items[i].point);
+		document.querySelector('.totalPay').innerText = nf.format(intTotalPay - items[i].price * (1 - items[i].discount * 0.01) * items[i].count);
+		intTotalCount -= items[i].count;
+		intTotalPrice -= items[i].price * items[i].count;
+		intTotalDiscount -= items[i].price * (items[i].discount * 0.01) * items[i].count;
+		intTotalDelivery -= items[i].delivery;
+		intTotalPoint -= items[i].point;
+		intTotalPay -= items[i].price * (1 - items[i].discount * 0.01) * items[i].count;
+	}
 </script>
 <th:block th:include="@{product/_footer.html}"/>
