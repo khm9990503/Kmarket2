@@ -56,7 +56,11 @@
   	</select>
   	
   	<select id="selectc2Name" resultType="kr.co.kmarket2.vo.ArticleVO">
-  		SELECT * FROM `km_qna_cate2` where cate=#{cate};
+  		SELECT * FROM `km_article_cate` where cate=#{cate};
+  	</select>
+  	
+  	<select id="selectQnas" resultType="kr.co.kmarket2.vo.ArticleVO">
+  		SELECT * FROM `km_article` WHERE `group` = 'qna' ORDER BY `no` DESC LIMIT 5;
   	</select>
   	
   	
