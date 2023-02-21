@@ -63,4 +63,14 @@
     <delete id="deleteCartByProdNo">
     	delete from `km_product_cart` where `prodNo`=#{prodNo} and `uid`=#{username};
     </delete>
+    <select id="selectCartByCartNo" resultType="kr.co.kmarket2.vo.CartVO">
+    	select a.*, b.prodName, b.prodCate1, b.prodCate2, b.descript from `km_product_cart` as a 
+    	join `km_product` as b 
+    	on a.prodNo = b.prodNo 
+    	where `cartNo` in (
+    		<foreach collection="array" item="cartNo" separator=",">
+    		#{cartNo}
+    		</foreach>
+    	);
+    </select>
 </mapper>

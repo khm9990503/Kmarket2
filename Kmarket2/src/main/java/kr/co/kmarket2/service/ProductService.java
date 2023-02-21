@@ -102,6 +102,14 @@ public class ProductService {
 		return dao.deleteCartByProdNo(prodNo, username);
 	}
 	
+	// order
+	// cartNo값을 이용해서 cart 테이블 값 가져오기
+	public List<CartVO> selectCartByCartNo(String[] cartNo){
+		return dao.selectCartByCartNo(cartNo);
+	}
+	
+	
+	
 	// 페이징
 	// 글 총 갯수(total)
 	public int selectCountTotal(String cate1, String cate2) {

@@ -10,7 +10,7 @@
                         <strong>주문결제</strong>
                     </p>
                 </nav>
-                <form action="#">
+                <form th:action="@{/product/complete}" method="post">
                     <table>
                         <tr>
                             <th>상품명</th>
@@ -19,62 +19,29 @@
                             <th>배송비</th>
                             <th>소계</th>
                         </tr>
-                        <tr>
+                        <tr th:each="item : ${orderList}">
                             <td>
                                 <article>
-                                    <a th:href="@{/product/view}">
-                                        <img src="https://via.placeholder.com/80" alt="">
+                                    <a th:href="@{/product/view(prodNo=${item.prodNo},cate1=${item.prodCate1},cate2=${item.prodCate2})}">
+                                        <img src="https://via.placeholder.com/80" alt="thumbnail">
                                     </a>
                                     <div>
                                         <h2>
-                                            <a th:href="@{/product/view}">상품명</a>
+                                            <a th:href="@{/product/view(prodNo=${item.prodNo},cate1=${item.prodCate1},cate2=${item.prodCate2})}">[[${item.prodName}]]</a>
                                         </h2>
-                                        <p>상품설명</p>
+                                        <p>[[${item.descript}]]</p>
                                     </div>
                                 </article>
                             </td>
-                            <td>1</td>
-                            <td>27,000</td>
-                            <td>무료배송</td>
-                            <td>27,000</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <article>
-                                    <a th:href="@{/product/view}">
-                                        <img src="https://via.placeholder.com/80" alt="">
-                                    </a>
-                                    <div>
-                                        <h2>
-                                            <a th:href="@{/product/view}">상품명</a>
-                                        </h2>
-                                        <p>상품설명</p>
-                                    </div>
-                                </article>
-                            </td>
-                            <td>1</td>
-                            <td>27,000</td>
-                            <td>무료배송</td>
-                            <td>27,000</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <article>
-                                    <a th:href="@{/product/view}">
-                                        <img src="https://via.placeholder.com/80" alt="">
-                                    </a>
-                                    <div>
-                                        <h2>
-                                            <a th:href="@{/product/view}">상품명</a>
-                                        </h2>
-                                        <p>상품설명</p>
-                                    </div>
-                                </article>
-                            </td>
-                            <td>1</td>
-                            <td>27,000</td>
-                            <td>무료배송</td>
-                            <td>27,000</td>
+                            <td>[[${item.count}]]</td>
+                            <td>[[${#numbers.formatInteger(item.price, 1, 'COMMA')}]]</td>
+                            <th:block th:if="${item.delivery > 0}">
+                            	<td>[[${#numbers.formatInteger(item.delivery, 3, 'COMMA')}]]</td>
+                            </th:block>
+                            <th:block th:unless="${item.delivery > 0}">
+                            	<td>무료배송</td>
+                            </th:block>
+                            <td>[[${#numbers.formatInteger(item.total, 3, 'COMMA')}]]</td>
                         </tr>
                     </table>
                     <div class="final">
@@ -82,27 +49,27 @@
                         <table border="0">
                             <tr>
                                 <td>총</td>
-                                <td>2 건</td>
+                                <td>[[${#numbers.formatInteger((#aggregates.sum(orderList.![count])), 1, 'COMMA')}]] 건</td>
                             </tr>
                             <tr>
                                 <td>상품금액</td>
-                                <td>27,000</td>
+                                <td>[[${#numbers.formatInteger((#aggregates.sum(orderList.![price])), 3, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>할인금액</td>
-                                <td>-1,000</td>
+                                <td>-[[${#numbers.formatInteger((#aggregates.sum(orderList.![disPrice])), 3, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>배송비</td>
-                                <td>0</td>
+                                <td>[[${#numbers.formatInteger((#aggregates.sum(orderList.![delivery])), 3, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>포인트 할인</td>
-                                <td>-1000</td>
+                                <td>0</td>
                             </tr>
                             <tr>
                                 <td>전체주문금액</td>
-                                <td>25,000</td>
+                                <td>[[${#numbers.formatInteger((#aggregates.sum(orderList.![total])), 3, 'COMMA')}]]</td>
                             </tr>
                         </table>
                         <input type="submit" value="결제하기">
