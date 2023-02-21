@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.kmarket2.dao.AdminDAO;
+import kr.co.kmarket2.vo.ArticleCateVO;
+import kr.co.kmarket2.vo.ArticleVO;
 import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.ProductVO;
@@ -113,6 +115,8 @@ public class AdminService {
 		public int selectCountTotalSeller(String seller) {
 			return dao.selectCountTotalSeller(seller);
 		}
+		
+
 		// 검색 게시물 총 갯수
 		public int selectCountTotalSearch (String search,String type) {
 			return dao.selectCountTotalSearch(search,type);
@@ -147,4 +151,13 @@ public class AdminService {
 		}
 		// 페이징 처리 끝 ///////////////////////////////////////////////////////
 	/////// 관리자 고객센터 관련 /////////////////////////////////////////////
+		public int selectCountTotalArticle(String group, String cate, String cate2, String type) {
+			return dao.selectCountTotalArticle(group,cate,cate2,type);
+		}
+		public List<ArticleCateVO> selectArticeCates () {
+			return dao.selectArticeCates();
+		};
+		public List<ArticleVO> selectArticlesByGroup (String group, String cate, String cate2, int start,String type){
+			return dao.selectArticlesByGroup(group, cate, cate2, start, type);
+		};
 }

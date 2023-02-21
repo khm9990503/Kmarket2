@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import kr.co.kmarket2.vo.ArticleCateVO;
+import kr.co.kmarket2.vo.ArticleVO;
 import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.ProductVO;
@@ -28,5 +30,7 @@ public interface AdminDAO {
 	public int updateProduct (ProductVO vo);
 	public int deleteProduct (String prodNo);
 /////// 관리자 고객센터 관련 /////////////////////////////////////////////
-	
+	public List<ArticleCateVO> selectArticeCates ();
+	public int selectCountTotalArticle (String group, String cate, String cate2 , @Param("type")String type);
+	public List<ArticleVO> selectArticlesByGroup (String group, String cate, String cate2, int start,@Param("type")String type);
 }

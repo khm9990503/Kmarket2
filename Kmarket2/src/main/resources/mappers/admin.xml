@@ -140,7 +140,36 @@
    	DELETE FROM `km_product` WHERE `prodNo` in (#{prodNo});
    </delete>
    <!-- admin / article -->
-   <select id="selectArticeCates">
-   	select * from `km_article_cate`
+   <select id="selectArticeCates" resultType="kr.co.kmarket2.vo.ArticleCateVO">
+   	select * from `km_article_cate`;
+   </select>
+   <select id="selectCountTotalArticle" resultType="int">
+   	SELECT COUNT(*) FROM `km_article` where `group`=#{group} and `parent`= 0
+   								<choose>
+					    			<when test="type == 1">
+					    				;
+					    			</when>
+					    			<when test="type == 2">
+					    				and `cate` = #{cate}; 
+					    			</when>
+					    			<when test="type == 3">
+					    				and `cate` = #{cate} and `cate2` = #{cate2}; 
+					    			</when>
+					    		</choose>
+   </select>
+   <select id="selectArticlesByGroup" resultType="kr.co.kmarket2.vo.ArticleVO">
+   	select * from `km_article` where `group`=#{group} 
+												<choose>
+									    			<when test="type == 1">
+									    				 
+									    			</when>
+									    			<when test="type == 2">
+									    				and `cate` = #{cate} 
+									    			</when>
+									    			<when test="type == 3">
+									    				and `cate` = #{cate} and `cate2` = #{cate2}  
+									    			</when>
+									    		</choose>
+   													and `parent`=0 ORDER BY `no` DESC LIMIT #{start},10;
    </select>
 </mapper>
