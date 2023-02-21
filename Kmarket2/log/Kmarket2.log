@@ -2449,3 +2449,6 @@ This generated password is for development use only. Your security configuration
 2023-02-16 13:24:15.588  INFO 5952 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8181 (http) with context path '/Kmarket2'
 2023-02-16 13:24:15.592  INFO 5952 --- [restartedMain] kr.co.kmarket2.Kmarket2Application       : Started Kmarket2Application in 0.578 seconds (JVM running for 14050.582)
 2023-02-16 13:24:15.594  INFO 5952 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-02-16 13:33:16.009  INFO 5952 --- [http-nio-8181-exec-2] o.a.c.c.C.[.[localhost].[/Kmarket2]      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-02-16 13:33:16.009  INFO 5952 --- [http-nio-8181-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-02-16 13:33:16.011  INFO 5952 --- [http-nio-8181-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms

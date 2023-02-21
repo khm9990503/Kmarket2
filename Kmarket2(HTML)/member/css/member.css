@@ -386,6 +386,13 @@ header > .logo > div > a {
     margin-top: 6px;
 }
 
+#member > .register table .addr button {
+    margin-left: 10px;
+    padding: 1px 5px;
+    border: 1px solid #dfe5ed;
+    font-size: 12px;
+}
+
 #member > .register form input[type="submit"] {
     display: block;
     background: #ef3f43;
