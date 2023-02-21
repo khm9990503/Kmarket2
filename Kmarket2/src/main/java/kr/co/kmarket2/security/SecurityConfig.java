@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		// 사이트 위조 방지 설정 , 배포 시 주석하기
 		http.csrf().disable();
-		/*
+		
 		// 로그인 설정
 		http.formLogin()
 			.loginPage("/member/login")
@@ -41,9 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// 로그아웃 설정
 		http.logout()
 					.invalidateHttpSession(true)
-					.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-					.logoutSuccessUrl("/user/login?success=200");
-		*/
+					.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+					.logoutSuccessUrl("/member/login?success=200");
+		
 		
 	}
 	
