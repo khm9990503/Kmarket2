@@ -196,54 +196,34 @@ $(function(){
     		<td th:if="${group.equals('notice')||group.equals('qna')}">[[${pageStartNum-status.index}]]</td>
     		<td th:if="${group.equals('faq')}">[[${10-status.index}]]</td>
     		<td th:each="ca : ${cates}" th:if="${ca.value == arti.cate}">[[${ca.value}]]</td>
-    			
-    		<c:forEach var="ca2" items="${artiCate2s}">
-    			<c:if test="${arti.cate.equals(ca2.artiCate) && arti.cate2.equals(ca2.artiCate2)}">
-    				<td>${ca2.c2Name}</td>
-    			</c:if>
-    		</c:forEach>
-    		<td><a href="/Java1_Kmarket1/admin/cs/view.do?no=${arti.no}&group=${group}">${arti.title}</a></td>
-    		<c:choose>
-    		<c:when test="${group.equals('notice') || group.equals('faq')}">
-    		<td>${arti.hit}</td>
-    		</c:when>
-    		<c:when test="${group.equals('qna')}">
-    		<td>${arti.uid}***</td>
-    		</c:when>
-    		</c:choose>
-    		<td>${arti.rdate}</td>
-    		<c:choose>
-    		<c:when test="${group.equals('notice') || group.equals('faq')}">
-    		<td>
+    		
+    		<th:block th:each="ca2 : ${articate2s}" th:if="${arti.cate.equals(ca2.cate) && arti.cate2.equals(ca2.cate2)}">
+    			<td>[[${ca2.c2Name}]]</td>
+    		</th:block>
+    		
+    		<td><a th:href="@{/admin/cs/view(no=${arti.no},group=${group})}">[[${arti.title}]]</a></td>
+    		<td th:if="${group != 'qna'}">[[${arti.hit}]]</td>
+    		<td th:if="${group == 'qna'}">[[${arti.uid}]]</td>
+    		<td>[[${arti.rdate}]]</td>
+    		<td th:if="${group != 'qna'}">
     			<a href="/Java1_Kmarket1/admin/cs/modify.do?no=${arti.no}&group=${group}">수정</a>
     			<a href="/Java1_Kmarket1/admin/cs/delete.do?no=${arti.no}&group=${group}">삭제</a>
     		</td>
-    		</c:when>
-    		<c:when test="${group.equals('qna') && arti.comment == 0}">
-    		<td>
+    		<td th:if="${group == 'qna' && arti.comment == 0}">
     			검토중
     		</td>
-    		</c:when>
-    		<c:when test="${group.equals('qna') && arti.comment != 0}">
-    		<td>
+    		<td th:if="${group == 'qna' && arti.comment != 0}">
     			<span style="color: #067dfd; font-weight: bold;" >답변완료</span> 
     		</td>
-    		</c:when>
-    		</c:choose>
     	</tr>
     </table>
     
     <div class="page">
-    <c:if test="${group.equals('notice') || group.equals('qna')}">
-	    <c:choose>
-	    <c:when test="${pageGroupStart gt 1 && cate != null}">
-	    <a href="/Java1_Kmarket1/admin/cs/list.do?pg=${pageGroupStart-1}&cate=${cate}&group=${group}" class="prev">이전</a>
-	    </c:when>
-	    <c:when test="${pageGroupStart gt 1 && cate == null}">
-	    <a href="/Java1_Kmarket1/admin/cs/list.do?pg=${pageGroupStart-1}&group=${group}" class="prev">이전</a>
-	    </c:when>
-	    </c:choose>
-	    <c:forEach var="i" begin="${pageGroupStart}" end="${pageGroupEnd }">
+    <th:block th:if="" test="${group != 'faq'}">
+	    <a th:if="${pageGroupStart gt 1 && cate != null}" th:href="@{/admin/cs/list(pg=${pageGroupStart-1},cate=${cate},group=${group})}" class="prev">이전</a>
+	    <a th:if="${pageGroupStart gt 1 && cate == null}" th:href="@{/admin/cs/list(pg=${pageGroupStart-1},group=${group})}" class="prev">이전</a>
+	    
+	    <th:block  var="i" begin="${pageGroupStart}" end="${pageGroupEnd }">
 	    <c:choose>
 	    <c:when test="${cate != null}">
 	    <a href="/Java1_Kmarket1/admin/cs/list.do?pg=${i}&cate=${cate}&group=${group}" class="num ${i==currentPage?'current':'off'} ${i==currentPage?'on':'off'}">${i}</a>
@@ -252,7 +232,7 @@ $(function(){
 	    <a href="/Java1_Kmarket1/admin/cs/list.do?pg=${i}&group=${group}" class="num ${i==currentPage?'current':'off'} ${i==currentPage?'on':'off'}">${i}</a>
 	    </c:when>
 	    </c:choose>
-	    </c:forEach>
+	    </th:block>
 	    <c:choose>
 	    <c:when test="${pageGroupEnd lt lastPageNum && cate != null}">
 	    <a href="/Java1_Kmarket1/admin/cs/list.do?pg=${pageGroupStart+1}&cate=${cate}&group=${group}" class="next">다음</a>
@@ -261,7 +241,7 @@ $(function(){
 	    <a href="/Java1_Kmarket1/admin/cs/list.do?pg=${pageGroupStart+1}&group=${group}" class="next">다음</a>
 	    </c:when>
 	    </c:choose>
-	</c:if>
+	</th:block>
     </div>
     
     <a href="#" class="btn btnDel">선택삭제</a>
