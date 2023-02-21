@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket2.service.AdminService;
+import kr.co.kmarket2.vo.ArticleCateVO;
 import kr.co.kmarket2.vo.ArticleVO;
 import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
@@ -26,9 +27,6 @@ import kr.co.kmarket2.vo.ProductVO;
 
 @Controller
 public class AdminController {
-	
-	@Autowired
-	private PasswordEncoder pe;
 	
 	@Autowired
 	private AdminService service;
@@ -119,16 +117,13 @@ public class AdminController {
 	}
 	/////// 관리자 고객센터 관련 /////////////////////////////////////////////
 	@GetMapping("admin/cs/list")
-	public String list(Model model,String group, String cate) {
+	public String list(Model model,String group, String cate, String cate2 ,  String pg) {
 		Map<String,String> cates = new LinkedHashMap<>();
 		if(group == "notice") {
 			cates.put("service", "고객서비스");
 			cates.put("deal", "안전거래");
 			cates.put("danger", "위해상품");
 			cates.put("lucky", "이벤트당첨");
-			if(cate == null) {
-				cate = "service";
-			}
 		}else {
 			cates.put("member", "회원");
 			cates.put("event", "쿠폰/이벤트");
@@ -141,8 +136,59 @@ public class AdminController {
 				cate = "member";
 			}
 		}
+		// 페이지//
+		int currentPage = service.getCurrnetPage(pg);
+		int start = service.getLimitStart(currentPage);
+		int	total = 0;
+		List<ArticleCateVO> artiCate2s = new ArrayList<>();
+		// 전체 게시물 갯수
+		if(group.equals("notice")) {
+			if(cate==null) {
+				total = service.selectCountTotalArticle(group,cate,cate2,"1");
+			}else {
+				total = service.selectCountTotalArticle(group,cate,cate2,"2");
+			}
+		}else if(group.equals("faq") || group.equals("qna")) {
+			artiCate2s = service.selectArticeCates();
+			if(cate == null) {
+				cate = "member";
+			}
+			if(cate2 == null) {
+				cate2 = "reg";
+			}
+			total = service.selectCountTotalArticle(group,cate,cate2,"3");
+		}
+		int pageStartNum = service.getPageStartNum(total, start);
+		int lastPageNum = service.getLastPageNum(total);
 		
+		// 페이지 그룹 start, end 번호
+		int pageGroupStart = service.getPageGroup(currentPage, lastPageNum)[0];
+		int pageGroupEnd = service.getPageGroup(currentPage, lastPageNum)[1];
+		
+		// 게시물 가져오기
+		List<ArticleVO> articles = null;
+		
+		if(group.equals("notice")) {
+			if(cate==null) {
+				articles = service.selectArticlesByGroup(group, cate, cate2, start, "1");
+			}else {
+				articles = service.selectArticlesByGroup(group, cate, cate2, start, "2");
+			}
+		}else if(group.equals("faq") || group.equals("qna")) {
+			articles = service.selectArticlesByGroup(group, cate, cate2, start, "3");
+		}
+		model.addAttribute("pg", pg);
+		model.addAttribute("pageStartNum", pageStartNum-1);
+		model.addAttribute("lastPageNum", lastPageNum);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("pageGroupStart", pageGroupStart);
+		model.addAttribute("pageGroupEnd", pageGroupEnd);
 		model.addAttribute("cates",cates);
+		model.addAttribute("group",group);
+		model.addAttribute("cate",cate);
+		model.addAttribute("cate2",cate2);
+		model.addAttribute("articate2s",artiCate2s);
+		model.addAttribute("articles",articles);
 		return "admin/cs/list";
 	}
 	@GetMapping("admin/cs/write")
