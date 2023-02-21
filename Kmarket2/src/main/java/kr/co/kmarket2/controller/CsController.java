@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.kmarket2.service.CsService;
+import kr.co.kmarket2.vo.ArticleCateVO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.QnaCateVO;
 
 @Controller
 public class CsController {
@@ -28,6 +30,10 @@ public class CsController {
 		// 공지사항 목록 가져오기
 		List<ArticleVO> articles = service.selectNotices(group);
 		
+		// 문의하기 목록 가져오기
+		List<ArticleVO> qnaArticles = service.selectQnas(group);
+		
+		model.addAttribute("qnaArticles",qnaArticles);
 		model.addAttribute("articles", articles);
 		
 		return "cs/index";
@@ -161,7 +167,18 @@ public class CsController {
     @GetMapping("cs/qna/write")
     public String qnaWrite(Model model, String cate) {
     	
+    	// c1Name 불러오기
+    	List<QnaCateVO> c1Names = service.selectc1Name();
+    	
+    	// c2Name 불러오기
+    	List<ArticleCateVO> c2Names = service.selectc2Name(cate);
+    	
+    	
     	model.addAttribute("cate",cate);
+    	model.addAttribute("c1Names",c1Names);
+    	model.addAttribute("c2Names",c2Names);
+    	
+    	
     	
         return "cs/qna/write";
     }
