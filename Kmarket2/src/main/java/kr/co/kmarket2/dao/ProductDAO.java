@@ -43,4 +43,10 @@ public interface ProductDAO {
 	
 	// 선택한 상품을 하나씩 삭제하기
 	public int deleteCartByProdNo(String prodNo, String username);
+	
+	// order
+	// cartNo값을 이용해서 cart 테이블 값 가져오기
+	public List<CartVO> selectCartByCartNo(String[] cartNo);
+	
+	// 현재 사용자의 포인트값 가져오기
 }

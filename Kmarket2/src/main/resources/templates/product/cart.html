@@ -10,7 +10,7 @@
                         <strong>장바구니</strong>
                     </p>
                 </nav>
-                <form th:action="@{/product/order}" method="post" modelAttribute="cartVO">
+                <form th:action="@{/product/order}" method="post" onsubmit="return check()">
                     <table>
                         <tr>
                             <th>
@@ -27,10 +27,9 @@
                         <tr class="empty">
                             <td colspan="7">장바구니에 상품이 없습니다</td>
                         </tr>
-                        <tr th:each="item:${items}">
-                        	<input type="hidden" name="prodNo" th:value="${item.prodNo}">
+                        <tr th:each="item :${items}">
                             <td>
-                                <input type="checkbox" name="individualItem">
+                                <input type="checkbox" th:name="individualItem" th:value="${item.cartNo}">
                             </td>
                             <td>
                                 <article>
@@ -210,7 +209,7 @@ let totalPay = document.querySelector('.totalPay').innerText;
 		document.querySelector('.totalCount').innerText = nf.format(intTotalCount + items[i].count);
 		document.querySelector('.totalPrice').innerText = nf.format(intTotalPrice + items[i].price * items[i].count);
 		
-		let discount = intTotalDiscount - items[i].price * (items[i].discount * 0.01) * items[i].count;
+		let discount = intTotalDiscount + items[i].price * (items[i].discount * 0.01) * items[i].count;
 		if(discount >0){
 			document.querySelector('.totalDiscount').innerText = "-"+nf.format(discount);
 		}else{
@@ -249,6 +248,23 @@ let totalPay = document.querySelector('.totalPay').innerText;
 		intTotalDelivery -= items[i].delivery;
 		intTotalPoint -= items[i].point;
 		intTotalPay -= items[i].price * (1 - items[i].discount * 0.01) * items[i].count;
+	}
+	
+	// 주문하기 누를 때 체크박스 한 개 이상 눌렀는 지 확인
+	function check(){
+		let j = 0; 
+		
+		checkboxes.forEach(function(checkbox){
+			if(checkbox.checked){
+				j++;
+			}
+		});
+		
+		if(j === 0){
+			alert('상품을 최소 한 개 이상 선택하여야 합니다.');
+			return false;
+		}
+		return true;
 	}
 </script>
 <th:block th:include="@{product/_footer.html}"/>

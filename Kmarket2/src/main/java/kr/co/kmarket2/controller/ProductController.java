@@ -216,8 +216,17 @@ public class ProductController {
 	}
 	
 	@PostMapping("product/order")
-	public String order(@ModelAttribute List<CartVO> carts) {
+	public String order(@RequestParam(value="individualItem") String[] individualItem, Model model){
+		// cart 페이지에서 주문하기 누를 경우(폼 submit) 체크된 체크박스에 바인딩된 cartNo값 전송한다
+		List<CartVO> orderList = service.selectCartByCartNo(individualItem);
 		
+		for(CartVO item : orderList)
+			item.setDisPrice((int) Math.ceil(item.getPrice() * item.getDiscount() * 0.01));
+		
+		// 현재 사용자의 포인트값 가져오기
+		
+		
+		model.addAttribute("orderList", orderList);
 		return "product/order";
 	}
 	

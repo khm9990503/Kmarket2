@@ -1,5 +1,7 @@
 package kr.co.kmarket2.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,5 +35,4 @@ public class CartVO {
 	// view에서 ajax로 넘길 때 필요한 정보
 	private int disPrice;
 	
-	private String individualItem;
 }
