@@ -44,30 +44,30 @@ $(function(){
     	<tr>
     		<th><input type="checkbox" name="selectAll" c></th>
     		<th>번호</th>
-	   			<th th:if="${group.equals('notice')}">유형</th>
-	   			<th:block th:if="${group.equals('faq') || group.equals('qna')}">
+   			<th th:if="${group.equals('notice')}">유형</th>
+   			<th:block th:if="${group.equals('faq') || group.equals('qna')}">
 	   			<th>1차유형</th>
 	   			<th>2차유형</th>
-	   			</th:block>
+   			</th:block>
     		<th>제목</th>
-	    		<th:block th:if="${group.equals('notice') || group.equals('faq')}">
-	    			<th>조회</th>
-	    			<th>날짜</th>
-	    			<th>관리</th>
-	    		</th:block>
-	    		<th:block th:if="${group.equals('qna')}">
-	    			<th>작성자</th>
-	    			<th>작성일</th>
-	    			<th>상태</th>
-	    		</th:block>
+    		<th:block th:if="${group.equals('notice') || group.equals('faq')}">
+    			<th>조회</th>
+    			<th>날짜</th>
+    			<th>관리</th>
+    		</th:block>
+    		<th:block th:if="${group.equals('qna')}">
+    			<th>작성자</th>
+    			<th>작성일</th>
+    			<th>상태</th>
+    		</th:block>
     	</tr>
     	
     	<tr th:each="arti,status : ${articles}">
-    		<td class="chk${status.index}"><input type="checkbox" name="select" th:value="${arti.no}"></td>
+    		<td class="chk" th:classappend="${status.index}"><input type="checkbox" name="select" th:value="${arti.no}"></td>
     		
     		<td th:if="${group.equals('notice')||group.equals('qna')}">[[${pageStartNum-status.index}]]</td>
     		<td th:if="${group.equals('faq')}">[[${10-status.index}]]</td>
-    		<td th:each="ca : ${cates}" th:if="${ca.value == arti.cate}">[[${ca.value}]]</td>
+    		<td th:each="ca : ${cates}" th:if="${ca.key == arti.cate}">[[${ca.value}]]</td>
     		
     		<th:block th:each="ca2 : ${articate2s}" th:if="${arti.cate.equals(ca2.cate) && arti.cate2.equals(ca2.cate2)}">
     			<td>[[${ca2.c2Name}]]</td>

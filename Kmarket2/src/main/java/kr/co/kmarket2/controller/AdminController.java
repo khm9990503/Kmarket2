@@ -119,7 +119,7 @@ public class AdminController {
 	@GetMapping("admin/cs/list")
 	public String list(Model model,String group, String cate, String cate2 ,  String pg) {
 		Map<String,String> cates = new LinkedHashMap<>();
-		if(group == "notice") {
+		if(group.equals("notice")) {
 			cates.put("service", "고객서비스");
 			cates.put("deal", "안전거래");
 			cates.put("danger", "위해상품");
