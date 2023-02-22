@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import kr.co.kmarket2.dao.ProductDAO;
 import kr.co.kmarket2.vo.CartVO;
 import kr.co.kmarket2.vo.Cate2VO;
+import kr.co.kmarket2.vo.MemberVO;
+import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
@@ -108,6 +110,15 @@ public class ProductService {
 		return dao.selectCartByCartNo(cartNo);
 	}
 	
+	// 현재 사용자의 정보 가져오기
+	public MemberVO selectUserMyUsername(String username) {
+		return dao.selectUserByUsername(username);
+	}
+	
+	// 주문 정보 DB에 저장하기
+	public int insertOrder(OrderVO order) {
+		return dao.insertOrder(order);
+	}
 	
 	
 	// 페이징

@@ -1,7 +1,5 @@
 <th:block th:include="@{product/_header.html}"/>
 <th:block th:include="@{product/_aside.html}"/>
-<meta name="_csrf" th:content="${_csrf.token}">
-<meta name="_csrf_header" th:content="${_csrf.headerName}">
             <section class="view">
                 <nav>
                     <h1>상품보기</h1>
@@ -237,8 +235,15 @@ function increase(){
 }
 
 function cart(){
-	let token = document.querySelector("[name='_csrf']").getAttribute("content");
-	let header = document.querySelector("[name='_csrf_header']").getAttribute("content");
+	/*
+	csrf 설정을 위해서 필요하지만 SecurityConfig 파일에서 csrf를 disable했기 때문에 필요없음
+	여기서 이 설정을 적용하면 다른 페이지에서 a 태그 링크로 접속할 때마다 토큰값 명시해줘야함
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	
+	//let token = document.querySelector("[name='_csrf']").getAttribute("content");
+	//let header = document.querySelector("[name='_csrf_header']").getAttribute("content");
+	*/
 	
 	// cart 테이블에 항목 담기(ajax)
 	let prodNo = [[${product.prodNo}]];
@@ -265,7 +270,7 @@ function cart(){
 	
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", "/Kmarket2/product/putInCart", true);
-	xhr.setRequestHeader(header, token);
+	//xhr.setRequestHeader(header, token);
 	xhr.setRequestHeader('Content-type', 'application/json');
 	xhr.responseType = "json";
 	xhr.send(post);
