@@ -84,12 +84,7 @@ public class CsService {
 		return dao.insertArticle(vo);
 	}
 	
-	public List<QnaCateVO> selectc1Name() {
-		return dao.selectc1Name();
-	}
-	public List<ArticleCateVO> selectc2Name(String cate) {
-		return dao.selectc2Name(cate);
-	}
+	
 	
 	// 페이징
 		public int getLastPageNum(int total) {

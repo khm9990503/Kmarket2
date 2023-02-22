@@ -47,8 +47,7 @@ public interface CsDAO {
 	//qna write
 	public int insertArticle(ArticleVO vo);
 	
-	public List<QnaCateVO> selectc1Name();
-	public List<ArticleCateVO> selectc2Name(String cate);
+	
 	
 	//index notice list
 	public List<ArticleVO> selectNotices(String group);

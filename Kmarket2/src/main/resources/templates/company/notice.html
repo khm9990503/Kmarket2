@@ -12,7 +12,31 @@
                 </div>
             </div>
             <section class="content">
-                <img th:src="@{/img/company/notice_sample.png}" alt>
+            		<article>
+                		<table>
+                			<tr>
+                				<th>번호</th>
+                				<th>제목</th>
+                				<th>작성일</th>
+                			</tr>
+                            <tr th:each="article:${articles}">
+                            	<td>[[${article.no}]]</td>
+                                <td><a th:href="@{/company/notice(no=${article.no},group=${article.group})}">[[${article.title}]]</a></td>
+                                <td>[[${article.rdate.substring(2,10)}]]</td>
+                            </tr>
+                        </table>
+                       <div class="page">
+                        	<th:block th:if="${pageGroupStart > 1}">
+                            	<a th:href="@{/company/notice(pg=${pageGroupStart - 1})}" class="prev">이전</a>
+                            </th:block>
+                            <th:block th:each="num,iterStat : ${#numbers.sequence(pageGroupStart, pageGroupEnd)}">
+                            	<a th:href="@{/company/notice(pg=${num},group='dart')}" th:class="${num} eq ${currentPage} ? 'num on':'num'">[[${num}]]</a>
+                            </th:block>
+                            <th:block th:if="${pageGroupEnd < lastPageNum}">
+                            <a th:href="@{/company/notice(pg=${pageGroupEnd + 1})}" class="next">다음</a>
+                            </th:block>
+                        </div>
+                    </article>
             </section>
         </main>
         
