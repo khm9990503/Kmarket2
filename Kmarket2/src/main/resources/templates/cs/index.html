@@ -48,7 +48,7 @@
                     <li th:each="article:${qnaArticles}">
                         <a th:href="@{/cs/qna/view(group='qna',no=${article.no},cate=${article.cate})}" class="title">[[${article.title}]]</a>
                         <p>
-                            <span class="uid">[[${article.uid}]]</span>
+                            <span class="uid">[[${article.uid.substring(0,1)}]]***</span>
                             <span class="date">[[${article.rdate.substring(2, 10)}]]</span>
                         </p>
                     </li>

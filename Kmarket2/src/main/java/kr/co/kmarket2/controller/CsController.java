@@ -167,21 +167,22 @@ public class CsController {
     @GetMapping("cs/qna/write")
     public String qnaWrite(Model model, String cate) {
     	
-    	// c1Name 불러오기
-    	List<QnaCateVO> c1Names = service.selectc1Name();
-    	
-    	// c2Name 불러오기
-    	List<ArticleCateVO> c2Names = service.selectc2Name(cate);
-    	
-    	
     	model.addAttribute("cate",cate);
-    	model.addAttribute("c1Names",c1Names);
-    	model.addAttribute("c2Names",c2Names);
-    	
-    	
     	
         return "cs/qna/write";
     }
+    
+    @PostMapping("cs/qna/write")
+    public String qnaWrite(Model model, ArticleVO vo, HttpServletRequest req) {
+    	
+    	vo.setRegip(req.getRemoteAddr());
+    	
+    	// 글 쓰기
+    	service.insertArticle(vo);
+    	
+    	return "redirect:/cs/qna/list?group=qna&cate="+vo.getCate();
+    }
+    
     
    
 }

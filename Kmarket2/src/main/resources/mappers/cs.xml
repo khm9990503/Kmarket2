@@ -48,16 +48,9 @@
     </select>
     
     <insert id="insertArticle">
-    	INSERT INTO `km_article` SET `cate`=#{cate}, `cate2`=#{cate2}, `title` = #{title}, `content` = #{content} , `uid` = #{uid}, `regip`=#{regip}, `rdate`=NOW();
+    	INSERT INTO `km_article` SET `group`='qna' ,`cate`=#{cate}, `cate2`=#{cate2}, `title` = #{title}, `content` = #{content} , `uid` = #{uid}, `regip`=#{regip}, `rdate`=NOW();
     </insert>
   
-  	<select id="selectc1Name" resultType="kr.co.kmarket2.vo.ArticleVO">
-  		SELECT * FROM `km_qna_cate`;
-  	</select>
-  	
-  	<select id="selectc2Name" resultType="kr.co.kmarket2.vo.ArticleVO">
-  		SELECT * FROM `km_article_cate` where cate=#{cate};
-  	</select>
   	
   	<select id="selectQnas" resultType="kr.co.kmarket2.vo.ArticleVO">
   		SELECT * FROM `km_article` WHERE `group` = 'qna' ORDER BY `no` DESC LIMIT 5;
