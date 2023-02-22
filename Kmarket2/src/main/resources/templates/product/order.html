@@ -39,7 +39,7 @@
 	function storeOrderInfo(){
 		let ordUid = document.querySelector("input[name='username']").value;
 		let ordCount = document.querySelector('.ordCount').innerText.split(',').join('');
-		let ordPrice = document.querySelector('.ordPrice').innerText.split(',').join('');
+		let ordPrice = parseInt(document.querySelector('.ordPrice').innerText.split(',').join(''));
 		let ordDiscount = document.querySelector('.ordDiscount').innerText.slice(1).split(',').join('');
 		let ordDelivery = document.querySelector('.ordDelivery').innerText.slice(1).split(',').join('');
 		let savePoint = document.querySelector('.savePoint').innerText.split(',').join('');
@@ -53,25 +53,11 @@
 		let deliveryRequest = document.querySelector("input[name='deliveryRequest']").value;
 		let ordPayment = document.querySelector("input[name='payment']:checked").value;
 		
-		console.log(ordUid);
-		console.log(ordCount);
-		console.log(ordPrice);
-		console.log(ordDiscount);
-		console.log(savePoint);
-		console.log(usedPoint);
-		console.log(ordTotPrice);
-		console.log(recipName);
-		console.log(recipHP);
-		console.log(recipZip);
-		console.log(recipAddr1);
-		console.log(recipAddr2);
-		console.log(deliveryRequest);
-		console.log(ordPayment);
-		
 		let orderVO ={
 				"ordPrice" : ordPrice
 				
 		}
+		
 		let order = JSON.stringify(orderVO);
 		
 		let xhr = new XMLHttpRequest();

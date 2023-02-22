@@ -241,9 +241,10 @@ public class ProductController {
 		return "product/order";
 	}
 	
-	@RequestMapping(value="product/storeOrderInfo", method = {RequestMethod.POST})
+	@PostMapping("product/storeOrderInfo")
 	@ResponseBody
-	public Map<String, Integer> storeOrderInfo(@RequestParam("ordPrice") String ordPrice){
+	public Map<String, Integer> storeOrderInfo(@RequestBody OrderVO order){
+		System.out.println(order.getOrdPrice());
 		int result = 1;
 		Map<String, Integer> resultMap = new HashMap<>();
 		resultMap.put("result", result);
