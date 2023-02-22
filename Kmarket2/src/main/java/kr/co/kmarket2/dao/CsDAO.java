@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import kr.co.kmarket2.vo.ArticleCateVO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.QnaCateVO;
 
 @Mapper
 @Repository
@@ -45,11 +47,14 @@ public interface CsDAO {
 	//qna write
 	public int insertArticle(ArticleVO vo);
 	
-	public ArticleVO selectc1Name();
-	public ArticleVO selectc2Name(String cate);
+	public List<QnaCateVO> selectc1Name();
+	public List<ArticleCateVO> selectc2Name(String cate);
 	
 	//index notice list
 	public List<ArticleVO> selectNotices(String group);
+	
+	//index qna list
+	public List<ArticleVO> selectQnas(String group);
 	
 	
 	
