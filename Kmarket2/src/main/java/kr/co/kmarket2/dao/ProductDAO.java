@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.kmarket2.vo.CartVO;
 import kr.co.kmarket2.vo.Cate2VO;
+import kr.co.kmarket2.vo.MemberVO;
+import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
@@ -48,5 +50,9 @@ public interface ProductDAO {
 	// cartNo값을 이용해서 cart 테이블 값 가져오기
 	public List<CartVO> selectCartByCartNo(String[] cartNo);
 	
-	// 현재 사용자의 포인트값 가져오기
+	// 현재 사용자의 정보 가져오기
+	public MemberVO selectUserByUsername(String username);
+	
+	// 주문 정보 DB에 저장하기
+	public int insertOrder(OrderVO order);
 }

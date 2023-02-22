@@ -73,4 +73,10 @@
     		</foreach>
     	);
     </select>
+    <select id="selectUserByUsername" resultType="kr.co.kmarket2.vo.MemberVO">
+    	select * from `km_member` where `uid`=#{username};
+    </select>
+    <insert id="insertOrder">
+    	insert into `km_product_order` values (default, #{ordUid}, #{ordCount}, #{ordPrice}, #{ordDiscount}, #{ordDelivery}, #{savePoint}, #{usedPoint}, #{ordTotPrice}, #{recipName}, #{recipHP}, #{recipZip}, #{recipAddr1}, #{recipAddr2}, #{deliveryRequest}, #{ordPayment}, #{ordComplete}, NOW());
+    </insert>
 </mapper>

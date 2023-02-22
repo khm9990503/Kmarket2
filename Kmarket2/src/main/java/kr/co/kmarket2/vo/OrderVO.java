@@ -30,4 +30,6 @@ public class OrderVO {
 	private int ordComplete;
 	private String ordDate;
 	
+	// 배송 요청사항 추가
+	private String deliveryRequest;
 }

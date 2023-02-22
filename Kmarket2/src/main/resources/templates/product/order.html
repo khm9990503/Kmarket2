@@ -1,5 +1,101 @@
 <th:block th:include="@{product/_header.html}"/>
 <th:block th:include="@{product/_aside.html}"/>
+<script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/Kmarket2/js/postcode.js"></script>
+<script>
+	// 포인트 할인 적용하기
+	function deductPoint(){
+		let userPoint = parseInt(document.querySelector('.userPoint').innerText.split(',').join(''));
+		let pointToDeduct = parseInt(document.querySelector('.pointToDeduct').value);
+		let nf = new Intl.NumberFormat('en-US');
+		
+		// 보유 포인트가 5000점 이상인지 확인
+		if(userPoint < 5000){
+			alert('보유 포인트가 5000점 이상일 때 포인트 사용이 가능합니다.');
+			return;
+		}
+		
+		// 보유 포인트보다 더 많은 값을 입력했는지 확인
+		if(pointToDeduct > userPoint){
+			alert('보유 포인트보다 더 많은 포인트를 사용하실 수 없습니다.');
+			return;
+		}
+		
+		// 전체 합계에서 포인트 할인 금액만큼 표시
+		let usedPoint = parseInt(document.querySelector('.usedPoint').innerText);
+		let ordTotPrice = document.querySelector('.ordTotPrice').innerText.split(',').join('');
+		
+		usedPoint += pointToDeduct;
+		ordTotPrice -= pointToDeduct;
+		
+		document.querySelector('.usedPoint').innerText = nf.format(usedPoint);
+		document.querySelector('.ordTotPrice').innerText = nf.format(ordTotPrice);
+		
+		// 쓴 포인트만큼 차감해서 보유 포인트 보여주기
+		document.querySelector('.userPoint').innerText = nf.format(userPoint - pointToDeduct);
+	}
+	
+	// 주문 정보 DB에 저장하기
+	function storeOrderInfo(){
+		let ordUid = document.querySelector("input[name='username']").value;
+		let ordCount = document.querySelector('.ordCount').innerText.split(',').join('');
+		let ordPrice = document.querySelector('.ordPrice').innerText.split(',').join('');
+		let ordDiscount = document.querySelector('.ordDiscount').innerText.slice(1).split(',').join('');
+		let ordDelivery = document.querySelector('.ordDelivery').innerText.slice(1).split(',').join('');
+		let savePoint = document.querySelector('.savePoint').innerText.split(',').join('');
+		let usedPoint = document.querySelector('.usedPoint').innerText;
+		let ordTotPrice = document.querySelector('.ordTotPrice').innerText.split(',').join('');
+		let recipName = document.querySelector("input[name='recipName']").value;
+		let recipHP = document.querySelector("input[name='recipHp']").value;
+		let recipZip = document.querySelector("input[name='zip']").value;
+		let recipAddr1 = document.querySelector("input[name='addr1']").value;
+		let recipAddr2 = document.querySelector("input[name='addr2']").value;
+		let deliveryRequest = document.querySelector("input[name='deliveryRequest']").value;
+		let ordPayment = document.querySelector("input[name='payment']:checked").value;
+		
+		console.log(ordUid);
+		console.log(ordCount);
+		console.log(ordPrice);
+		console.log(ordDiscount);
+		console.log(savePoint);
+		console.log(usedPoint);
+		console.log(ordTotPrice);
+		console.log(recipName);
+		console.log(recipHP);
+		console.log(recipZip);
+		console.log(recipAddr1);
+		console.log(recipAddr2);
+		console.log(deliveryRequest);
+		console.log(ordPayment);
+		
+		let orderVO ={
+				"ordPrice" : ordPrice
+				
+		}
+		let order = JSON.stringify(orderVO);
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", "/Kmarket2/product/storeOrderInfo");
+		xhr.setRequestHeader('Content-type', 'application/json');
+		xhr.responseType = "json";
+		xhr.send(order);
+		
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === XMLHttpRequest.DONE){
+				if(xhr.status ===200){
+					const data = xhr.response;
+					const result = data.result;
+					
+					if(result === 1){
+						alert('success');
+					}else{
+						alert('?');
+					}
+				}
+			}
+		}
+	}
+</script>
             <section class="order">
                 <nav>
                     <h1>주문결제</h1>
@@ -10,7 +106,8 @@
                         <strong>주문결제</strong>
                     </p>
                 </nav>
-                <form th:action="@{/product/complete}" method="post">
+                <form action="#" method="post">
+                	<input type="hidden" th:value="${#authentication.name}" name="username">
                     <table>
                         <tr>
                             <th>상품명</th>
@@ -49,64 +146,74 @@
                         <table border="0">
                             <tr>
                                 <td>총</td>
-                                <td>[[${#numbers.formatInteger((#aggregates.sum(orderList.![count])), 1, 'COMMA')}]] 건</td>
+                                <td class="ordCount">[[${#numbers.formatInteger((#aggregates.sum(orderList.![count])), 1, 'COMMA')}]] 건</td>
                             </tr>
                             <tr>
                                 <td>상품금액</td>
-                                <td>[[${#numbers.formatInteger((#aggregates.sum(orderList.![price])), 3, 'COMMA')}]]</td>
+                                <td class="ordPrice">[[${#numbers.formatInteger((#aggregates.sum(orderList.![price])), 3, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>할인금액</td>
-                                <td>-[[${#numbers.formatInteger((#aggregates.sum(orderList.![disPrice])), 3, 'COMMA')}]]</td>
+                                <td class="ordDiscount">-[[${#numbers.formatInteger((#aggregates.sum(orderList.![disPrice])), 3, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>배송비</td>
-                                <td>[[${#numbers.formatInteger((#aggregates.sum(orderList.![delivery])), 3, 'COMMA')}]]</td>
+                                <td class="ordDelivery">[[${#numbers.formatInteger((#aggregates.sum(orderList.![delivery])), 3, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>포인트 할인</td>
-                                <td>0</td>
+                                <td class="usedPoint">0</td>
+                            </tr>
+                            <tr>
+                                <td>적립 포인트</td>
+                                <td class="savePoint">[[${#numbers.formatInteger((#aggregates.sum(orderList.![point])), 3, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>전체주문금액</td>
-                                <td>[[${#numbers.formatInteger((#aggregates.sum(orderList.![total])), 3, 'COMMA')}]]</td>
+                                <td class="ordTotPrice">[[${#numbers.formatInteger((#aggregates.sum(orderList.![total])), 3, 'COMMA')}]]</td>
                             </tr>
                         </table>
-                        <input type="submit" value="결제하기">
+                        <input type="button" value="결제하기" onclick="storeOrderInfo();">
                     </div>
                     <article class="delivery">
                         <h1>배송정보</h1>
                         <table>
                             <tr>
-                                <td>주문자</td>
+                                <td>수령자</td>
                                 <td>
-                                    <input type="text" name="orderer">
+                                    <input type="text" name="recipName" th:value="${user.name}">
                                 </td>
                             </tr>
                             <tr>
                                 <td>휴대폰</td>
                                 <td>
-                                    <input type="text" name="hp">
+                                    <input type="text" name="recipHp" th:value="${user.hp}">
                                     <span>- 포함 입력</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>우편번호</td>
                                 <td>
-                                    <input type="text" name="zip">
-                                    <input type="button" value="검색">
+                                    <input type="text" name="zip" id="zip" readonly th:value="${user.zip}">
+                                    <input type="button" value="검색" id="btnZip" onclick="postcode()">
                                 </td>
                             </tr>
                             <tr>
                                 <td>기본주소</td>
                                 <td>
-                                    <input type="text" name="addr1">
+                                    <input type="text" name="addr1" id="addr1" th:value="${user.addr1}">
                                 </td>
                             </tr>
                             <tr>
                                 <td>상세주소</td>
                                 <td>
-                                    <input type="text" name="addr2">
+                                    <input type="text" name="addr2" id="addr2" th:value="${user.addr2}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>요청사항</td>
+                                <td>
+                                    <input type="text" name="deliveryRequest">
                                 </td>
                             </tr>
                         </table>
@@ -116,13 +223,13 @@
                         <div>
                             <p>
                                 현재 포인트 : 
-                                <span>7200</span>
+                                <span class="userPoint">[[${#numbers.formatInteger(user.point, 1, 'COMMA')}]]</span>
                                 점
                             </p>
                             <label>
-                                <input type="text" name="point">
+                                <input type="text" name="point" class="pointToDeduct">
                                 점
-                                <input type="button" value="적용">
+                                <input type="button" value="적용" onclick="deductPoint();">
                             </label>
                             <span>포인트 5,000점 이상이면 현금처럼 사용 가능합니다.</span>
                         </div>
@@ -146,9 +253,9 @@
                         <div>
                             <span>기타</span>
                             <p>
-                                <label><input type="radio" name="payment" value="type3"/>휴대폰결제</label>
+                                <label><input type="radio" name="payment" value="type5"/>휴대폰결제</label>
                                 <label>
-                                    <input type="radio" name="payment" value="type4"/>카카오페이
+                                    <input type="radio" name="payment" value="type6"/>카카오페이
                                     <img th:src="@{/img/ico_kakaopay.gif}" alt="카카오페이"/>
                                 </label>                                
                             </p>

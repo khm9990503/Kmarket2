@@ -9,19 +9,25 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket2.service.ProductService;
 import kr.co.kmarket2.vo.CartVO;
 import kr.co.kmarket2.vo.Cate2VO;
+import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderItemVO;
+import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
@@ -30,6 +36,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService service;
+	
+	@Autowired
+	private PasswordEncoder encoder; // 회원가입 기능 구현 전 임의로 아이디, 비밀번호 지정하기 위해 주입
 	
 	@GetMapping("product/list")
 	public String list(String cate1, String cate2, String sort, Model model, @RequestParam(value="pg", defaultValue = "1") String pg) {
@@ -216,18 +225,29 @@ public class ProductController {
 	}
 	
 	@PostMapping("product/order")
-	public String order(@RequestParam(value="individualItem") String[] individualItem, Model model){
+	public String order(@RequestParam(value="individualItem") String[] individualItem, Model model, Principal principal){
 		// cart 페이지에서 주문하기 누를 경우(폼 submit) 체크된 체크박스에 바인딩된 cartNo값 전송한다
 		List<CartVO> orderList = service.selectCartByCartNo(individualItem);
 		
 		for(CartVO item : orderList)
 			item.setDisPrice((int) Math.ceil(item.getPrice() * item.getDiscount() * 0.01));
 		
-		// 현재 사용자의 포인트값 가져오기
-		
+		// 현재 사용자 정보 불러오기(포인트값)
+		String username = principal.getName();
+		MemberVO currentUser = service.selectUserMyUsername(username);
 		
 		model.addAttribute("orderList", orderList);
+		model.addAttribute("user", currentUser);
 		return "product/order";
+	}
+	
+	@RequestMapping(value="product/storeOrderInfo", method = {RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Integer> storeOrderInfo(@RequestParam("ordPrice") String ordPrice){
+		int result = 1;
+		Map<String, Integer> resultMap = new HashMap<>();
+		resultMap.put("result", result);
+		return resultMap;
 	}
 	
 	@GetMapping("product/complete")

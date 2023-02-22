@@ -212,42 +212,47 @@ let totalPay = document.querySelector('.totalPay').innerText;
 		let discount = intTotalDiscount + items[i].price * (items[i].discount * 0.01) * items[i].count;
 		if(discount >0){
 			document.querySelector('.totalDiscount').innerText = "-"+nf.format(discount);
-		}else{
+		}else if(discount ===0){
 			document.querySelector('.totalDiscount').innerText = nf.format(discount);
 		}
 		
 		document.querySelector('.totalDelivery').innerText = nf.format(intTotalDelivery + items[i].delivery);
 		document.querySelector('.totalPoint').innerText = nf.format(intTotalPoint + items[i].point);
-		document.querySelector('.totalPay').innerText = nf.format(intTotalPay + items[i].price * (1 - items[i].discount * 0.01) * items[i].count);
+		document.querySelector('.totalPay').innerText = nf.format(intTotalPay + items[i].price * (1 - items[i].discount * 0.01) * items[i].count + items[i].delivery);
 		intTotalCount += items[i].count;
 		intTotalPrice += items[i].price * items[i].count;
 		intTotalDiscount += items[i].price * (items[i].discount * 0.01) * items[i].count;
 		intTotalDelivery += items[i].delivery;
 		intTotalPoint += items[i].point;
-		intTotalPay += items[i].price * (1 - items[i].discount * 0.01) * items[i].count;
+		intTotalPay += items[i].price * (1 - items[i].discount * 0.01) * items[i].count + items[i].delivery;
 	}
 	
 	// 선택한 체크박스에 해당하는 품목의 값들을 전체합계에 빼기
 	function decrease(i){
+		if(intTotalCount === 0){
+			return;
+		}
+		
 		document.querySelector('.totalCount').innerText = nf.format(intTotalCount - items[i].count);
 		document.querySelector('.totalPrice').innerText = nf.format(intTotalPrice - items[i].price * items[i].count);
 		
-		let discount = intTotalDiscount - items[i].price * (items[i].discount * 0.01) * items[i].count;
-		if(discount >0){
+		let discount = Math.abs(intTotalDiscount - items[i].price * (items[i].discount * 0.01) * items[i].count);
+		if(discount > 1){
 			document.querySelector('.totalDiscount').innerText = "-"+nf.format(discount);
 		}else{
 			document.querySelector('.totalDiscount').innerText = nf.format(discount);
-		}
+		}	
 		
 		document.querySelector('.totalDelivery').innerText = nf.format(intTotalDelivery - items[i].delivery);
 		document.querySelector('.totalPoint').innerText = nf.format(intTotalPoint - items[i].point);
-		document.querySelector('.totalPay').innerText = nf.format(intTotalPay - items[i].price * (1 - items[i].discount * 0.01) * items[i].count);
+		document.querySelector('.totalPay').innerText = nf.format(intTotalPay - (items[i].price * (1 - items[i].discount * 0.01) * items[i].count + items[i].delivery));
 		intTotalCount -= items[i].count;
 		intTotalPrice -= items[i].price * items[i].count;
 		intTotalDiscount -= items[i].price * (items[i].discount * 0.01) * items[i].count;
 		intTotalDelivery -= items[i].delivery;
 		intTotalPoint -= items[i].point;
-		intTotalPay -= items[i].price * (1 - items[i].discount * 0.01) * items[i].count;
+		intTotalPay -= items[i].price * (1 - items[i].discount * 0.01) * items[i].count + items[i].delivery;
+		console.log(discount);
 	}
 	
 	// 주문하기 누를 때 체크박스 한 개 이상 눌렀는 지 확인
