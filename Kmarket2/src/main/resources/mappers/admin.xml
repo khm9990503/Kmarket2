@@ -143,6 +143,9 @@
    <select id="selectArticeCates" resultType="kr.co.kmarket2.vo.ArticleCateVO">
    	select * from `km_article_cate`;
    </select>
+   <select id="selectArticeCatesByCate" resultType="kr.co.kmarket2.vo.ArticleCateVO">
+   	select * from `km_article_cate` where `cate`=#{cate};
+   </select>
    <select id="selectCountTotalArticle" resultType="int">
    	SELECT COUNT(*) FROM `km_article` where `group`=#{group} and `parent`= 0
    								<choose>
@@ -172,4 +175,33 @@
 									    		</choose>
    													and `parent`=0 ORDER BY `no` DESC LIMIT #{start},10;
    </select>
+   <select id="selectArticle" resultType="kr.co.kmarket2.vo.ArticleVO">
+   	select * from `km_article` where `no`=#{no};
+   </select>
+   <select id="selectReply" resultType="kr.co.kmarket2.vo.ArticleVO">
+   	select * from `km_article` where `parent`=#{parent};
+   </select>
+   <insert id="insertArticle">
+   	insert into `km_article` set
+   								`group`=#{group}, 
+   								`cate`=#{cate}, 
+   								`cate2`=#{cate2}, 
+   								`title`=#{title}, 
+   								`content`=#{content}, 
+   								`uid`=#{uid}, 
+   								`regip`=#{regip}, 
+   								`rdate`=now(); 
+   </insert>
+   <insert id="insertReply">
+   	insert into `km_article` set `parent`=#{parent},`uid`=#{uid},`content`=#{content},`regip`=#{regip},`rdate`=now();
+   </insert>
+   <update id="updateArticle">
+   	update `km_article` set `title`=#{title},`content`=#{content},`cate`=#{cate},`rdate`=now() where `no`=#{no}
+   </update>
+   <update id="updateComment">
+   	UPDATE `km_article` SET `comment`=`comment`+1 WHERE `no`=#{no}
+   </update>
+   <delete id="deleteArticles">
+   	DELETE FROM `km_article` WHERE `no` = #{chk} or `parent` = #{chk};
+   </delete>
 </mapper>

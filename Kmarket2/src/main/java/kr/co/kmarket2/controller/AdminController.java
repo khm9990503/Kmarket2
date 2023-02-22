@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket2.service.AdminService;
@@ -178,7 +180,7 @@ public class AdminController {
 			articles = service.selectArticlesByGroup(group, cate, cate2, start, "3");
 		}
 		model.addAttribute("pg", pg);
-		model.addAttribute("pageStartNum", pageStartNum-1);
+		model.addAttribute("pageStartNum", pageStartNum);
 		model.addAttribute("lastPageNum", lastPageNum);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pageGroupStart", pageGroupStart);
@@ -191,16 +193,87 @@ public class AdminController {
 		model.addAttribute("articles",articles);
 		return "admin/cs/list";
 	}
+	@ResponseBody
+	@GetMapping("/admin/cs/cateList")
+	public Map<String, List<ArticleCateVO>> cateList(String cate) {
+		List<ArticleCateVO> cates = service.selectArticeCatesByCate(cate);
+		Map<String, List<ArticleCateVO>> map = new HashMap<>();
+		map.put("result", cates);
+		return map;
+	}
+	
+	@ResponseBody
+	@GetMapping("/admin/cs/listDelete")
+	public Map<String, Integer> listDelete(String chks){
+		List<String> chkList = Arrays.asList(chks.split(","));
+		int result = 0;
+		for(String chk : chkList) {
+			result = service.deleteArticles(chk);
+		}
+		Map<String , Integer> map = new HashMap<>();
+		map.put("result", result);
+		return map;
+	}
+	
 	@GetMapping("admin/cs/write")
-	public String write() {
+	public String write(Model model, String group, String cate) {
+		Map<String,String> cates = service.getCates(group, cate);
+		model.addAttribute("cates",cates);
+		model.addAttribute("group",group);
+		model.addAttribute("cate",cate);
 		return "admin/cs/write";
 	}
+	@RequestMapping(value="/admin/cs/write", method = {RequestMethod.POST})
+	public String write(ArticleVO vo, String group,HttpServletRequest req) {
+		vo.setRegip(req.getRemoteAddr());
+		int result = service.insertArticle(vo);
+		return "redirect:/admin/cs/list?group="+group+"&result="+result;
+	}
 	@GetMapping("admin/cs/modify")
-	public String modify() {
+	public String modify(Model model, String group, String cate, String no) {
+		Map<String,String> cates = service.getCates(group, cate);
+		List<ArticleCateVO> artiCate2s = service.selectArticeCates();
+		ArticleVO article = service.selectArticle(no);
+		model.addAttribute("cates",cates);
+		model.addAttribute("artiCate2s",artiCate2s);
+		model.addAttribute("no",no);
+		model.addAttribute("group",group);
+		model.addAttribute("cate",cate);
+		model.addAttribute("article",article);
 		return "admin/cs/modify";
 	}
+	
+	@RequestMapping(value="/admin/cs/modify", method = {RequestMethod.POST})
+	public String modify(ArticleVO vo) {
+		int result = service.updateArticle(vo);
+		return "redirect:/admin/cs/view?no="+vo.getNo()+"&result="+result+"&group="+vo.getGroup();
+	}
+	
 	@GetMapping("admin/cs/view")
-	public String view() {
+	public String view(Model model, String group, String cate, String no) {
+		Map<String,String> cates = service.getCates(group, cate);
+		List<ArticleCateVO> artiCate2s = service.selectArticeCates();
+		ArticleVO article = service.selectArticle(no);
+		ArticleVO reply = service.selectReply(no);
+		model.addAttribute("cates",cates);
+		model.addAttribute("artiCate2s",artiCate2s);
+		model.addAttribute("group",group);
+		model.addAttribute("cate",cate);
+		model.addAttribute("article",article);
+		model.addAttribute("reply",reply);
 		return "admin/cs/view";
+	}
+	@ResponseBody
+	@RequestMapping(value="/admin/cs/view", method = {RequestMethod.POST})
+	public Map<String, Integer> reply(String no, String uid, String content, HttpServletRequest req) {
+		int result = service.insertReply(no, uid, content, req.getRemoteAddr());
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
+		return map;
+	}
+	@GetMapping("admin/cs/delete")
+	public String delete(String no,String group) {
+		service.deleteArticles(no);
+		return "redirect:/admin/cs/list?group="+group;
 	}
 }

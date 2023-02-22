@@ -465,6 +465,7 @@ footer > div > p {
 }
 #csView table td:nth-child(1) {
 	font-weight: bold;
+	width: 120px
 }
 #csView table .content {
 	height: 280px;
@@ -493,6 +494,7 @@ footer > div > p {
 }
 #csWrite table td:nth-child(1) {
 	font-weight: bold;
+	width: 120px
 }
 #csWrite table tr:nth-child(3) td:nth-child(1) {
 	height: 280px;
@@ -529,6 +531,7 @@ footer > div > p {
 }
 #csModify table td:nth-child(1) {
 	font-weight: bold;
+	width: 120px
 }
 #csModify table tr:nth-child(3) td:nth-child(1) {
 	height: 280px;

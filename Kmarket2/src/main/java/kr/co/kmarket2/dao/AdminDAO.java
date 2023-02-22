@@ -31,6 +31,14 @@ public interface AdminDAO {
 	public int deleteProduct (String prodNo);
 /////// 관리자 고객센터 관련 /////////////////////////////////////////////
 	public List<ArticleCateVO> selectArticeCates ();
+	public List<ArticleCateVO> selectArticeCatesByCate (String cate);
 	public int selectCountTotalArticle (String group, String cate, String cate2 , @Param("type")String type);
 	public List<ArticleVO> selectArticlesByGroup (String group, String cate, String cate2, int start,@Param("type")String type);
+	public ArticleVO selectArticle (String no);
+	public ArticleVO selectReply (String parent);
+	public int insertArticle (ArticleVO vo);
+	public int insertReply (String parent, String uid, String content, String regip);
+	public int updateArticle (ArticleVO vo);
+	public int updateComment (String no);
+	public int deleteArticles (String chk);
 }
