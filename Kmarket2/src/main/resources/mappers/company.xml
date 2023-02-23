@@ -5,10 +5,10 @@
 <mapper namespace="kr.co.kmarket2.dao.CompanyDAO">	
 
 	<select id="selectCountTotal" resultType="int">
-    	select count(`no`) from `km_article` where `group`=#{group};
+    	select count(`no`) from `km_article` where `group`='dart';
     </select>
 	
 	<select id="selectComArticles" resultType="kr.co.kmarket2.vo.ArticleVO">
-		select * FROM `km_article` WHERE `group`='dart' ORDER BY `no` DESC LIMIT #{start},10; 
+		select * FROM `km_article` WHERE `group`='dart' ORDER BY `no` DESC LIMIT #{start},10;
 	</select>
 </mapper>
