@@ -106,7 +106,7 @@
     </select>
     <select id="selectMemberByUsername" resultType="kr.co.kmarket2.vo.MemberVO">
     	select * from `km_member` where `uid`=#{username};
-
+	</select>
     
     <!-- 메인 23/02/23 구홍모 -->
     <select id="selectMainProducts" resultType="kr.co.kmarket2.vo.ProductVO">
