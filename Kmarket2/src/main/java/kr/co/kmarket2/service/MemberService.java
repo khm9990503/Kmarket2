@@ -32,4 +32,8 @@ public class MemberService {
 		vo.setPass(encoder.encode(Pass2));
 		dao.insertSeller(vo);
 	};
+	
+	public int selectCountUid(String uid) {
+		return dao.selectCountUid(uid);
+	};
 }
