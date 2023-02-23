@@ -4,22 +4,22 @@
                 <ul>
                     <span class="menu_else"></span>
                     <li>
-                        <a href="./ordered.html">전체주문내역</a>
+                        <a th:href="@{/my/ordered}">전체주문내역</a>
                     </li>
                     <li>
-                        <a href="./point.html">포인트내역</a>
+                        <a th:href="@{/my/point}">포인트내역</a>
                     </li>
                     <li>
-                        <a href="./coupon.html">쿠폰</a>
+                        <a th:href="@{/my/coupon}">쿠폰</a>
                     </li>
                     <li>
                         <a href="#">나의리뷰</a>
                     </li>
                     <li>
-                        <a href="#">문의하기</a>
+                        <a th:href="@{/my/qna}">문의하기</a>
                     </li>
                     <li>
-                        <a href="#">나의설정</a>
+                        <a th:href="@{/my/info}">나의설정</a>
                     </li>
                 </ul>
                 <section>
@@ -43,13 +43,13 @@
                                         <img src="https://via.placeholder.com/80x80" alt="img" class="thumb">
                                     </a>
                                     <ul>
-                                        <li class="company">상호명</li>
+                                        <li class="company"><a href="#">상호명</a></li>
                                         <li class="prodName">
                                             <a href="#">상품명</a>
                                         </li>
                                         <li>
                                             수량 : <span class="prodCount">1</span>
-                                            개 / 주문번호 : <span class="ordNo">1012211341</span>
+                                            개 / 주문번호 : <span class="orderNo"><a href="#">1012211341</a></span>
                                         </li>
                                         <li class="prodPrice">
                                             34,000

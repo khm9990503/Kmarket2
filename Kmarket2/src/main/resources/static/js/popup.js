@@ -1,7 +1,7 @@
 $(function(){
 
     // 판매자 정보 팝업 띄우기
-    $('.latest .info .company > a').click(function(e){
+    $('.latest .company > a').click(function(e){
         e.preventDefault();
         $('#popSeller').addClass('on');
     });
@@ -14,7 +14,7 @@ $(function(){
     });
 
     // 주문상세 팝업 띄우기
-    $('.latest .info .orderNo > a').click(function(e){
+    $('.latest .orderNo > a').click(function(e){
         e.preventDefault();
         $('#popOrder').addClass('on');
     });
@@ -32,7 +32,7 @@ $(function(){
     });
                
     // 팝업 닫기
-    $('.btnClose').click(function(){                
+    $('.btnClose, .btnNegative').click(function(){                
         $(this).closest('.popup').removeClass('on');                
     });
 
