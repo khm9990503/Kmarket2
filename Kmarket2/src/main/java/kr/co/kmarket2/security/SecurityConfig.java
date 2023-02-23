@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		// 인가 (접근 권한) 설정
 		http.authorizeRequests().antMatchers("/").permitAll(); // ↓ ROLE_2 X
-		//http.authorizeRequests().antMatchers("/board/list").hasAnyRole("2","3","4","5"); 
+		http.authorizeRequests().antMatchers("/admin/*").hasAnyRole("5","6","7"); 
 		//http.authorizeRequests().antMatchers("/board/write").hasAnyRole("3","4","5"); 
 		//http.authorizeRequests().antMatchers("/board/view").hasAnyRole("3","4","5"); 
 		//http.authorizeRequests().antMatchers("/board/modify").hasAnyRole("3","4","5"); 
