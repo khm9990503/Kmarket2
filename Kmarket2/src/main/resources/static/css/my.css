@@ -1282,11 +1282,14 @@ footer > div > p:nth-of-type(2){
             position: fixed;
             left: 0;
             top: 0;
-            
+            display: none;
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 1000;
+        }
+        .popup.on {
+        	display: block;
         }
         .popup > div {
             display: table;
@@ -1314,7 +1317,7 @@ footer > div > p:nth-of-type(2){
             float: right;
             width: 30px;
             height: 30px;
-            background-image: url(/img/ico_sprites.png);
+            background-image: url(../img/ico_sprites.png);
             background-position: 227px -25px;
             background-color: transparent;
             border: none;

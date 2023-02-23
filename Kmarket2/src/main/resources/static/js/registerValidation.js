@@ -44,7 +44,7 @@
 			setTimeout(()=>{
 				console.log('here6');
 				$.ajax({
-					url: '/Kmarket2/member/checkUid.do',
+					url: '/Kmarket2/member/checkUid',
 					method: 'get',
 					data: jsonData,
 					dataType: 'json',
@@ -136,12 +136,13 @@
 		////////////////////////////////////
 		// 폼 데이터 유효성 검증(Validation)
 		////////////////////////////////////
-		/*
+		
 		// 아이디 검증
 		if(!isUidOk){
 			alert('아이디를 확인 하십시요.');
 			return false;
 		}
+		/*
 		// 비밀번호 검증
 		if(!isPassOk){
 			alert('비밀번호를 확인 하십시요.');

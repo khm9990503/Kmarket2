@@ -79,6 +79,7 @@
     <insert id="insertOrder">
     	insert into `km_product_order` values (default, #{ordUid}, #{ordCount}, #{ordPrice}, #{ordDiscount}, #{ordDelivery}, #{savePoint}, #{usedPoint}, #{ordTotPrice}, #{recipName}, #{recipHP}, #{recipZip}, #{recipAddr1}, #{recipAddr2}, #{deliveryRequest}, #{ordPayment}, #{ordComplete}, NOW());
     </insert>
+
     <select id="selectCartByProdNo" resultType="kr.co.kmarket2.vo.CartVO">
     	select * from `km_product_cart` where `prodNo`=#{prodNo} and `uid`=#{username};
     </select>
@@ -105,5 +106,33 @@
     </select>
     <select id="selectMemberByUsername" resultType="kr.co.kmarket2.vo.MemberVO">
     	select * from `km_member` where `uid`=#{username};
+
+    
+    <!-- 메인 23/02/23 구홍모 -->
+    <select id="selectMainProducts" resultType="kr.co.kmarket2.vo.ProductVO">
+    	SELECT * FROM `km_product` ORDER BY
+    	<choose>
+    		<when test="sort == 1">
+    			`sold` DESC LIMIT 5;
+    		</when>
+    		<when test="sort == 2">
+    			`hit` DESC LIMIT 8;
+    		</when>
+    		<when test="sort == 3">
+    			`score` DESC LIMIT 8;
+    		</when>
+    		<when test="sort == 4">
+    			`prodNo` DESC LIMIT 8;
+    		</when>
+    		<when test="sort == 5">
+    			`discount` DESC LIMIT 8;
+    		</when>
+    	</choose>
+    </select>
+    <select id="selectProdCate1s" resultType="kr.co.kmarket2.vo.Cate1VO">
+    	select * from `km_product_cate1`;
+    </select>
+    <select id="selectProdCate2s" resultType="kr.co.kmarket2.vo.Cate2VO">
+    	select * from `km_product_cate2`;
     </select>
 </mapper>

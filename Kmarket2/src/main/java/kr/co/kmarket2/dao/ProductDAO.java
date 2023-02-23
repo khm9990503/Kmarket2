@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import kr.co.kmarket2.vo.CartVO;
+import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderItemVO;
@@ -81,4 +82,13 @@ public interface ProductDAO {
 	
 	// 주문자 정보 가져오기
 	public MemberVO selectMemberByUsername(String username);
+
+	// main - 구홍모
+	// 메인 상품 목록 구현
+	public List<ProductVO> selectMainProducts(String sort);
+	// 상품 카테고리1 불러오기
+	public List<Cate1VO> selectProdCate1s();
+	// 상품 카테고리2 불러오기
+	public List<Cate2VO> selectProdCate2s();
+
 }
