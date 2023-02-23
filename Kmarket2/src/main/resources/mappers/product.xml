@@ -51,4 +51,88 @@
     <select id="selectReviewCountTotal" resultType="int">
     	select count(`prodNo`) from `km_product_review` where `prodNo`=#{prodNo};
     </select>
+    <insert id="insertCart" parameterType="kr.co.kmarket2.vo.CartVO">
+    	insert into `km_product_cart` values (default, #{uid}, #{prodNo}, #{count}, #{price}, #{discount}, #{point}, #{delivery}, #{total}, NOW());
+    </insert>
+    <select id="selectCartByUsername" resultType="kr.co.kmarket2.vo.CartVO">
+    	select a.*, b.prodName, b.prodCate1, b.prodCate2, b.descript from `km_product_cart` as a 
+    	join `km_product` as b 
+    	on a.prodNo = b.prodNo 
+    	where `uid`=#{username};
+    </select>
+    <delete id="deleteCartByProdNo">
+    	delete from `km_product_cart` where `prodNo`=#{prodNo} and `uid`=#{username};
+    </delete>
+    <select id="selectCartByCartNo" resultType="kr.co.kmarket2.vo.CartVO">
+    	select a.*, b.prodName, b.prodCate1, b.prodCate2, b.descript from `km_product_cart` as a 
+    	join `km_product` as b 
+    	on a.prodNo = b.prodNo 
+    	where `cartNo` in (
+    		<foreach collection="array" item="cartNo" separator=",">
+    		#{cartNo}
+    		</foreach>
+    	);
+    </select>
+    <select id="selectUserByUsername" resultType="kr.co.kmarket2.vo.MemberVO">
+    	select * from `km_member` where `uid`=#{username};
+    </select>
+    <insert id="insertOrder">
+    	insert into `km_product_order` values (default, #{ordUid}, #{ordCount}, #{ordPrice}, #{ordDiscount}, #{ordDelivery}, #{savePoint}, #{usedPoint}, #{ordTotPrice}, #{recipName}, #{recipHP}, #{recipZip}, #{recipAddr1}, #{recipAddr2}, #{deliveryRequest}, #{ordPayment}, #{ordComplete}, NOW());
+    </insert>
+
+    <select id="selectCartByProdNo" resultType="kr.co.kmarket2.vo.CartVO">
+    	select * from `km_product_cart` where `prodNo`=#{prodNo} and `uid`=#{username};
+    </select>
+    <select id="selectOrdNoByUsername" resultType="kr.co.kmarket2.vo.OrderVO">
+    	select * from `km_product_order` where `ordUid`=#{username} order by `ordDate` desc limit 1;
+    </select>
+    <insert id="insertOrderItems" parameterType="kr.co.kmarket2.vo.OrderItemVO">
+    	insert into `km_product_order_item` values (#{ordNo}, #{prodNo}, #{count}, #{price}, #{discount}, #{point}, #{delivery}, #{total});
+    </insert>
+    <update id="updateMemberPoint">
+    	update `km_member` set `point` = `point` + #{pointSum} where `uid`=#{username};
+    </update>
+    <update id="insertPoint">
+    	insert `km_member_point` values (default, #{username}, #{ordNo}, #{point}, NOW());
+    </update>
+    <select id="selectOrder" resultType="kr.co.kmarket2.vo.OrderItemVO">
+    	select a.*, b.* from `km_product_order_item` as a 
+    	join `km_product` as b 
+    	on a.prodNo = b.prodNo 
+    	where `ordNo` =#{ordNo};
+    </select>
+    <select id="selectOrderInfo" resultType="kr.co.kmarket2.vo.OrderVO">
+    	select * from `km_product_order` where `ordNo` =#{ordNo};
+    </select>
+    <select id="selectMemberByUsername" resultType="kr.co.kmarket2.vo.MemberVO">
+    	select * from `km_member` where `uid`=#{username};
+
+    
+    <!-- 메인 23/02/23 구홍모 -->
+    <select id="selectMainProducts" resultType="kr.co.kmarket2.vo.ProductVO">
+    	SELECT * FROM `km_product` ORDER BY
+    	<choose>
+    		<when test="sort == 1">
+    			`sold` DESC LIMIT 5;
+    		</when>
+    		<when test="sort == 2">
+    			`hit` DESC LIMIT 8;
+    		</when>
+    		<when test="sort == 3">
+    			`score` DESC LIMIT 8;
+    		</when>
+    		<when test="sort == 4">
+    			`prodNo` DESC LIMIT 8;
+    		</when>
+    		<when test="sort == 5">
+    			`discount` DESC LIMIT 8;
+    		</when>
+    	</choose>
+    </select>
+    <select id="selectProdCate1s" resultType="kr.co.kmarket2.vo.Cate1VO">
+    	select * from `km_product_cate1`;
+    </select>
+    <select id="selectProdCate2s" resultType="kr.co.kmarket2.vo.Cate2VO">
+    	select * from `km_product_cate2`;
+    </select>
 </mapper>

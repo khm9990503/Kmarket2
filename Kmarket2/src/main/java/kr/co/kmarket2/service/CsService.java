@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.kmarket2.dao.CsDAO;
+import kr.co.kmarket2.vo.ArticleCateVO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.QnaCateVO;
 
 @Service
 public class CsService {
@@ -27,6 +29,11 @@ public class CsService {
 	// index 공지사항 리스트
 	public List<ArticleVO> selectNotices(String group){
 		return dao.selectNotices(group);
+	}
+	
+	// index 문의하기 리스트
+	public List<ArticleVO> selectQnas(String group){
+		return dao.selectQnas(group);
 	}
 	
 	
@@ -69,6 +76,15 @@ public class CsService {
 	public ArticleVO selectAnswer(int no) {
 		return dao.selectAnswer(no);
 	}
+	
+	
+	/* write */
+	
+	public int insertArticle(ArticleVO vo) {
+		return dao.insertArticle(vo);
+	}
+	
+	
 	
 	// 페이징
 		public int getLastPageNum(int total) {

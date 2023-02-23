@@ -2,14 +2,19 @@ package kr.co.kmarket2.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.kmarket2.service.CsService;
+import kr.co.kmarket2.vo.ArticleCateVO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.QnaCateVO;
 
 @Controller
 public class CsController {
@@ -25,6 +30,10 @@ public class CsController {
 		// 공지사항 목록 가져오기
 		List<ArticleVO> articles = service.selectNotices(group);
 		
+		// 문의하기 목록 가져오기
+		List<ArticleVO> qnaArticles = service.selectQnas(group);
+		
+		model.addAttribute("qnaArticles",qnaArticles);
 		model.addAttribute("articles", articles);
 		
 		return "cs/index";
@@ -156,7 +165,24 @@ public class CsController {
     }
 
     @GetMapping("cs/qna/write")
-    public String qnaWrite() {
+    public String qnaWrite(Model model, String cate) {
+    	
+    	model.addAttribute("cate",cate);
+    	
         return "cs/qna/write";
     }
+    
+    @PostMapping("cs/qna/write")
+    public String qnaWrite(Model model, ArticleVO vo, HttpServletRequest req) {
+    	
+    	vo.setRegip(req.getRemoteAddr());
+    	
+    	// 글 쓰기
+    	service.insertArticle(vo);
+    	
+    	return "redirect:/cs/qna/list?group=qna&cate="+vo.getCate();
+    }
+    
+    
+   
 }

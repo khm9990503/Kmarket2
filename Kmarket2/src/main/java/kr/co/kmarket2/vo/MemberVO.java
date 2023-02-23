@@ -14,6 +14,8 @@ import lombok.ToString;
 public class MemberVO {
 	private String uid;
 	private String pass;
+	private String pass1;
+	private String pass2;
 	private String name;
 	private int gender;
 	private String hp;
@@ -26,12 +28,12 @@ public class MemberVO {
 	private String addr2;
 	private String company;
 	private String ceo;
-	private String bizRegNum;
 	private String comRegNum;
+	private String bizRegNum;
 	private String tel;
 	private String manager;
 	private String managerHp;
-	private String fax;
+	private String fax;	
 	private String regip;
 	private String wdate;
 	private String rdate;

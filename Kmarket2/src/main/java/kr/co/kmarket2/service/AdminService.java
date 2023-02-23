@@ -3,16 +3,21 @@ package kr.co.kmarket2.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.kmarket2.dao.AdminDAO;
+import kr.co.kmarket2.vo.ArticleCateVO;
+import kr.co.kmarket2.vo.ArticleVO;
 import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.ProductVO;
@@ -113,6 +118,8 @@ public class AdminService {
 		public int selectCountTotalSeller(String seller) {
 			return dao.selectCountTotalSeller(seller);
 		}
+		
+
 		// 검색 게시물 총 갯수
 		public int selectCountTotalSearch (String search,String type) {
 			return dao.selectCountTotalSearch(search,type);
@@ -147,4 +154,57 @@ public class AdminService {
 		}
 		// 페이징 처리 끝 ///////////////////////////////////////////////////////
 	/////// 관리자 고객센터 관련 /////////////////////////////////////////////
+		public int selectCountTotalArticle(String group, String cate, String cate2, String type) {
+			return dao.selectCountTotalArticle(group,cate,cate2,type);
+		}
+		public List<ArticleCateVO> selectArticeCatesByCate (String cate){
+			return dao.selectArticeCatesByCate(cate);
+		};
+		public List<ArticleCateVO> selectArticeCates () {
+			return dao.selectArticeCates();
+		};
+		public List<ArticleVO> selectArticlesByGroup (String group, String cate, String cate2, int start,String type){
+			return dao.selectArticlesByGroup(group, cate, cate2, start, type);
+		};
+		public ArticleVO selectArticle (String no) {
+			return dao.selectArticle(no);
+		};
+		public ArticleVO selectReply (String parent) {
+			return dao.selectReply(parent);
+		};
+		public int insertArticle (ArticleVO vo) {
+			return dao.insertArticle(vo);
+		};
+		@Transactional
+		public int insertReply (String parent, String uid, String content, String regip) {
+			dao.insertReply(parent, uid, content, regip);
+			return dao.updateComment(parent);
+		};
+		public int updateArticle (ArticleVO vo) {
+			return dao.updateArticle(vo);
+		};
+		public int deleteArticles (String chk) {
+			return dao.deleteArticles(chk);
+		};
+		public Map<String,String> getCates (String group, String cate){
+			Map<String,String> cates = new LinkedHashMap<>();
+			if(group.equals("notice")) {
+				cates.put("service", "고객서비스");
+				cates.put("deal", "안전거래");
+				cates.put("danger", "위해상품");
+				cates.put("lucky", "이벤트당첨");
+			}else {
+				cates.put("member", "회원");
+				cates.put("event", "쿠폰/이벤트");
+				cates.put("order", "주문/결제");
+				cates.put("deli", "배송");
+				cates.put("cancle", "취소/반품/교환");
+				cates.put("trip", "여행/항공/숙박");
+				cates.put("safe", "안전거래");
+				if(cate == null) {
+					cate = "member";
+				}
+			}
+			return cates;
+		};
 }

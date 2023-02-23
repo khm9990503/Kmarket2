@@ -398,6 +398,12 @@ footer > ul > li {
   }
 
   /* notice - list */
+  #cs > .notice > .list > article h2 {
+   font-size: 14px;
+   color: grey;
+   margin-top: 10px;
+}
+  
   #cs > .notice > .list > article > table {
     width: 100%;
     border-collapse: collapse;
@@ -454,7 +460,9 @@ footer > ul > li {
 
 /* notice - view */
 #cs > .notice > .view{}
-#cs > .notice > .view > article > nav{
+
+
+#cs > .notice > .view > article > .main{
     width: 100%;
     height: auto;
     padding: 26px;
@@ -462,6 +470,12 @@ footer > ul > li {
     border-bottom: 1px solid #e9e9e9;
     box-sizing: border-box;
 }
+ #cs > .notice > .view > article h3 {
+   font-size: 14px;
+   color: grey;
+   margin-top: 10px;
+}
+
 #cs > .notice > .view > article > nav > .title{
     margin-bottom: 6px;
     font-size: 32px;
@@ -576,6 +590,12 @@ footer > ul > li {
 }
 
 /* faq - list */
+
+#cs > .faq > .list > article h2{
+    font-size: 14px;
+    color: grey;
+    margin-top: 10px;
+}
 #cs > .faq > .list > article > div{
     margin-top: 26px;
 }
@@ -626,7 +646,14 @@ footer > ul > li {
 /* faq - view */
 #cs > .faq > .view{}
   #cs > .faq > .view > article{}
-  #cs > .faq > .view > article > nav{
+  
+  #cs > .faq > .view > article h2{
+    font-size: 14px;
+    color: grey;
+    margin-top: 10px;
+}
+  
+  #cs > .faq > .view > article > .main{
        width: 100%;
        height: auto;
        padding: 26px;
@@ -754,6 +781,13 @@ footer > ul > li {
 }
 
 /* qna - list */
+
+#cs > .qna > .list > article > nav > h2{
+    font-size: 14px;
+    color: grey;
+    margin-top: 10px;
+}
+
 #cs > .qna > .list > article > table{
     width: 100%;
     border-collapse: collapse;
@@ -834,7 +868,7 @@ footer > ul > li {
 /* qna - view */
 #cs > .qna > .view{}
 #cs > .qna > .view > article{}
-#cs > .qna > .view > article > nav{
+#cs > .qna > .view > article > .main{
      width: 100%;
      height: auto;
      padding: 26px;
@@ -842,6 +876,13 @@ footer > ul > li {
      border-bottom: 1px solid #e9e9e9;
      box-sizing: border-box;
 }
+
+#cs > .qna > .view > article > nav > h2{
+    font-size: 14px;
+    color: grey;
+    margin-top: 10px;
+}
+
 #cs > .qna > .view > article > nav > .title{
      margin-bottom: 6px;
      font-size: 32px;
@@ -900,6 +941,13 @@ footer > ul > li {
 }
 
 /* qna - write */
+#cs > .qna > .write > article h2 {
+   font-size: 14px;
+   color: grey;
+   margin-top: 10px;
+}
+
+
 #cs > .qna > .write > article table{
     width: 100%;
     border-collapse: collapse;
@@ -970,4 +1018,17 @@ footer > ul > li {
     line-height: 58px;
     text-align: center;
     box-sizing: border-box;
+}
+
+.fa {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 5px;
 }

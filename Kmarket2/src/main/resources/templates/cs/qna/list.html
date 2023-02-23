@@ -53,7 +53,7 @@
                                 <td><a th:href="@{/cs/qna/view(no=${article.no},group=${article.group},cate=${article.cate})}">&#91;[[${article.c2Name}]]&#93;[[${article.title}]]</a></td>
                                 <td th:if="${article.comment} eq 1" class="answerComplete">답변완료</td>
                                 <td th:if="${article.comment} eq 0" class="answerIng">검토중</td>
-                                <td>[[${article.uid}]]</td>
+                                <td class="uid">[[${article.uid.substring(0,1)}]]***</td>
                                 <td>[[${article.rdate.substring(2,10)}]]</td>
                             </tr>
                             
@@ -69,7 +69,7 @@
                             <a th:href="@{/cs/qna/list(pg=${pageGroupEnd + 1})}" class="next">다음</a>
                             </th:block>
                         </div>
-                        <a th:href="@{/cs/qna/write}" class="btnWrite">문의하기</a>
+                        <a th:href="@{/cs/qna/write(group='qna',cate=${cate})}" class="btnWrite">문의하기</a>
                     </article>
                 </section>
             </div>

@@ -1,5 +1,6 @@
 package kr.co.kmarket2.controller;
 
+import java.security.Principal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,15 +9,25 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket2.service.ProductService;
+import kr.co.kmarket2.vo.CartVO;
 import kr.co.kmarket2.vo.Cate2VO;
+import kr.co.kmarket2.vo.MemberVO;
+import kr.co.kmarket2.vo.OrderItemVO;
+import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
@@ -25,6 +36,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService service;
+	
+	@Autowired
+	private PasswordEncoder encoder; // 회원가입 기능 구현 전 임의로 아이디, 비밀번호 지정하기 위해 주입
 	
 	@GetMapping("product/list")
 	public String list(String cate1, String cate2, String sort, Model model, @RequestParam(value="pg", defaultValue = "1") String pg) {
@@ -154,24 +168,166 @@ public class ProductController {
 		return result;
 	}
 	
+	@PostMapping("product/putInCart")
+	@ResponseBody
+	public Map<String, Object> putInCart(@RequestBody CartVO cartVO , Principal principal) {
+		// 현재 사용자 정보 가져오기
+		/*
+		String username = null;
+		Map<String, Integer> resultMap = new HashMap<>();
+		
+		if(principal != null){ 
+			username = ((UserDetails) principal).getUserName();
+		}else{
+			result.put("result", 0);
+			return resultMap;
+		}
+		*/
+		String username = "a123123";
+		Map<String, Object> resultMap = new HashMap<>();
+		cartVO.setUid(username);
+		
+		// cart 테이블에 정보 저장
+		int result = service.insertCart(cartVO);
+		resultMap.put("result", result);
+		resultMap.put("username", cartVO.getUid()); // 로그인 기능 구현 때까지 임시로 사용
+		return resultMap;
+	}
+	
 	@GetMapping("product/cart")
-	public String cart() {
+	public String cart(String uid, Model model) {
+		// 현재 사용자 정보 가져와서 cart 테이블에서 상품 가져오기
+		/*
+		String username = ((UserDetails) principal).getUserName();
+		*/
+		
+		List<CartVO> items = service.selectCartByUsername(uid);
+		
+		model.addAttribute("items", items);
 		return "product/cart";
 	}
 	
 	@ResponseBody
-	@PostMapping("product/putInCart")
-	public void putInCart() {
-		System.out.println("1");
+	@GetMapping("product/remove")
+	public Map<String, String> removeFromCart(String[] items, Principal principal) {
+		// 현재 사용자 username과 prodNo 이용해서 cart 테이블에서 선택한 상품 삭제
+		// 혹시 principal 객체 인식 못하면 뷰 페이지에서 sec:authentication으로 username보내기
+		String username = "a123123";
+		
+		for(int i =0; i < items.length; i++) {
+			service.deleteCartByProdNo(items[i], username);
+		}
+		
+		// uid ajax reponse값으로 설정 => ajax 성공하면 리다이렉트하는데 uid가 파라미터로 필요
+		Map<String, String> result = new HashMap<>();
+		result.put("username", username);
+		return result;
 	}
 	
-	@GetMapping("product/order")
-	public String order() {
+	@PostMapping("product/order")
+	public String order(@RequestParam(value="individualItem") String[] individualItem, Model model, Principal principal){
+		// cart 페이지에서 주문하기 누를 경우(폼 submit) 체크된 체크박스에 바인딩된 cartNo값 전송한다
+		List<CartVO> orderList = service.selectCartByCartNo(individualItem);
+		
+		for(CartVO item : orderList)
+			item.setDisPrice((int) Math.ceil(item.getPrice() * item.getDiscount() * 0.01));
+		
+		// 현재 사용자 정보 불러오기(포인트값)
+		String username = principal.getName();
+		MemberVO currentUser = service.selectUserMyUsername(username);
+		
+		model.addAttribute("orderList", orderList);
+		model.addAttribute("user", currentUser);
 		return "product/order";
 	}
 	
+	@PostMapping("product/storeOrderInfo")
+	@ResponseBody
+	public Map<String, Integer> storeOrderInfo(@RequestBody OrderVO order){
+		int result = service.insertOrder(order);
+		
+		// (현재 사용자의 포인트) + savePoint - usedPoint
+		int pointSum = order.getSavePoint() - order.getUsedPoint();
+		service.updateMemberPoint(pointSum, order.getOrdUid());
+		
+		Map<String, Integer> resultMap = new HashMap<>();
+		resultMap.put("result", result);
+		return resultMap;
+	}
+	
+	@PostMapping("product/storeOrderItems")
+	@ResponseBody
+	public Map<String, Integer> storeOrderItems(@RequestBody Map<String, Object> prodNoListToSend){
+		ArrayList<String> prodNos = (ArrayList<String>) prodNoListToSend.get("prodNoList");
+		String username = (String) prodNoListToSend.get("uid");
+		
+		// username을 이용해서 order 테이블에서 ordNo값 가져오기
+			OrderVO order = service.selectOrdNoByUsername(username);
+			int ordNo = order.getOrdNo();
+			int point = order.getSavePoint();
+		
+		// prodNo와 username을 이용해서 cart 테이블에서 상품정보 가져오기
+		List<OrderItemVO> ordItems = new ArrayList<>();
+		List<String> cartProdNos = new ArrayList<>(); // ord_item 테이블에 추가 끝나고 cart 테이블에서 삭제를 위해 저장
+		for(int i =0 ; i < prodNos.size(); i++){
+			CartVO item = service.selectCartByProdNo(prodNos.get(i), username);
+			
+			OrderItemVO ordItem = new OrderItemVO();
+			ordItem.setOrdNo(ordNo);
+			ordItem.setProdNo(item.getProdNo());
+			ordItem.setCount(item.getCount());
+			ordItem.setPrice(item.getPrice());
+			ordItem.setDiscount(item.getDiscount());
+			ordItem.setPoint(item.getPoint());
+			ordItem.setDelivery(item.getDelivery());
+			ordItem.setTotal(item.getTotal());
+			
+			ordItems.add(ordItem);
+			
+			cartProdNos.add(String.valueOf(item.getProdNo()));
+		}
+		
+		int ordResult = 0;
+		// ordNo값과 상품정보를 order_item 테이블에 저장
+		for(OrderItemVO ordItem : ordItems) {
+			ordResult = service.insertOrderItems(ordItem);
+			
+			if(ordResult == 0)
+				break;
+		}
+		
+		// 주문 완료된 상품은 cart 테이블에서 삭제하기
+		for(String cartProdNo : cartProdNos)
+			service.deleteCartByProdNo(cartProdNo, username);
+		
+		// point 테이블 업데이트하기
+		service.insertPoint(username, ordNo, point);
+		
+		Map<String, Integer> resultMap = new HashMap<>();
+		resultMap.put("ordResult", ordResult);
+		resultMap.put("ordNo", ordNo);
+		return resultMap;
+	}
+	
 	@GetMapping("product/complete")
-	public String complete() {
+	public String complete(String ordNo, Model model) {
+		// order_item 테이블에서 ordNo값으로 주문완료 상품 가지고오기
+		List<OrderItemVO> ordItems = service.selectOrder(ordNo);
+		
+		// order 테이블에서 ordNo값으로 주문 정보 가지고 오기
+		OrderVO order = service.selectOrderInfo(ordNo);
+		
+		// order_item의 할인 가격 구하기
+		for(OrderItemVO item : ordItems) {
+			item.setDiscountPrice((int) Math.floor(item.getPrice() * item.getDiscount() * 0.01));
+		}
+		
+		// 주문자 정보 저장
+		MemberVO orderer = service.selectMemberByUsername(order.getOrdUid());
+		
+		model.addAttribute("ordItems", ordItems);
+		model.addAttribute("order", order);
+		model.addAttribute("orderer", orderer);
 		return "product/complete";
 	}
 }

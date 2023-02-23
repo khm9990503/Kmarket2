@@ -368,6 +368,15 @@ header > .logo > div > a {
     vertical-align: middle;
 }
 
+#member > .register table button {
+    margin-left: 5px;
+    padding: 1px 5px;
+    border: 1px solid #dfe5ed;
+    font-size: 12px;
+    border-radius: 1.9px;
+    cursor: pointer;
+}
+
 #member > .register table label {
     display: inline-block;
     width: 60px;
@@ -382,6 +391,15 @@ header > .logo > div > a {
     margin-top: 6px;
 }
 
+#member > .register table .addr button {
+    margin-left: 5px;
+    padding: 1px 5px;
+    border: 1px solid #dfe5ed;
+    font-size: 12px;
+    border-radius: 1.9px;
+    cursor: pointer;
+}
+
 #member > .register form input[type="submit"] {
     display: block;
     background: #ef3f43;
@@ -394,6 +412,8 @@ header > .logo > div > a {
     border-radius: 2px;
     cursor: pointer;
 }
+
+
 
 
 /* SignUp(판매회원) */
@@ -467,6 +487,15 @@ header > .logo > div > a {
     vertical-align: middle;
 }
 
+#member > .registerSeller table button {
+    margin-left: 5px;
+    padding: 1px 5px;
+    border: 1px solid #dfe5ed;
+    font-size: 12px;
+    border-radius: 1.9px;
+    cursor: pointer;
+}
+
 #member > .registerSeller table .addr th {
     padding-left: 30px;
 }
@@ -484,6 +513,15 @@ header > .logo > div > a {
 
 #member > .registerSeller table input {
     margin-top: 6px;
+}
+
+#member > .registerSeller table .addr button {
+    margin-left: 5px;
+    padding: 1px 5px;
+    border: 1px solid #dfe5ed;
+    font-size: 12px;
+    border-radius: 1.9px;
+    cursor: pointer;
 }
 
 #member > .registerSeller form input[type="submit"] {
