@@ -50,6 +50,9 @@
 				`locationTerms`=#{locationTerms};
 	</insert>
 				
+	<select id="selectCountUid" resultType="int">
+		select count(`uid`) from `km_member` where `uid`=#{uid};
+	</select>
 	
 </mapper>
 

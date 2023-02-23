@@ -14,6 +14,6 @@ public interface MemberDAO {
 	public TermsVO selectTerms();
 	public void insertBuyer(MemberVO vo);
 	public void insertSeller(MemberVO vo);
-	
+	public int selectCountUid(String uid);
 
 }
