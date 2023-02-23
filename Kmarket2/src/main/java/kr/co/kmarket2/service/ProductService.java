@@ -14,6 +14,7 @@ import kr.co.kmarket2.vo.CartVO;
 import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.MemberVO;
+import kr.co.kmarket2.vo.OrderItemVO;
 import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
@@ -121,7 +122,49 @@ public class ProductService {
 		return dao.insertOrder(order);
 	}
 	
+	// 주문 상품 prodNo 이용해서 cart 테이블에서 상품 정보 가져오기
+	public CartVO selectCartByProdNo(String prodNo, String username) {
+		return dao.selectCartByProdNo(prodNo, username);
+	}
 	
+	// username 이용해서 ordNo값 가져오기
+	public OrderVO selectOrdNoByUsername(String username) {
+		return dao.selectOrdNoByUsername(username);
+	}
+	
+	// 주문 상품 order_item 테이블에 저장하기
+	public int insertOrderItems(OrderItemVO ordItem) {
+		return dao.insertOrderItems(ordItem);
+	}
+	
+	// 주문 이후 사용자의 포인트 변화
+	public int updateMemberPoint(int pointSum, String username) {
+		return dao.updateMemberPoint(pointSum, username);
+	}
+	
+	// point 테이블 업데이트하기
+	public int insertPoint(String username, int ordNo, int point) {
+		return dao.insertPoint(username, ordNo, point);
+	}
+	
+	// complete
+	// order_item 테이블에서 ordNo값으로 주문완료 상품 가지고오기
+	public List<OrderItemVO> selectOrder(String ordNo){
+		return dao.selectOrder(ordNo);
+	}
+	
+	// order 테이블에서 ordNo값으로 주문 정보 가지고 오기
+	public OrderVO selectOrderInfo(String ordNo){
+		return dao.selectOrderInfo(ordNo);
+	}
+	
+	// 주문자 정보 가져오기
+	public MemberVO selectMemberByUsername(String username) {
+		return dao.selectMemberByUsername(username);
+	}
+	
+		
+		
 	// 페이징
 	// 글 총 갯수(total)
 	public int selectCountTotal(String cate1, String cate2) {

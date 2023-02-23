@@ -241,19 +241,93 @@ public class ProductController {
 		return "product/order";
 	}
 	
-	@RequestMapping(value="product/storeOrderInfo", method = {RequestMethod.POST})
+	@PostMapping("product/storeOrderInfo")
 	@ResponseBody
-	public Map<String, Integer> storeOrderInfo(@RequestParam("ordPrice") String ordPrice){
-		int result = 1;
+	public Map<String, Integer> storeOrderInfo(@RequestBody OrderVO order){
+		int result = service.insertOrder(order);
+		
+		// (현재 사용자의 포인트) + savePoint - usedPoint
+		int pointSum = order.getSavePoint() - order.getUsedPoint();
+		service.updateMemberPoint(pointSum, order.getOrdUid());
+		
 		Map<String, Integer> resultMap = new HashMap<>();
 		resultMap.put("result", result);
 		return resultMap;
 	}
 	
-	@GetMapping("product/complete")
-	public String complete() {
-		// cart 테이블에서 주문 완료한 상품 삭제
+	@PostMapping("product/storeOrderItems")
+	@ResponseBody
+	public Map<String, Integer> storeOrderItems(@RequestBody Map<String, Object> prodNoListToSend){
+		ArrayList<String> prodNos = (ArrayList<String>) prodNoListToSend.get("prodNoList");
+		String username = (String) prodNoListToSend.get("uid");
 		
+		// username을 이용해서 order 테이블에서 ordNo값 가져오기
+			OrderVO order = service.selectOrdNoByUsername(username);
+			int ordNo = order.getOrdNo();
+			int point = order.getSavePoint();
+		
+		// prodNo와 username을 이용해서 cart 테이블에서 상품정보 가져오기
+		List<OrderItemVO> ordItems = new ArrayList<>();
+		List<String> cartProdNos = new ArrayList<>(); // ord_item 테이블에 추가 끝나고 cart 테이블에서 삭제를 위해 저장
+		for(int i =0 ; i < prodNos.size(); i++){
+			CartVO item = service.selectCartByProdNo(prodNos.get(i), username);
+			
+			OrderItemVO ordItem = new OrderItemVO();
+			ordItem.setOrdNo(ordNo);
+			ordItem.setProdNo(item.getProdNo());
+			ordItem.setCount(item.getCount());
+			ordItem.setPrice(item.getPrice());
+			ordItem.setDiscount(item.getDiscount());
+			ordItem.setPoint(item.getPoint());
+			ordItem.setDelivery(item.getDelivery());
+			ordItem.setTotal(item.getTotal());
+			
+			ordItems.add(ordItem);
+			
+			cartProdNos.add(String.valueOf(item.getProdNo()));
+		}
+		
+		int ordResult = 0;
+		// ordNo값과 상품정보를 order_item 테이블에 저장
+		for(OrderItemVO ordItem : ordItems) {
+			ordResult = service.insertOrderItems(ordItem);
+			
+			if(ordResult == 0)
+				break;
+		}
+		
+		// 주문 완료된 상품은 cart 테이블에서 삭제하기
+		for(String cartProdNo : cartProdNos)
+			service.deleteCartByProdNo(cartProdNo, username);
+		
+		// point 테이블 업데이트하기
+		service.insertPoint(username, ordNo, point);
+		
+		Map<String, Integer> resultMap = new HashMap<>();
+		resultMap.put("ordResult", ordResult);
+		resultMap.put("ordNo", ordNo);
+		return resultMap;
+	}
+	
+	@GetMapping("product/complete")
+	public String complete(String ordNo, Model model) {
+		// order_item 테이블에서 ordNo값으로 주문완료 상품 가지고오기
+		List<OrderItemVO> ordItems = service.selectOrder(ordNo);
+		
+		// order 테이블에서 ordNo값으로 주문 정보 가지고 오기
+		OrderVO order = service.selectOrderInfo(ordNo);
+		
+		// order_item의 할인 가격 구하기
+		for(OrderItemVO item : ordItems) {
+			item.setDiscountPrice((int) Math.floor(item.getPrice() * item.getDiscount() * 0.01));
+		}
+		
+		// 주문자 정보 저장
+		MemberVO orderer = service.selectMemberByUsername(order.getOrdUid());
+		
+		model.addAttribute("ordItems", ordItems);
+		model.addAttribute("order", order);
+		model.addAttribute("orderer", orderer);
 		return "product/complete";
 	}
 }
