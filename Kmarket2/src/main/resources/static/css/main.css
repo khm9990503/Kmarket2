@@ -74,6 +74,14 @@ header>div{
     color: #333;
     outline: none;
 }
+.logo > div > form > button > a {
+    position: absolute;
+    font-size: 20px;
+    display: inline-block;
+    right: 0.3px;
+    top: 0px;
+}
+
 .logo > div > form > input{
     position: absolute;
     width: 100%;
@@ -181,11 +189,19 @@ main > aside > .category ol {
 }
 main > aside > .category ol > li {
     width: 100%;
-    height: 24px;
+    height: 33px;
     padding: 10px;
     box-sizing: border-box;
 }
-
+main > aside > .category ol > li a {
+	color: #111;
+	font-weight: bold;
+	font-size: 1em;
+}
+main > aside .category ol > li > a:hover {
+     color: #41ab47;
+     text-decoration: underline;
+ }
 
 main > aside > .best {
     width: 215px;
@@ -385,6 +401,12 @@ main > section > section > article .dis_price > ins{
 main > section > section > article .dis_price > ins::after{
     content: "원";
 }
+main > section > section > article .dis_price > span::before{
+    content: "배송비 : ";
+}
+main > section > section > article .dis_price > span::after{
+    content: "원";
+}
 main > section > section > article .dis_price > .free{
     display: inline-block;
     font-size: 0;
@@ -441,4 +463,17 @@ footer > div > p > strong{
     color: #464646;
     font-size: 14px;
     font-weight: bold;
+}
+/*최상단으로 올라가는 버튼*/
+#top {
+    position: fixed;
+    left: 50%;
+    bottom: 10px;
+    margin-left: 600px;
+    width: 42px;
+    height: 42px;
+    background-image: url('../img/top.png');
+    border: none;
+    font-size: 0;
+    cursor: pointer;
 }

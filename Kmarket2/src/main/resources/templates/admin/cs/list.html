@@ -239,7 +239,7 @@ $(function(){
     <a href="#" class="btn btnDel">선택삭제</a>
     <c:choose>
     		<a th:if="${group != 'qna'}" th:href="@{/admin/cs/write(group=${group})}" class="btn btnWrite">작성하기</a>
-    		<a th:if="${group == 'qna'}" th:href="@{/cs/qna/list}" class="btn btnWrite">문의하기</a>
+    		<a th:if="${group == 'qna'}" th:href="@{/cs/qna/list(group='qna',cate='member')}" class="btn btnWrite">문의하기</a>
     </c:choose>
     
     <input type="hidden" name="group" th:value="${group}">

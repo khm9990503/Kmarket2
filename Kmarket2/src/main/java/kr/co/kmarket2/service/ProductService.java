@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.kmarket2.dao.ProductDAO;
 import kr.co.kmarket2.vo.CartVO;
+import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderVO;
@@ -176,4 +177,32 @@ public class ProductService {
 		int[] groups = {groupStart, groupEnd};
 		return groups;
 	}
+	
+	// main - 구홍모
+	// 메인 상품 목록 구현
+	public List<ProductVO> selectMainProducts(String sort){
+		List<ProductVO> products = dao.selectMainProducts(sort);
+		for(ProductVO product : products) {
+			if(product.getDiscount() != 0) {
+				product.setDisPrice(Math.round(product.getPrice()*(100-product.getDiscount())/100));
+			}
+			
+			char isJ  = product.getThumb1().charAt(1);
+			if(isJ == 'J') {
+				product.setThumb1(product.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+				product.setThumb2(product.getThumb2().replaceFirst("/Java1_Kmarket1", ""));
+				product.setThumb3(product.getThumb3().replaceFirst("/Java1_Kmarket1", ""));
+				product.setDetail(product.getDetail().replaceFirst("/Java1_Kmarket1", ""));
+			}
+		}
+		return products;
+	};
+	// 상품 카테고리1
+	public List<Cate1VO> selectProdCate1s(){
+		return dao.selectProdCate1s();
+	};
+	// 상품 카테고리2
+	public List<Cate2VO> selectProdCate2s(){
+		return dao.selectProdCate2s();
+	};
 }

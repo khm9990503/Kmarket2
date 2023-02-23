@@ -39,14 +39,6 @@
         });
     </script>
 </head>
-<script>
-	$(function () {
-		$('a[href^="#"]').on('click', function() {  
-		    $('html, body').animate({scrollTop: $(this.hash).offset().top - 50}, 1000);
-		    return false;
-		});
-	});
-</script>
 <body>
     <div id="wrapper">
         <header>
@@ -80,16 +72,16 @@
             <div class="logo">
                 <div>
                     <a th:href="@{/index}">
-                        <img th:src="@{/img/header_logo.png}" alt="로고">
+                        <img th:src="@{/img/header_logo.png}" alt="logo">
                     </a>
-                    <div class="head-search">
-                        <form action="#">
-                            <input type="text" name="keyword">
-                            <button>
-                                <img th:src="@{/img/image__header-search.png}" alt="검색돋보기">
-                            </button>
-                        </form>
-                    </div>
+                    <form>
+                        <input type="text">
+                        <button>
+                            <a href="#">
+                                <i class="fa fa-search fa-sm"></i>
+                            </a>
+                        </button>
+                    </form>
                 </div>
             </div>
             <div class="menu">
@@ -102,9 +94,9 @@
                         <li><a href="#discount">할인상품</a></li>
                     </ul>
                     <ul>
-                        <li><a th:href="@{/cs/notice/list}">공지사항</a></li>
-                        <li><a th:href="@{/cs/faq/list}">자주묻는질문</a></li>
-                        <li><a th:href="@{/cs/qna/list}">문의하기</a></li>
+                        <li><a th:href="@{/cs/notice/list(group='notice')}">공지사항</a></li>
+                        <li><a th:href="@{/cs/faq/list(group='faq',cate='member')}">자주묻는질문</a></li>
+                        <li><a th:href="@{/cs/qna/list(group='qna',cate='member')}">문의하기</a></li>
                         <li><a th:href="@{/cs/index}">고객센터</a></li>
                     </ul>
                 </div>
