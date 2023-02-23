@@ -14,21 +14,36 @@
     <div class="wrapper">
         <header>
             <div class="top">
-                <div sec:authorize="!isAuthenticated()">
-                    <a th:href="@{/member/login}">로그인</a>
-                    <a th:href="@{/member/register}">회원가입</a>
-                    <a th:href="@{/my/index}">마이페이지</a>
-                    <a th:href="@{/product/cart}">
-                        <i class="fa fa-shopping-cart"></i>
-                        장바구니</a>
+               	<th:block sec:authorize="isAnonymous()">
+               		<div>
+	                    <a th:href="@{/member/login}">로그인</a>
+	                    <a th:href="@{/member/join}">회원가입</a>
+	                </div>
+                   </th:block>
+                   <th:block sec:authorize="hasAnyRole('5','6','7')">
+                   	<div>
+	                   	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+	                   	<a th:href="@{/admin/index}">관리자</a>
+	                   	<a th:href="@{/member/logout}">로그아웃</a>
+	                    <a th:href="@{/my/home}">마이페이지</a>
+	                    <a th:href="@{/product/cart}">
+	                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+	                        장바구니
+	                    </a>
+	                </div>
+                   </th:block>
+                   <th:block sec:authorize="hasAnyRole('1','2','3','4')">
+                   	<div>
+	                   	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+	                   	<a th:href="@{/member/logout}">로그아웃</a>
+	                    <a th:href="@{/my/home}">마이페이지</a>
+	                    <a th:href="@{/product/cart}">
+	                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+	                        장바구니
+	                    </a>
+	                </div>
+                   </th:block>
                 </div>
-                <div sec:authorize="isAuthenticated()">
-                    <a th:href="@{/my/index}">마이페이지</a>
-                    <a th:href="@{/product/cart}">
-                        <i class="fa fa-shopping-cart"></i>
-                        장바구니</a>
-                </div>
-            </div>
             <div class="logo">
                 <div>
                     <a th:href="@{/index}">

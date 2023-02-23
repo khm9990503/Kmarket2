@@ -79,4 +79,31 @@
     <insert id="insertOrder">
     	insert into `km_product_order` values (default, #{ordUid}, #{ordCount}, #{ordPrice}, #{ordDiscount}, #{ordDelivery}, #{savePoint}, #{usedPoint}, #{ordTotPrice}, #{recipName}, #{recipHP}, #{recipZip}, #{recipAddr1}, #{recipAddr2}, #{deliveryRequest}, #{ordPayment}, #{ordComplete}, NOW());
     </insert>
+    <select id="selectCartByProdNo" resultType="kr.co.kmarket2.vo.CartVO">
+    	select * from `km_product_cart` where `prodNo`=#{prodNo} and `uid`=#{username};
+    </select>
+    <select id="selectOrdNoByUsername" resultType="kr.co.kmarket2.vo.OrderVO">
+    	select * from `km_product_order` where `ordUid`=#{username} order by `ordDate` desc limit 1;
+    </select>
+    <insert id="insertOrderItems" parameterType="kr.co.kmarket2.vo.OrderItemVO">
+    	insert into `km_product_order_item` values (#{ordNo}, #{prodNo}, #{count}, #{price}, #{discount}, #{point}, #{delivery}, #{total});
+    </insert>
+    <update id="updateMemberPoint">
+    	update `km_member` set `point` = `point` + #{pointSum} where `uid`=#{username};
+    </update>
+    <update id="insertPoint">
+    	insert `km_member_point` values (default, #{username}, #{ordNo}, #{point}, NOW());
+    </update>
+    <select id="selectOrder" resultType="kr.co.kmarket2.vo.OrderItemVO">
+    	select a.*, b.* from `km_product_order_item` as a 
+    	join `km_product` as b 
+    	on a.prodNo = b.prodNo 
+    	where `ordNo` =#{ordNo};
+    </select>
+    <select id="selectOrderInfo" resultType="kr.co.kmarket2.vo.OrderVO">
+    	select * from `km_product_order` where `ordNo` =#{ordNo};
+    </select>
+    <select id="selectMemberByUsername" resultType="kr.co.kmarket2.vo.MemberVO">
+    	select * from `km_member` where `uid`=#{username};
+    </select>
 </mapper>

@@ -21,4 +21,10 @@ public class OrderItemVO {
 	private int delivery;
 	private int total;
 	
+	// complete 페이지 출력위해 추가
+	private String prodName;
+	private String descript;
+	private String prodCate1;
+	private String prodCate2;
+	private int discountPrice;
 }
