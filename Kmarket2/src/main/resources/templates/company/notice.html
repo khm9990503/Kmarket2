@@ -1,5 +1,4 @@
 <th:block th:include="@{company/_header.html}"/>
-
         <main id="notice">
             <div class="cover">
                 <div>
@@ -21,7 +20,7 @@
                 			</tr>
                             <tr th:each="article:${articles}">
                             	<td>[[${article.no}]]</td>
-                                <td><a th:href="@{/company/notice(no=${article.no},group=${article.group})}">[[${article.title}]]</a></td>
+                                <td><a th:href="@{/company/notice/view(no=${article.no},group=${article.group})}">[[${article.title}]]</a></td>
                                 <td>[[${article.rdate.substring(2,10)}]]</td>
                             </tr>
                         </table>

@@ -132,7 +132,7 @@
                             <h2>안전거래관련 문의 내용입니다.</h2>
                         </nav>
                     <form th:action="@{/cs/qna/write}" method="post">
-                    <input type="hidden" name="uid" th:value="uid"/>
+                    <input type="hidden" name="uid" th:value="${#authentication.principal.user.uid}"/>
                         <table>
                             <tr>
                                 <td>문의유형</td>
