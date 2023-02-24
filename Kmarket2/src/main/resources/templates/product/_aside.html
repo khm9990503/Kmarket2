@@ -32,85 +32,41 @@
 	            <i class="fa-solid fa-bars"></i>
 	            카테고리
 	        </li>
-	        <li>
-	            <a th:href="@{/product/list?cate1=11&cate2=10&sort=1}">
-	                <i class="fa-solid fa-shirt"></i>
-	                패션·의류·뷰티
-	            </a>
-	            <ol>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=11&cate2=11&sort=1}">남성의류</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=11&cate2=10&sort=1}">여성의류</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=11&cate2=14&sort=1}">잡화</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=11&cate2=16&sort=1}">뷰티</a>
-	                </li>
-	            </ol>
-	        </li>
-	        <li>
-	            <a th:href="@{/product/list?cate1=15&cate2=10&sort=1}" >
-	                <i class="fa-solid fa-laptop"></i>
-	                가전·디지털
-	            </a>
-	            <ol>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=15&cate2=10&sort=1}">노트북/PC</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=15&cate2=16&sort=1}">가전</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=15&cate2=13&sort=1}">휴대폰</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=15&cate2=12&sort=1}">기타</a>
-	                </li>
-	            </ol>
-	        </li>
-	        <li>
-	            <a th:href="@{/product/list?cate1=13&cate2=10&sort=1}">
-	                <i class="fa-solid fa-utensils"></i>
-	                식품·생필품
-	            </a>
-	            <ol>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=13&cate2=10&sort=1}">신선식품</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=13&cate2=11&sort=1}">가공식품</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=13&cate2=12&sort=1}">건강식품</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=13&cate2=14&sort=1}">생필품</a>
-	                </li>
-	            </ol>
-	        </li>
-	        <li>
-	            <a th:href="@{/product/list?cate1=14&cate2=10&sort=1}">
-	                <i class="fa-solid fa-house-chimney"></i>
-	                홈·문구·취미
-	            </a>
-	            <ol>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=14&cate2=10&sort=1}">가구/DIY</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=14&cate2=11&sort=1}">침구·커튼</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=14&cate2=13&sort=1}">생활용품</a>
-	                </li>
-	                <li>
-	                    <a th:href="@{/product/list?cate1=14&cate2=15&sort=1}">사무용품</a>
-	                </li>
-	            </ol>
-	        </li>
+            <li th:each="ca1 : ${cate1s}">
+                <a th:href="@{/product/list(cate1=${ca1.cate1},cate2=10,sort=1)}">
+					<th:block th:if="${ca1.cate1 == 10 }">
+                	<i class="fas fa-tag"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right"></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 11 }">
+                	<i class="fas fa-tshirt"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right"></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 12 }">
+                	<i class="fas fa-baby"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 13 }">
+                	<i class="fas fa-utensils"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 14 }">
+                	<i class="fas fa-home"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 15 }">
+                	<i class="fas fa-laptop"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 16 }">
+                	<i class="fas fa-heart"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 17 }">
+                	<i class="fas fa-car"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 18 }">
+                	<i class="fas fa-book"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                </a>
+                <ol>
+                	<th:block th:each="ca2 : ${cate2s}">
+                    		<li th:if="${ca1.cate1==ca2.cate1}"><a th:href="@{/product/list(cate1=${ca2.cate1},cate2=${ca2.cate2},sort=1)}">[[${ca2.c2Name}]]</a></li>
+                    </th:block>
+                </ol>
+            </li>
 	    </ul>
 	</aside>

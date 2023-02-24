@@ -12,7 +12,7 @@
                 </nav>
                 <article class="info">
                     <div class="image">
-                        <img src="https://via.placeholder.com/460" alt="product image">
+                        <img th:src="@{__${product.thumb2}__}" alt="product image">
                     </div>
                     <div class="summary">
                         <nav>
@@ -85,9 +85,8 @@
                     <nav>
                         <h1>상품정보</h1>
                     </nav>
-                    <img src="https://via.placeholder.com/860x460" alt="상세페이지1">
-                    <img src="https://via.placeholder.com/860x460" alt="상세페이지2">
-                    <img src="https://via.placeholder.com/860x460" alt="상세페이지3">
+                    <img th:src="@{__${product.thumb3}__}" alt="상세페이지1">
+                    <img th:src="@{__${product.detail}__}" alt="상세페이지2">
                 </article>
                 <article class="notice">
                     <nav>

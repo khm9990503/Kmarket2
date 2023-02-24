@@ -41,7 +41,7 @@
                     <tr th:each="product:${products}">
                         <td>
                             <a th:href="@{/product/view?prodNo=__${product.prodNo}__}" class="thumb">
-                                <img src="https://via.placeholder.com/120x120" alt="thumbnail">
+                                <img th:src="@{__${product.thumb1}__}" alt="thumbnail">
                             </a>
                         </td>
                         <td>

@@ -27,7 +27,19 @@ public class ProductService {
 	
 	// aside
 	public List<ProductVO> selectProducts(String cate1, String cate2, String sort, int start){
-		return dao.selectProducts(cate1, cate2, sort, start);
+		// 썸네일 수정 - 구홍모
+		List<ProductVO> products = dao.selectProducts(cate1, cate2, sort, start);
+		for(ProductVO product : products) {
+			
+			char isJ  = product.getThumb1().charAt(1);
+			if(isJ == 'J') {
+				product.setThumb1(product.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+				product.setThumb2(product.getThumb2().replaceFirst("/Java1_Kmarket1", ""));
+				product.setThumb3(product.getThumb3().replaceFirst("/Java1_Kmarket1", ""));
+				product.setDetail(product.getDetail().replaceFirst("/Java1_Kmarket1", ""));
+			}
+		}
+		return products;
 	}
 	
 	// list
@@ -39,7 +51,16 @@ public class ProductService {
 	// view
 	// prodNo값으로 상품 정보 불러오기
 	public ProductVO selectProduct(String prodNo) {
-		return dao.selectProduct(prodNo);
+		// 썸네일 수정 - 구홍모
+		ProductVO product = dao.selectProduct(prodNo);
+		char isJ  = product.getThumb1().charAt(1);
+		if(isJ == 'J') {
+			product.setThumb1(product.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+			product.setThumb2(product.getThumb2().replaceFirst("/Java1_Kmarket1", ""));
+			product.setThumb3(product.getThumb3().replaceFirst("/Java1_Kmarket1", ""));
+			product.setDetail(product.getDetail().replaceFirst("/Java1_Kmarket1", ""));
+		}
+		return product;
 	}
 	
 	// 배송 예정일 구하기(현재 날짜 + 3 영업일)
@@ -98,7 +119,16 @@ public class ProductService {
 	// cart
 	// cart 테이블에서 사용자가 담은 상품 불러오기
 	public List<CartVO> selectCartByUsername(String username){
-		return dao.selectCartByUsername(username);
+		// 썸네일 수정 - 구홍모
+		List<CartVO> carts = dao.selectCartByUsername(username);
+		for(CartVO cart : carts) {
+			
+			char isJ  = cart.getThumb1().charAt(1);
+			if(isJ == 'J') {
+				cart.setThumb1(cart.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+			}
+		}
+		return carts;
 	}
 	
 	// 선택한 상품을 하나씩 삭제하기
@@ -109,7 +139,15 @@ public class ProductService {
 	// order
 	// cartNo값을 이용해서 cart 테이블 값 가져오기
 	public List<CartVO> selectCartByCartNo(String[] cartNo){
-		return dao.selectCartByCartNo(cartNo);
+		// 썸네일 수정 - 구홍모
+		List<CartVO> carts = dao.selectCartByCartNo(cartNo);
+		for(CartVO cart : carts) {
+			char isJ  = cart.getThumb1().charAt(1);
+			if(isJ == 'J') {
+				cart.setThumb1(cart.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+			}
+		}
+		return carts;
 	}
 	
 	// 현재 사용자의 정보 가져오기
@@ -124,7 +162,13 @@ public class ProductService {
 	
 	// 주문 상품 prodNo 이용해서 cart 테이블에서 상품 정보 가져오기
 	public CartVO selectCartByProdNo(String prodNo, String username) {
-		return dao.selectCartByProdNo(prodNo, username);
+		// 썸네일 수정 - 구홍모
+		CartVO cart = dao.selectCartByProdNo(prodNo, username);
+		char isJ  = cart.getThumb1().charAt(1);
+		if(isJ == 'J') {
+			cart.setThumb1(cart.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+		}
+		return cart;
 	}
 	
 	// username 이용해서 ordNo값 가져오기

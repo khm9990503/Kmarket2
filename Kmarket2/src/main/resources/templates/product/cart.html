@@ -34,7 +34,7 @@
                             <td>
                                 <article>
                                     <a th:href="@{/product/view(prodNo=${item.prodNo},cate1=${item.prodCate1},cate2=${item.prodCate2})}">
-                                        <img src="https://via.placeholder.com/80" alt="thumbnail">
+                                        <img src="@{__${item.thumb1}__}" alt="thumbnail">
                                     </a>
                                     <div>
                                         <h2>
