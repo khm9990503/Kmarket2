@@ -1,9 +1,11 @@
 // 데이터 검증에 사용할 정규표현식
-	let regUid   = /^[a-z]+[a-z0-9]{3,12}$/g;
-	let regName  = /^[가-힣]{2,4}$/;
-	let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-	let regHp	 = /^\d{3}-\d{3,4}-\d{4}$/;
-	let regPass  = /^.*(?=^.{8,12}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	let regUid    = /^[a-z]+[a-z0-9]{3,12}$/g;
+	let regName   = /^[가-힣]{2,4}$/;
+	let regEmail  = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	let regHp	  = /^\d{3}-\d{3,4}-\d{4}$/;
+	let regPass   = /^.*(?=^.{8,12}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	let regTel 	  = /^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))-(\d{3,4})-(\d{4})$/
+	let regComNum = /^[0-9]{3}-[0-9]{2}-[0-9]{5}$/
 	
 	// 폼 데이터 검증 결과 상태변수
 	let isUidOk   = false;
@@ -16,6 +18,8 @@
 	let isEmailAuthOk = false;
 	let isEmailAuthCodeOk = false;
 	let receivedCode = 0;	
+	let isTelOk = false;
+	let isFaxOk = false;
 	
 	$(function(){
 		
@@ -65,7 +69,7 @@
 			}, 500);
 		});
 	
-	/*
+	
 	// 비밀번호 형식검사 일치여부 확인
 	$('input[name=pass2]').focusout(function(){			
 		let pass1 = $('input[name=pass1]').val();
@@ -101,6 +105,32 @@
 			$('.resultName').text('');
 		}
 	});
+	
+	// 대표자 이름 유효성 검증
+	$('input[name=ceo]').focusout(function(){
+		let name = $(this).val();
+		
+		if(!name.match(regName)){
+			isNameOk = false;
+			$('.resultName').css('color', 'red').text('이름은 한글 2자 이상 이어야 합니다.');
+		}else{
+			isNameOk = true;
+			$('.resultName').text('');
+		}
+	});
+	
+	// 담당자 이름 유효성 검증
+	$('input[name=manager]').focusout(function(){
+		let name = $(this).val();
+		
+		if(!name.match(regName)){
+			isNameOk = false;
+			$('.resultName').css('color', 'red').text('이름은 한글 2자 이상 이어야 합니다.');
+		}else{
+			isNameOk = true;
+			$('.resultName').text('');
+		}
+	});
 		
 	// 이메일 유효성 검사
 	$('input[name=email]').focusout(function(){
@@ -115,6 +145,7 @@
 		}			
 	});
 	
+	
 	// 휴대폰 유효성 검사
 	$('input[name=hp]').focusout(function(){
 		let hp = $(this).val();
@@ -127,7 +158,59 @@
 			$('.resultHp').text('');
 		}
 	});
-	*/
+	
+	// 담당자 번호 유효성 검사
+	$('input[name=managerHp]').focusout(function(){
+		let hp = $(this).val();
+		
+		if(!hp.match(regHp)){
+			isHpOk = false;
+			$('.resultHp').css('color', 'red').text('휴대폰이 유효하지 않습니다.');
+		}else{
+			isHpOk = true;
+			$('.resultHp').text('');
+		}
+	});
+	
+	// 일반전화 유효성 검사
+	$('input[name=tel]').focusout(function(){
+		let tel = $(this).val();
+		
+		if(!tel.match(regTel)){
+			isTelOk = false;
+			$('.msgTel').css('color', 'red').text('전화번호가 유효하지 않습니다.');
+		}else{
+			isTelOk = true;
+			$('.msgTel').text('');
+		}
+	});
+	
+	// 팩스번호 유효성 검사
+	$('input[name=fax]').focusout(function(){
+		let hp = $(this).val();
+		
+		if(!hp.match(regTel)){
+			isHpOk = false;
+			$('.msgFax').css('color', 'red').text('팩스번호가 유효하지 않습니다.');
+		}else{
+			isHpOk = true;
+			$('.msgFax').text('');
+		}
+	});
+	
+	// 사업자등록번호 유효성 검사
+	$('input[name=comRegNum]').focusout(function(){
+		let comRegNum = $(this).val();
+		
+		if(!comRegNum.match(regComNum)){
+			isHpOk = false;
+			$('.msgCorp').css('color', 'red').text('사업자등록번호가 유효하지 않습니다.');
+		}else{
+			isHpOk = true;
+			$('.msgCorp').text('');
+		}
+	});
+	
 	
 	// 폼 전송이 시작될 때 실행되는 폼 이벤트(폼 전송 버튼을 클릭했을 때) 
 	$('.register > form').submit(function(){
@@ -142,7 +225,7 @@
 			alert('아이디를 확인 하십시요.');
 			return false;
 		}
-		/*
+		
 		// 비밀번호 검증
 		if(!isPassOk){
 			alert('비밀번호를 확인 하십시요.');
@@ -165,7 +248,7 @@
 			alert('휴대폰을 확인 하십시요.');
 			return false;
 		}
-		*/
+		
 		
 		// 최종 전송
 		return true;
