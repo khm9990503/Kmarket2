@@ -37,6 +37,10 @@ public class MyController {
 	public String info() {
 		return "my/info";
 	}
+	@GetMapping("my/review")
+	public String review() {
+		return "my/review";
+	}
 	@GetMapping("my/qna")
 	public String qna(String group, String pg ,Model model, Principal principal) {
 		

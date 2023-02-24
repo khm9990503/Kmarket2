@@ -181,7 +181,7 @@
             margin-right: 30px;
         }
 
-        /* coupon */
+        /* review */
         #my > nav{
             width: 100%;
             height: auto;
@@ -285,107 +285,100 @@
             background-color: #075acc;
             border-top: 1px solid #054cbc;
         }
-
-        #my > div > section{
+        #my > .review > section{
             width: 832px;
             height: auto;
             margin-left: 148px;
             padding: 10px;
             box-sizing: border-box;
         }
-        #my > div > section .banner{
-            width: 810px;
-            object-fit: none;
-        }
-
-        #my > div > section > article{margin-top: 20px;}
-        #my > div > section > article > h3{
+        #my > .review > section > article{margin-top: 20px;}
+        #my > .review > section > article > h3{
             font-size: 20px;
             font-weight: bold;
             color: #444;
         }
-        #my > div > section > article > p{
-            font-family: 돋움;
-            font-size: 11px;
-            color: #888;
-            margin: 10px 0;
-        }
-
-        #my > .coupon > section > article > .bg{
-            position: relative;
-            width: 100%;
-            height: 209px;
-            background-image: url(../img/my_coupon_bg.gif);
-            background-size: contain;
-        }
-        .bg > dl{
-            position: absolute;
-            right: 20px;
-            bottom: 20px;
-            width: 160px;
-            height: auto;
-            margin-top: 20px;
-            overflow: hidden;
-        }
-        .bg dt{
-            float: left;
-            font-family: 돋움;
-            color: #777;
-            margin-top: 10px;
-        }
-        .bg dd{float: right;}
-        .bg dd > strong{
-            font-family: 'Tahoma';
-            font-size: 22px;
-            font-weight: bold;
-            color: #ec0e0e;
-        }
-        .bg dd > span{
-            font-family: 돋움;
-            font-weight: bold;
-            color: #ec0e0e;
-        }
-
-        #my > div > section > article > table{
+        #my > .review > section > article > table{
             width: 100%;
             height: auto;
+            border-top: 2px solid #444;
             margin-top: 6px;
             border-collapse: collapse;
         }
-        #my > div > section > article > table *{
+        #my > .review > section > article > table *{
             font-family: 돋움;
-            color: #444;
+            color: rgb(68, 68, 68);
         }
-        #my > div > section > article > table th{
+        #my > .review > section > article > table th{
             padding: 6px;
             box-sizing: border-box;
-            border-top: 1px solid #444;
-            border-left: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-            color: #444;
-            background-color: #f7f7f7;
+            color: #fff;
+            background-color: #a5a7a5;
         }
-        #my > div > section > article > table th:first-child{border-left: none;}
-        #my > div > section > article > table td{
+        #my > .review > section > article > table td{
             padding: 10px;
             box-sizing: border-box;
-            border-left: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
+            border-left: 1px solid #f1f1f1;
+            border-bottom: 1px solid #aaa;
             overflow: hidden;
         }
-        #my > div > section > article > table td:first-child{border-left: none;}
-        
-        #my .info{
-            margin: 16px;
-            list-style: square;
+        #my > .review > section > article > table td:first-child{border-left: none;}
+        #my > .review > section > article > table .prodName {
+            text-decoration: underline;
         }
-        .info > li{
-            font-family: 돋움;
-            font-size: 11px;
+        #my > .review > section > article > table .rating {
+            display: block;
+            width: 84px;
+            height: 20px;
+            font-size: 0px;
+            background-image: url(../img/my_rating_star.png);
+            background-repeat: no-repeat;
+            background-position: 36px 0px;
+        }
+
+        #my > .review > section > article > table .rating.star1 {
+            background-position: 0 -40px;
+        }
+        #my > .review > section > article > table .rating.star2 {
+            background-position: 0 -80px;
+        }
+        #my > .review > section > article > table .rating.star3 {
+            background-position: 0 -120px;
+        }
+        #my > .review > section > article > table .rating.star4 {
+            background-position: 0 -160px;
+        }
+        #my > .review > section > article > table .rating.star5 {
+            background-position: 0 -200px;
+        }
+
+        #my > .review > section > article > .page {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        #my > .review > section > article > .page > .prev {
+            background: url(../img/my_sprites2.png) no-repeat 0 -300px;
+            font-size: 0;
+        }
+        #my > .review > section > article > .page > a {
+            display: inline-block;
+            width: 19px;
+            height: 19px;
+            box-sizing: border-box;
+            vertical-align: top;
             color: #777;
-            letter-spacing: -1px;
-            padding-bottom: 8px;
         }
+        #my > .review > section > article > .page > a.on {
+            font-weight: bold;
+            color: #1179ea;
+        }
+        #my > .review > section > article > .page > .next {
+            background: url(../img/my_sprites2.png) no-repeat -120px -300px;
+            font-size: 0;
+        }
+
+        
     </style>
 </head>
 <body>
@@ -451,7 +444,7 @@
                     </ol>
                 </div>
             </nav>
-            <div class="coupon">
+            <div class="review">
                 <ul>
                     <span class="menu_else"></span>
                     <li class="on">
@@ -478,55 +471,78 @@
                         <img src="../img/my_banner2.png" alt="패션, 타운 하나로 끝" class="banner">
                     </a>
                     <article>
-                        <h3>쿠폰</h3>
-                        <p>고객님께서 보유하고 있는 할인쿠폰을 확인하세요! 상품구매 시 더욱 저렴하게 구매할 수 있습니다.</p>
-                        <div class="bg">
-                            <dl>
-                                <dt>· 나의 보유쿠폰</dt>
-                                <dd>
-                                    <strong>2</strong>
-                                    <span>장</span>
-                                </dd>
-                            </dl>
-                        </div>
+                        <h3>나의 리뷰</h3>
                         <table border="0">
                             <tr>
-                                <th>쿠폰명</th>
-                                <th>할인금액</th>
-                                <th>적용기준/제한조건</th>
-                                <th>유효기간</th>
-                                <th>상태</th>
+                                <th>번호</th>
+                                <th>상품명</th>
+                                <th>내용</th>
+                                <th>평점</th>
+                                <th>작성일</th>
                             </tr>
                             <tr>
-                                <td class="tit">1만원 할인 중복쿠폰</td>
-                                <td class="discount">
-                                    <span>10,000</span>원
+                                <td class="no">5</td>
+                                <td class="prodName">
+                                    <a href="#">상품명</a>
                                 </td>
-                                <td class="condition">
-                                    <span>10,100</span>원 이상 구매시
+                                <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
+                                <td class="score">
+                                    <span class="rating star1">평점</span>
                                 </td>
-                                <td class="expire">~12/29</td>
-                                <td class="status">사용가능</td>
+                                <td class="date">2024-12-12</td>
                             </tr>
                             <tr>
-                                <td class="tit">회원가입 축하 5천원 할인쿠폰</td>
-                                <td class="discount">
-                                    <span>5,000</span>원
+                                <td class="no">4</td>
+                                <td class="prodName">
+                                    <a href="#">상품명</a>
                                 </td>
-                                <td class="condition">
-                                    <span>5,100</span>원 이상 구매시
+                                <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
+                                <td class="score">
+                                    <span class="rating star2">평점</span>
                                 </td>
-                                <td class="expire">~12/29</td>
-                                <td class="status">사용가능</td>
+                                <td class="date">2024-12-12</td>
+                            </tr>
+                            <tr>
+                                <td class="no">3</td>
+                                <td class="prodName">
+                                    <a href="#">상품명</a>
+                                </td>
+                                <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
+                                <td class="score">
+                                    <span class="rating star3">평점</span>
+                                </td>
+                                <td class="date">2024-12-12</td>
+                            </tr>
+                            <tr>
+                                <td class="no">2</td>
+                                <td class="prodName">
+                                    <a href="#">상품명</a>
+                                </td>
+                                <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
+                                <td class="score">
+                                    <span class="rating star4">평점</span>
+                                </td>
+                                <td class="date">2024-12-12</td>
+                            </tr>
+                            <tr>
+                                <td class="no">1</td>
+                                <td class="prodName">
+                                    <a href="#">상품명</a>
+                                </td>
+                                <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
+                                <td class="score">
+                                    <span class="rating star5">평점</span>
+                                </td>
+                                <td class="date">2024-12-12</td>
                             </tr>
                         </table>
-                        <ul class="info">
-                            <li>순금/골드바/돌반지/상품권 등 환금성 카테고리 및 중고상품 및 일부 프로모션 상품에는 쿠폰사용이 제한됩니다.</li>
-                            <li>쿠폰 적용 가능한 금액기준은 판매자 상품별할인과 G마켓 추가할인이 모두 포함된 할인적용가입니다.</li>
-                            <li>중복쿠폰은 판매자 할인, G마켓 할인과 중복 적용 가능하며 하나의 상품당 한장의 중복쿠폰만 사용 가능합니다.</li>
-                            <li>항공 할인은 항공권 전용 할인으로 결제시점에 할인 혜택을 받을 수 있습니다.</li>
-                            <li>항공권 예약취소 또는 환불시 적용했던 항공할인은 id당 1회 한하여 다시 발급됩니다.</li>
-                        </ul>
+                        <p class="page">
+                            <a href="#" class="prev">이전</a>
+                            <a href="#" class="num on">1</a>
+                            <a href="#" class="num">2</a>
+                            <a href="#" class="num">3</a>
+                            <a href="#" class="next">다음</a>
+                        </p>
                     </article>
                 </section>
             </div>
