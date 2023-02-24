@@ -119,16 +119,7 @@ public class ProductService {
 	// cart
 	// cart 테이블에서 사용자가 담은 상품 불러오기
 	public List<CartVO> selectCartByUsername(String username){
-		// 썸네일 수정 - 구홍모
-		List<CartVO> carts = dao.selectCartByUsername(username);
-		for(CartVO cart : carts) {
-			
-			char isJ  = cart.getThumb1().charAt(1);
-			if(isJ == 'J') {
-				cart.setThumb1(cart.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
-			}
-		}
-		return carts;
+		return dao.selectCartByUsername(username);
 	}
 	
 	// 선택한 상품을 하나씩 삭제하기
@@ -139,15 +130,7 @@ public class ProductService {
 	// order
 	// cartNo값을 이용해서 cart 테이블 값 가져오기
 	public List<CartVO> selectCartByCartNo(String[] cartNo){
-		// 썸네일 수정 - 구홍모
-		List<CartVO> carts = dao.selectCartByCartNo(cartNo);
-		for(CartVO cart : carts) {
-			char isJ  = cart.getThumb1().charAt(1);
-			if(isJ == 'J') {
-				cart.setThumb1(cart.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
-			}
-		}
-		return carts;
+		return dao.selectCartByCartNo(cartNo);
 	}
 	
 	// 현재 사용자의 정보 가져오기
@@ -162,13 +145,7 @@ public class ProductService {
 	
 	// 주문 상품 prodNo 이용해서 cart 테이블에서 상품 정보 가져오기
 	public CartVO selectCartByProdNo(String prodNo, String username) {
-		// 썸네일 수정 - 구홍모
-		CartVO cart = dao.selectCartByProdNo(prodNo, username);
-		char isJ  = cart.getThumb1().charAt(1);
-		if(isJ == 'J') {
-			cart.setThumb1(cart.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
-		}
-		return cart;
+		return dao.selectCartByProdNo(prodNo, username);
 	}
 	
 	// username 이용해서 ordNo값 가져오기
