@@ -38,6 +38,6 @@ public class MainController {
 		model.addAttribute("lates",lates);
 		model.addAttribute("discounts",discounts);
 		
-		return "/index";
+		return "index";
 	}
 }
