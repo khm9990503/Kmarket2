@@ -223,7 +223,7 @@ public class AdminController {
 		model.addAttribute("cate",cate);
 		return "admin/cs/write";
 	}
-	@RequestMapping(value="/admin/cs/write", method = {RequestMethod.POST})
+	@RequestMapping(value="admin/cs/write", method = {RequestMethod.POST})
 	public String write(ArticleVO vo, String group,HttpServletRequest req) {
 		vo.setRegip(req.getRemoteAddr());
 		int result = service.insertArticle(vo);
@@ -243,7 +243,7 @@ public class AdminController {
 		return "admin/cs/modify";
 	}
 	
-	@RequestMapping(value="/admin/cs/modify", method = {RequestMethod.POST})
+	@RequestMapping(value="admin/cs/modify", method = {RequestMethod.POST})
 	public String modify(ArticleVO vo) {
 		int result = service.updateArticle(vo);
 		return "redirect:/admin/cs/view?no="+vo.getNo()+"&result="+result+"&group="+vo.getGroup();
@@ -264,7 +264,7 @@ public class AdminController {
 		return "admin/cs/view";
 	}
 	@ResponseBody
-	@RequestMapping(value="/admin/cs/view", method = {RequestMethod.POST})
+	@RequestMapping(value="admin/cs/view", method = {RequestMethod.POST})
 	public Map<String, Integer> reply(String no, String uid, String content, HttpServletRequest req) {
 		int result = service.insertReply(no, uid, content, req.getRemoteAddr());
 		Map<String, Integer> map = new HashMap<>();
