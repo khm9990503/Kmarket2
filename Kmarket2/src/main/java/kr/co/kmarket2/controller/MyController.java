@@ -18,23 +18,34 @@ public class MyController {
 	private MyService service;
 	
 	@GetMapping("my/home")
-	public String home() {
+	public String home(String group,Model model) {
+		
+		model.addAttribute("group",group);
+		
 		return "my/home";
 	}
 	@GetMapping("my/ordered")
-	public String ordered() {
+	public String ordered(String group,Model model) {
+		
+		model.addAttribute("group",group);
 		return "my/ordered";
 	}
 	@GetMapping("my/point")
-	public String point() {
+	public String point(String group,Model model) {
+		
+		model.addAttribute("group",group);
 		return "my/point";
 	}
 	@GetMapping("my/coupon")
-	public String coupon() {
+	public String coupon(String group,Model model) {
+		
+		model.addAttribute("group",group);
 		return "my/coupon";
 	}
 	@GetMapping("my/info")
-	public String info() {
+	public String info(String group,Model model) {
+		
+		model.addAttribute("group",group);
 		return "my/info";
 	}
 	@GetMapping("my/review")
@@ -67,6 +78,7 @@ public class MyController {
 		model.addAttribute("pageGroupStart", result[0]);
 		model.addAttribute("pageGroupEnd", result[1]);
 		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("group", group);
 		
 		// qna 목록(c1Name join) 가져오기
 		List<ArticleVO> articles = service.selectQnaArticles(uid, start);
