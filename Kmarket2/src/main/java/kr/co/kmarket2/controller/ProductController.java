@@ -172,26 +172,26 @@ public class ProductController {
 	@ResponseBody
 	public Map<String, Object> putInCart(@RequestBody CartVO cartVO , Principal principal) {
 		// 현재 사용자 정보 가져오기
-		/*
 		String username = null;
-		Map<String, Integer> resultMap = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		if(principal != null){ 
-			username = ((UserDetails) principal).getUserName();
+			username = principal.getName();
+			
+			cartVO.setUid(username);
+			
+			// cart 테이블에 정보 저장
+			int result = service.insertCart(cartVO);
+			resultMap.put("result", result);
+			resultMap.put("username", cartVO.getUid()); // 로그인 기능 구현 때까지 임시로 사용
+			return resultMap;
 		}else{
-			result.put("result", 0);
+			resultMap.put("result", 0);
 			return resultMap;
 		}
-		*/
-		String username = "a123123";
-		Map<String, Object> resultMap = new HashMap<>();
-		cartVO.setUid(username);
 		
-		// cart 테이블에 정보 저장
-		int result = service.insertCart(cartVO);
-		resultMap.put("result", result);
-		resultMap.put("username", cartVO.getUid()); // 로그인 기능 구현 때까지 임시로 사용
-		return resultMap;
+		//String username = "a123123";
+		//Map<String, Object> resultMap = new HashMap<>();
 	}
 	
 	@GetMapping("product/cart")
@@ -212,7 +212,7 @@ public class ProductController {
 	public Map<String, String> removeFromCart(String[] items, Principal principal) {
 		// 현재 사용자 username과 prodNo 이용해서 cart 테이블에서 선택한 상품 삭제
 		// 혹시 principal 객체 인식 못하면 뷰 페이지에서 sec:authentication으로 username보내기
-		String username = "a123123";
+		String username = principal.getName();
 		
 		for(int i =0; i < items.length; i++) {
 			service.deleteCartByProdNo(items[i], username);

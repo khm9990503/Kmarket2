@@ -1,24 +1,24 @@
 <th:block th:include="@{my/_header.html}"/>
             <div class="qna">
-                <ul>
+                 <ul>
                     <span class="menu_else"></span>
-                    <li class="on">
-                        <a th:href="@{#}">전체주문내역</a>
+                    <li>
+                        <a th:href="@{/my/ordered}">전체주문내역</a>
                     </li>
                     <li>
-                        <a th:href="@{#}">포인트내역</a>
+                        <a th:href="@{/my/point}">포인트내역</a>
                     </li>
                     <li>
-                        <a th:href="@{#}">쿠폰</a>
+                        <a th:href="@{/my/coupon}">쿠폰</a>
                     </li>
                     <li>
-                        <a th:href="@{#}">나의리뷰</a>
+                        <a href="#">나의리뷰</a>
                     </li>
                     <li>
-                        <a th:href="@{#}">문의하기</a>
+                        <a th:href="@{/my/qna}">문의하기</a>
                     </li>
                     <li>
-                        <a th:href="@{#}">나의설정</a>
+                        <a th:href="@{/my/info}">나의설정</a>
                     </li>
                 </ul>
                 <section>
@@ -41,23 +41,27 @@
                                 <td class="channel">고객센터</td>
                                 <td class="type">[[${article.c1Name}]]</td>
                                 <td class="tit">
-                                    <a href="#">[[${article.title}]]</a>
+                                    <a th:href="@{/cs/qna/view(group='qna',cate=${article.cate},no=${article.no})}">[[${article.title}]]</a>
                                 </td>
                                 <td class="date">[[${article.rdate.substring(2, 10)}]]</td>
                                 <td class="status" th:if="${article.comment} eq 1">
-                                    <span class="notAnswerYet">답변완료</span>
+                                    <span class="AnswerYet">답변완료</span>
                                 </td>
                                 <td class="status" th:if="${article.comment} eq 0">
                                     <span class="notAnswerYet">검토중</span>
                                 </td>
                             </tr>
                         </table>
-                        <p class="page">
-                            <a th:href="@{#}" class="prev">이전</a>
-                            <a th:href="@{#}" class="num on">1</a>
-                            <a th:href="@{#}" class="num">2</a>
-                            <a th:href="@{#}" class="num">3</a>
-                            <a th:href="@{#}" class="next">다음</a>
+                         <p class="page">
+                        	<th:block th:if="${pageGroupStart > 1}">
+                            	<a th:href="@{/my/qna(pg=${currentPage - 1})}" class="prev">이전</a>
+                            </th:block>
+                            <th:block th:each="num,iterStat : ${#numbers.sequence(pageGroupStart, pageGroupEnd)}">
+                            	<a th:href="@{/my/qna(pg=${num},group='qna')}" th:class="${num} eq ${currentPage} ? 'num on':'num'">[[${num}]]</a>
+                            </th:block>
+                            <th:block th:if="${pageGroupEnd < lastPageNum}">
+                            <a th:href="@{/my/qna(pg=${currentPage+ 1})}" class="next">다음</a>
+                            </th:block>
                         </p>
                     </article>
                 </section>

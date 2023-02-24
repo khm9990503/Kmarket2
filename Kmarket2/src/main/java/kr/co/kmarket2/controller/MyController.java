@@ -1,5 +1,6 @@
 package kr.co.kmarket2.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +42,17 @@ public class MyController {
 		return "my/review";
 	}
 	@GetMapping("my/qna")
-	public String qna(String group,String uid, String pg ,Model model) {
+	public String qna(String group, String pg ,Model model, Principal principal) {
+		
+		//아이디 가져오기
+		String uid = principal.getName();
 		
 		//페이징 
     	int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
 		int total = 0;
 		
 		
-		total = service.selectCountTotal(group); //전체 게시물 갯수
+		total = service.selectCountTotal(uid, group); //전체 게시물 갯수
 		
 			
 		
@@ -56,6 +60,7 @@ public class MyController {
 		int[] result = service.getPageGroupNum(currentPage, lastPageNum); // 페이지 그룹번호
 		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작번호
 		int start = service.getStartNum(currentPage); // 시작 인덱스
+		
 		
 		model.addAttribute("lastPageNum", lastPageNum);		
 		model.addAttribute("currentPage", currentPage);		

@@ -68,8 +68,83 @@
 				
 			}, 500);
 		});
+	// 이메일 유효성 검사
+	$('input[name=email]').focusout(function() {
+		let email = $(this).val();
+		if(!email.match(regEmail)){
+			isEmailOk = false;
+			$('.resultEmail').css('color','red').text('이메일이 유효하지 않습니다.');
+		}else{
+			isEmailOk = true;
+			$('.resultEmail').text('');
+		}
+	});
 	
+
+	// 이메일 인증코드 발송 클릭
+	$('#btnEmail').click(function() {
+		
+		$(this).hide();
+		
+		let email = $('input[name=email]').val();
+		
+		if(email == ''){
+			alert('이메일을 입력하세요.')
+			return;
+		}
+		
+		if(isEmailAuthOk){
+			return;
+		}
+		
+		isEmailAuthOk = true;
+		
+		$('.resultEmail').text('이메일 전송 중...');
+		
+		setTimeout(function() {
+			
+		$.ajax({
+			url:'/Kmarket2/member/emailAuth',
+			method:'GET',
+			data:{"email":email},
+			dataType:'json',
+			success:function(data){
+				//console.log(data);
+				if(data.status.length == 2){
+					// 메일 전송 성공
+					isEmailAuthOk = true;
+					$('.resultEmail').text('메일 확인 후 인증코드를 입력하세요.')
+					$('.auth').show();
+					receivedCode = data.code;
+				}else {
+					// 메일 전송 실패
+					isEmailAuthOk = false;
+					alert("이메일 주소를 다시 확인해 주세요.")
+				}
+			}
+		});
+		},1000);
+	});
 	
+	// 이메일 인증 코드 확인 버튼
+	$('#btnEmailConfirm').click(function() {
+		let code = $('input[name=auth]').val();
+		
+		if(code == ''){
+			alert('이메일 확인 후 인증코드를 입력하세요.');
+			return;
+		}else if(code == receivedCode){
+			isEmailAuthCodeOk = true;
+			$('input[name=email]').attr('readonly',true);
+			$('.resultEmail').text('메일 인증 완료')
+			$('.auth').hide();
+		}else {
+			isEmailAuthCodeOk = false;
+			alert('인증코드가 틀립니다. \n 다시 확인 하십시오.');
+		}
+	});
+	/*
+
 	// 비밀번호 형식검사 일치여부 확인
 	$('input[name=pass2]').focusout(function(){			
 		let pass1 = $('input[name=pass1]').val();
@@ -144,6 +219,7 @@
 			$('.resultEmail').text('');
 		}			
 	});
+
 	
 	
 	// 휴대폰 유효성 검사
