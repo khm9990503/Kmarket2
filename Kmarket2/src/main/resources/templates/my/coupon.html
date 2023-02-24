@@ -11,15 +11,14 @@
                     <li th:classappend="${group} eq 'coupon'?'on':'off'">
                         <a th:href="@{/my/coupon?group=coupon}">쿠폰</a>
                     </li>
-                    <li>
-                        <a href="#">나의리뷰</a>
+                    <li th:classappend="${group} eq 'review'?'on':'off'">
+                        <a th:href="@{/my/review?group=review}">나의리뷰</a>
                     </li>
                     <li th:classappend="${group} eq 'qna'?'on':'off'">
                         <a th:href="@{/my/qna?group=qna}">문의하기</a>
                     </li>
                     <li th:classappend="${group} eq 'info'?'on':'off'">
                         <a th:href="@{/my/info?group=info}">나의설정</a>
-                    </li>
                 </ul>
                 <section>
                     <a href="#">

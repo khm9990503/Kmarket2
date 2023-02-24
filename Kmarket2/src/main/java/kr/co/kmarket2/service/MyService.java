@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.kmarket2.dao.MyDAO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.ReviewVO;
 
 @Service
 public class MyService {
@@ -14,18 +15,27 @@ public class MyService {
 	@Autowired
 	private MyDAO dao;
 	
-	// 문의하기 리스트
+	// 나의문의 불러오기
 	public List<ArticleVO> selectQnaArticles(String uid, int start) {
-		return dao.selectQnaArticles(uid, start); 
+		return dao.selectQnaArticles(uid, start);
+	}
+
+	// 나의 문의 총 갯수
+	public int selectQnaCountTotal(String uid, String group) {
+		return dao.selectQnaCountTotal(uid, group);
 	}
 	
-	
-	// 문의하기 페이징
-	
-	public int selectCountTotal(String uid, String group) {
-		return dao.selectCountTotal(uid ,group);
+	// 리뷰 불러오기
+	public List<ReviewVO> selectReview(String uid, int start){
+		return dao.selectReview(uid, start);
 	}
 	
+	// 나의 리뷰 총 갯수
+	public int selectReviewCountTotal(String uid) {
+		return dao.selectReviewCountTotal(uid);
+	}
+
+	// paging
 	public int getLastPageNum(int total) {
 
 		int lastPageNum = 0;
