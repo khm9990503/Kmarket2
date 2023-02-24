@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket2.service.ProductService;
 import kr.co.kmarket2.vo.CartVO;
+import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderItemVO;
@@ -78,6 +79,11 @@ public class ProductController {
 		List<Cate2VO> cates = service.selectCates(cate1, cate2);
 		model.addAttribute("cates", cates.get(0));
 		
+		// 카테고리 목록 불러오기 - 구홍모 02/24
+		List<Cate1VO> cate1s = service.selectProdCate1s();
+		List<Cate2VO> cate2s = service.selectProdCate2s();
+		model.addAttribute("cate1s",cate1s);
+		model.addAttribute("cate2s",cate2s);
 		return "product/list";
 	}
 	
@@ -126,6 +132,12 @@ public class ProductController {
 			review.setUid(review.getUid().replaceAll("(?<=^...)(.*)", s));
 		}
 		model.addAttribute("reviews", reviews);
+		
+		// 카테고리 목록 불러오기 - 구홍모 02/24
+		List<Cate1VO> cate1s = service.selectProdCate1s();
+		List<Cate2VO> cate2s = service.selectProdCate2s();
+		model.addAttribute("cate1s",cate1s);
+		model.addAttribute("cate2s",cate2s);
 		
 		return "product/view";
 	}
@@ -204,6 +216,12 @@ public class ProductController {
 		List<CartVO> items = service.selectCartByUsername(uid);
 		
 		model.addAttribute("items", items);
+		
+		// 카테고리 목록 불러오기 - 구홍모 02/24
+		List<Cate1VO> cate1s = service.selectProdCate1s();
+		List<Cate2VO> cate2s = service.selectProdCate2s();
+		model.addAttribute("cate1s",cate1s);
+		model.addAttribute("cate2s",cate2s);
 		return "product/cart";
 	}
 	
@@ -328,6 +346,13 @@ public class ProductController {
 		model.addAttribute("ordItems", ordItems);
 		model.addAttribute("order", order);
 		model.addAttribute("orderer", orderer);
+		
+		
+		// 카테고리 목록 불러오기 - 구홍모 02/24
+		List<Cate1VO> cate1s = service.selectProdCate1s();
+		List<Cate2VO> cate2s = service.selectProdCate2s();
+		model.addAttribute("cate1s",cate1s);
+		model.addAttribute("cate2s",cate2s);
 		return "product/complete";
 	}
 }
