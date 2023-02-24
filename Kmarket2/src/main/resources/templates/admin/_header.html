@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Kmarket::관리자</title>
-    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" th:href="@{/css/admin.css}">
@@ -32,14 +32,13 @@
     <div class="admin_wrapper">
         <header>
             <div>
-                <a href="#" class="logo">
+                <a th:href="@{/admin/index}" class="logo">
                     <img th:src="@{/img/admin_logo.png}" alt="admin_logo">
                 </a>
                 <p>
-                    <span>홍길동님 반갑습니다.</span>
-                    <a href="#">HOME |</a>
-                    <a href="#">로그아웃 |</a>
-                    <a href="#">고객센터</a>
+                   	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+                   	<a th:href="@{/member/logout}"> 로그아웃 </a>
+                    <a th:href="@{/my/home}"> 마이페이지 </a>
                 </p>
             </div>
         </header>

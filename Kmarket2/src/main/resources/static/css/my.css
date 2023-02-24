@@ -1060,6 +1060,9 @@ footer > div > p:nth-of-type(2){
 #my > div > section > article > table .notanswerYet {
     color: #999;
 }
+#my > div > section > article > table .AnswerYet {
+    color: blue;
+}
 
 #my > div > section > article > table .answered {
     color: #01a900;

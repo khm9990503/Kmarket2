@@ -22,8 +22,8 @@ public class MyService {
 	
 	// 문의하기 페이징
 	
-	public int selectCountTotal(String group) {
-		return dao.selectCountTotal(group);
+	public int selectCountTotal(String uid, String group) {
+		return dao.selectCountTotal(uid ,group);
 	}
 	
 	public int getLastPageNum(int total) {
