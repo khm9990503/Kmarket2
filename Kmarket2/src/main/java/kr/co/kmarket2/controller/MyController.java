@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.co.kmarket2.service.MyService;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.ReviewVO;
 
 @Controller
 public class MyController {
@@ -49,7 +50,39 @@ public class MyController {
 		return "my/info";
 	}
 	@GetMapping("my/review")
-	public String review() {
+	public String review(String group, String pg, Model model,Principal principal) {
+		
+		//아이디 가져오기
+		String uid = principal.getName();
+		
+		// 페이징
+		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
+		int total = 0;
+		
+		
+		total = service.selectReviewCountTotal(uid); //전체 리뷰 갯수
+		
+			
+		
+		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
+		int[] result = service.getPageGroupNum(currentPage, lastPageNum); // 페이지 그룹번호
+		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작번호
+		int start = service.getStartNum(currentPage); // 시작 인덱스
+		
+		
+		model.addAttribute("lastPageNum", lastPageNum);		
+		model.addAttribute("currentPage", currentPage);		
+		model.addAttribute("pageGroupStart", result[0]);
+		model.addAttribute("pageGroupEnd", result[1]);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		
+		// reivew 목록(prodName join) 가져오기
+		List<ReviewVO> reviews = service.selectReview(uid, start);
+		
+		model.addAttribute("reivews", reviews);
+		
+		
+		model.addAttribute("group", group);
 		return "my/review";
 	}
 	@GetMapping("my/qna")
@@ -63,7 +96,7 @@ public class MyController {
 		int total = 0;
 		
 		
-		total = service.selectCountTotal(uid, group); //전체 게시물 갯수
+		total = service.selectQnaCountTotal(uid, group); //전체 게시물 갯수
 		
 			
 		
