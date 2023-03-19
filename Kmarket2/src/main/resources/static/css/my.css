@@ -565,7 +565,6 @@ footer > div > p:nth-of-type(2){
 #my > div > section > article > table td:first-child{border-left: none;}
 
 #my .info{
-    margin: 16px;
     list-style: square;
 }
 .info > li{
