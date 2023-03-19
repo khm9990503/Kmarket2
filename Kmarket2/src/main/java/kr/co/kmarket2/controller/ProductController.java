@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket2.service.ProductService;
 import kr.co.kmarket2.vo.CartVO;
+import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderItemVO;
@@ -78,6 +79,11 @@ public class ProductController {
 		List<Cate2VO> cates = service.selectCates(cate1, cate2);
 		model.addAttribute("cates", cates.get(0));
 		
+		// 카테고리 목록 불러오기 - 구홍모 02/24
+		List<Cate1VO> cate1s = service.selectProdCate1s();
+		List<Cate2VO> cate2s = service.selectProdCate2s();
+		model.addAttribute("cate1s",cate1s);
+		model.addAttribute("cate2s",cate2s);
 		return "product/list";
 	}
 	
@@ -127,6 +133,12 @@ public class ProductController {
 		}
 		model.addAttribute("reviews", reviews);
 		
+		// 카테고리 목록 불러오기 - 구홍모 02/24
+		List<Cate1VO> cate1s = service.selectProdCate1s();
+		List<Cate2VO> cate2s = service.selectProdCate2s();
+		model.addAttribute("cate1s",cate1s);
+		model.addAttribute("cate2s",cate2s);
+		
 		return "product/view";
 	}
 	
@@ -172,26 +184,26 @@ public class ProductController {
 	@ResponseBody
 	public Map<String, Object> putInCart(@RequestBody CartVO cartVO , Principal principal) {
 		// 현재 사용자 정보 가져오기
-		/*
 		String username = null;
-		Map<String, Integer> resultMap = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		if(principal != null){ 
-			username = ((UserDetails) principal).getUserName();
+			username = principal.getName();
+			
+			cartVO.setUid(username);
+			
+			// cart 테이블에 정보 저장
+			int result = service.insertCart(cartVO);
+			resultMap.put("result", result);
+			resultMap.put("username", cartVO.getUid()); // 로그인 기능 구현 때까지 임시로 사용
+			return resultMap;
 		}else{
-			result.put("result", 0);
+			resultMap.put("result", 0);
 			return resultMap;
 		}
-		*/
-		String username = "a123123";
-		Map<String, Object> resultMap = new HashMap<>();
-		cartVO.setUid(username);
 		
-		// cart 테이블에 정보 저장
-		int result = service.insertCart(cartVO);
-		resultMap.put("result", result);
-		resultMap.put("username", cartVO.getUid()); // 로그인 기능 구현 때까지 임시로 사용
-		return resultMap;
+		//String username = "a123123";
+		//Map<String, Object> resultMap = new HashMap<>();
 	}
 	
 	@GetMapping("product/cart")
@@ -204,6 +216,12 @@ public class ProductController {
 		List<CartVO> items = service.selectCartByUsername(uid);
 		
 		model.addAttribute("items", items);
+		
+		// 카테고리 목록 불러오기 - 구홍모 02/24
+		List<Cate1VO> cate1s = service.selectProdCate1s();
+		List<Cate2VO> cate2s = service.selectProdCate2s();
+		model.addAttribute("cate1s",cate1s);
+		model.addAttribute("cate2s",cate2s);
 		return "product/cart";
 	}
 	
@@ -212,7 +230,7 @@ public class ProductController {
 	public Map<String, String> removeFromCart(String[] items, Principal principal) {
 		// 현재 사용자 username과 prodNo 이용해서 cart 테이블에서 선택한 상품 삭제
 		// 혹시 principal 객체 인식 못하면 뷰 페이지에서 sec:authentication으로 username보내기
-		String username = "a123123";
+		String username = principal.getName();
 		
 		for(int i =0; i < items.length; i++) {
 			service.deleteCartByProdNo(items[i], username);
@@ -328,6 +346,13 @@ public class ProductController {
 		model.addAttribute("ordItems", ordItems);
 		model.addAttribute("order", order);
 		model.addAttribute("orderer", orderer);
+		
+		
+		// 카테고리 목록 불러오기 - 구홍모 02/24
+		List<Cate1VO> cate1s = service.selectProdCate1s();
+		List<Cate2VO> cate2s = service.selectProdCate2s();
+		model.addAttribute("cate1s",cate1s);
+		model.addAttribute("cate2s",cate2s);
 		return "product/complete";
 	}
 }

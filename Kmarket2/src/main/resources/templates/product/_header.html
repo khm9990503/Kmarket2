@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>cart</title>
+    <title>KMARKET2</title>
     <script src="https://kit.fontawesome.com/78ddb08b0c.css" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -26,7 +26,7 @@
 	                   	<a th:href="@{/admin/index}">관리자</a>
 	                   	<a th:href="@{/member/logout}">로그아웃</a>
 	                    <a th:href="@{/my/home}">마이페이지</a>
-	                    <a th:href="@{/product/cart}">
+	                    <a th:href="@{/product/cart?uid=${#authtentication.getPrincipal().getUsername()}}">
 	                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
 	                        장바구니
 	                    </a>
@@ -37,7 +37,7 @@
 	                   	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
 	                   	<a th:href="@{/member/logout}">로그아웃</a>
 	                    <a th:href="@{/my/home}">마이페이지</a>
-	                    <a th:href="@{/product/cart}">
+	                    <a th:href="@{/product/cart?uid=__${#authentication.name}__}">
 	                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
 	                        장바구니
 	                    </a>

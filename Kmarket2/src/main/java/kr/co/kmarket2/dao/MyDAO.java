@@ -15,5 +15,5 @@ public interface MyDAO {
 	public List<ArticleVO> selectQnaArticles(String uid, int start);
 	
 	// 문의하기 페이징(총 갯수)
-	public int selectCountTotal(String group);
+	public int selectCountTotal(String uid, String group);
 }

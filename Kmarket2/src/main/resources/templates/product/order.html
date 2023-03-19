@@ -121,8 +121,8 @@
 							console.log(xhr2.status);
 								if(xhr2.readyState === XMLHttpRequest.DONE){
 									if(xhr2.status === 200){
-										const ordResult = xhr2.response.ordResult;
-										const ordNo = xhr2.reponse.ordNo;
+										let ordResult = xhr2.response.ordResult;
+										let ordNo = xhr2.response.ordNo;
 										
 										if(ordResult === 1){
 											window.location.href = "/Kmarket2/product/complete?ordNo=" + ordNo;
