@@ -1,0 +1,72 @@
+<!-- 
+	날짜 : 2023.02.11
+	이름 : 조수빈
+	내용 : 카테고리 및 하위 카테고리 보여주는 aside 화면 출력 및 기능 구현
+ -->
+ <script>
+ window.onload = () => {
+	let targetUrl = '';
+
+	 document.querySelectorAll('a').forEach(link => {
+		 link.addEventListener('click', (e) =>{
+			 // a 태그의 href 값을 불러와서 세번째 '/' 이후의 값을 targetUrl 변수에 저장
+			 let href = e.target.href;
+			 targetUrl = href.substring(href.indexOf('/', 8));
+			 // 값이 잘 들어오는지 확인('click'을 'mouseover'로 바꿔서 확인)
+			 console.log(targetUrl);
+		 });
+	 });
+	 
+	 let xhr = new XMLHttpRequest();
+	 xhr.open("GET", targetUrl);
+	 //xhr.responseType = 'json';
+	 xhr.send();
+ };
+	 
+ 
+ </script>
+<main id="product">
+	<aside>
+	    <ul class="category">
+	        <li>
+	            <i class="fa-solid fa-bars"></i>
+	            카테고리
+	        </li>
+            <li th:each="ca1 : ${cate1s}">
+                <a th:href="@{/product/list(cate1=${ca1.cate1},cate2=10,sort=1)}">
+					<th:block th:if="${ca1.cate1 == 10 }">
+                	<i class="fas fa-tag"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right"></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 11 }">
+                	<i class="fas fa-tshirt"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right"></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 12 }">
+                	<i class="fas fa-baby"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 13 }">
+                	<i class="fas fa-utensils"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 14 }">
+                	<i class="fas fa-home"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 15 }">
+                	<i class="fas fa-laptop"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 16 }">
+                	<i class="fas fa-heart"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 17 }">
+                	<i class="fas fa-car"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                	<th:block th:if="${ca1.cate1 == 18 }">
+                	<i class="fas fa-book"></i>[[${ca1.c1Name}]]<i class="fas fa-angle-right" ></i>
+                	</th:block>
+                </a>
+                <ol>
+                	<th:block th:each="ca2 : ${cate2s}">
+                    		<li th:if="${ca1.cate1==ca2.cate1}"><a th:href="@{/product/list(cate1=${ca2.cate1},cate2=${ca2.cate2},sort=1)}">[[${ca2.c2Name}]]</a></li>
+                    </th:block>
+                </ol>
+            </li>
+	    </ul>
+	</aside>

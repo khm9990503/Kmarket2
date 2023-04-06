@@ -1,0 +1,250 @@
+<th:block th:include="@{admin/_header.html}"/>
+<script>
+$(function(){
+	// 1차 유형 선택 시 2차 유형 카테고리 불러오기
+	let ca = $("select[name=cate]").val();
+	let jsonData = {
+			"cate":ca
+	}
+	$.ajax({
+		url:'/Kmarket2/admin/cs/cateList',
+		method:'GET',
+		data:jsonData,
+		dataType:'json',
+		success:function(data){
+			//console.log(data)
+			for(let vo of data.result){
+				let ca2 = $('input[name=cate2]').val();
+				//console.log(ca2);
+				let tag = null;
+				if(ca2==vo.cate2){
+					tag = "<option class='opt' value="+vo.cate2+" selected>"+vo.c2Name+"</option>";
+				}else{
+					tag = "<option class='opt' value="+vo.cate2+">"+vo.c2Name+"</option>";
+				}
+                $('select[name=cate2]').append(tag); // select에 option을 뒤에 붙임
+            }
+		}
+	});
+	
+	// 1차 유형 선택 시 2차 유형 카테고리 불러오기
+	$("select[name=cate]").change("click",function(){
+		let cate = $(this).val(); // 선택된 option의 value = select의 value
+		let jsonData = {
+				"cate":cate
+		}
+		$('.opt').remove(); // cate1 다시 선택 시 이전 cate2를 지우기 위해
+		$.ajax({
+			url:'/Kmarket2/admin/cs/cateList',
+			method:'GET',
+			data:jsonData,
+			dataType:'json',
+			success:function(data){
+				//console.log(data)
+				for(let vo of data.result){
+                    let tag = "<option class='opt' value="+vo.cate2+">"+vo.c2Name+"</option>";
+                    $('select[name=cate2]').append(tag); // select에 option을 뒤에 붙임
+                }
+			}
+		});
+	});
+	// 2차 유형별 게시물 불러오기
+	$('select[name=cate2]').on("change",function() {
+		let group = $('input[name=group]').val();
+		let cate = $('select[name=cate]').val();
+		let cate2 = $(this).val();
+		
+		location.href = "/Kmarket2/admin/cs/list?pg=1&group="+group+"&cate="+cate+"&cate2="+cate2;
+		
+	});
+	
+	
+
+	// 전체 체크박스 클릭 이벤트
+	$('input[name=selectAll]').on("click",function(){
+		let isCheck = $(this).is(":checked");
+		
+		let val_arr = [];
+		$("input[name=select]").each(function(){
+			let chk = $(this).val();
+			val_arr.push(chk);
+		})
+		$('input[name=select]').remove();
+		for(let i=0;i<10;i++){
+			let tag = "<input type='checkbox' name='select' value="+val_arr[i]+">"
+			let sel = ".chk"+i;
+			console.log(sel);
+			$(sel).append(tag);
+		}
+		
+		if(isCheck){
+			$('input[name=select]').attr("checked",true); 
+		}else {
+			$('input[name=select]').attr("checked",false);
+		}
+		
+	});
+	// 각 체크박스 클릭 이벤트
+	$('input[name=select]').each(function(){
+		$(this).click(function(){
+			let isCheck = $(this).is(":checked");
+			if(isCheck){
+				$(this).attr("checked",true); 
+			}else {
+				$(this).attr("checked",false);
+			}
+		});
+	});
+	// 선택삭제 버튼 이벤트
+	$('.btnDel').click(function(){
+		// 체크가 없으면 실행 안함
+		let isCheck = $('input[name=select]').is(":checked");
+		if(!isCheck){
+			alert("삭제할 게시물을 선택해주세요.");
+			return false;
+		}
+		
+		let group = $('input[name=group]').val();
+		let cate = $('input[name=cate]').val();
+		let cate2 = $('input[name=cate2]').val();
+		
+		
+		let chk_arr = [];
+		$("input[name=select]:checked").each(function(){
+			let chk = $(this).val();
+			chk_arr.push(chk);
+		})
+		console.log(chk_arr);
+		let chks = chk_arr.toString();
+		let jsonData = {
+				"chks":chks
+		}
+		$.ajax({
+			url:"/Kmarket2/admin/cs/listDelete",
+			method:"get",
+			data:jsonData,
+			dataType:"json",
+			success:function(data){
+				if(data.result > 0){
+					location.href = "/Kmarket2/admin/cs/list?group="+group;	
+				}
+			}
+		});
+	});
+});
+</script>
+<th:block th:if="${group.equals('notice')}">
+<script>
+$(function(){
+	$('select[name=cate]').on("change",function() {
+		let group = $('input[name=group]').val();
+		let cate = $(this).val();
+		location.href = "/Kmarket2/admin/cs/list?pg=1&group="+group+"&cate="+cate;
+		
+	});
+});
+</script>
+</th:block>
+ 
+<section id="csList">
+		<nav th:if="${group.equals('notice')}">
+	        <h3>공지사항 목록</h3>
+	        <p>HOME > 고객센터 ><strong>공지사항</strong></p>
+	    </nav>
+		<nav th:if="${group.equals('faq')}">
+	        <h3>자주묻는질문 목록</h3>
+	        <p>HOME > 고객센터 ><strong>자주묻는질문</strong></p>
+	    </nav>
+		<nav th:if="${group.equals('qna')}">
+	        <h3>문의하기 목록</h3>
+	        <p>HOME > 고객센터 ><strong>문의하기</strong></p>
+	    </nav>
+	   
+    <select name="cate" id="cate">
+    	<th:block th:if="${group.equals('notice')}">
+    	<option value="0">유형선택</option>
+    	<option th:each="ca : ${cates}" th:value="${ca.key}" th:selected="${ca.key}==${cate}" >[[${ca.value}]]</option>
+    	</th:block>
+    	<th:block th:if="${group.equals('qna') || group.equals('faq') }">
+    	<option value="0">1차유형</option>
+    	<option th:each="ca : ${cates}" th:value="${ca.key}" th:selected="${ca.key}==${cate}" >[[${ca.value}]]</option>
+    	</th:block>
+    </select>
+    <select th:if="${group.equals('qna') || group.equals('faq') }" name="cate2" id="cate2">
+    	<option value="0">2차유형</option>
+    </select>
+    <table>
+    	<tr>
+    		<th><input type="checkbox" name="selectAll" c></th>
+    		<th>번호</th>
+   			<th th:if="${group.equals('notice')}">유형</th>
+   			<th:block th:if="${group.equals('faq') || group.equals('qna')}">
+	   			<th>1차유형</th>
+	   			<th>2차유형</th>
+   			</th:block>
+    		<th>제목</th>
+    		<th:block th:if="${group.equals('notice') || group.equals('faq')}">
+    			<th>조회</th>
+    			<th>날짜</th>
+    			<th>관리</th>
+    		</th:block>
+    		<th:block th:if="${group.equals('qna')}">
+    			<th>작성자</th>
+    			<th>작성일</th>
+    			<th>상태</th>
+    		</th:block>
+    	</tr>
+    	
+    	<tr th:each="arti,status : ${articles}">
+    		<td class="" th:classappend="chk+${status.index}"><input type="checkbox" name="select" th:value="${arti.no}"></td>
+    		
+    		<td th:if="${group.equals('notice')||group.equals('qna')}">[[${pageStartNum-status.index}]]</td>
+    		<td th:if="${group.equals('faq')}">[[${10-status.index}]]</td>
+    		<td th:each="ca : ${cates}" th:if="${ca.key == arti.cate}">[[${ca.value}]]</td>
+    		
+    		<th:block th:each="ca2 : ${articate2s}" th:if="${arti.cate.equals(ca2.cate) && arti.cate2.equals(ca2.cate2)}">
+    			<td>[[${ca2.c2Name}]]</td>
+    		</th:block>
+    		
+    		<td><a th:href="@{/admin/cs/view(no=${arti.no},group=${group})}">[[${arti.title}]]</a></td>
+    		<td th:if="${group != 'qna'}">[[${arti.hit}]]</td>
+    		<td th:if="${group == 'qna'}">***[[${arti.uid.substring(3)}]]</td>
+    		<td>[[${arti.rdate.substring(2,10)}]]</td>
+    		<td th:if="${group != 'qna'}">
+    			<a th:href="@{/admin/cs/modify(no=${arti.no},group=${group})}">수정</a>
+    			<a th:href="@{/admin/cs/delete(no=${arti.no},group=${group})}">삭제</a>
+    		</td>
+    		<td th:if="${group == 'qna' && arti.comment == 0}">
+    			검토중
+    		</td>
+    		<td th:if="${group == 'qna' && arti.comment != 0}">
+    			<span style="color: #067dfd; font-weight: bold;" >답변완료</span> 
+    		</td>
+    	</tr>
+    </table>
+    
+    <div class="page">
+    <th:block th:if="${group != 'faq'}">
+	    <a th:if="${pageGroupStart gt 1 && cate != null}" th:href="@{/admin/cs/list(pg=${pageGroupStart-1},cate=${cate},group=${group})}" class="prev">이전</a>
+	    <a th:if="${pageGroupStart gt 1 && cate == null}" th:href="@{/admin/cs/list(pg=${pageGroupStart-1},group=${group})}" class="prev">이전</a>
+	    <th:block th:each="num,numStat : ${#numbers.sequence(pageGroupStart,pageGroupEnd)}">
+	    <a th:if="${cate != null}" th:href="@{/admin/cs/list(pg=${num},cate=${cate},group=${group})}" class="num" th:classappend="${currentPage}==${num}?'on':''">[[${num}]]</a>
+	    <a th:if="${cate == null}" th:href="@{/admin/cs/list(pg=${num},group=${group})}" class="num" th:classappend="${currentPage}==${num}?'on':''">[[${num}]]</a>
+	    </th:block>
+	    <a th:if="${pageGroupEnd lt lastPageNum && cate != null}" th:href="@{/admin/cs/list(pg=${pageGroupStart+1},cate=${cate},group=${group})}" class="next">다음</a>
+	    <a th:if="${pageGroupEnd lt lastPageNum && cate == null}"th:href="@{/admin/cs/list(pg=${pageGroupStart+1},group=${group})}" class="next">다음</a>
+	</th:block>
+    </div>
+    
+    <a href="#" class="btn btnDel">선택삭제</a>
+    <c:choose>
+    		<a th:if="${group != 'qna'}" th:href="@{/admin/cs/write(group=${group})}" class="btn btnWrite">작성하기</a>
+    		<a th:if="${group == 'qna'}" th:href="@{/cs/qna/list(group='qna',cate='member')}" class="btn btnWrite">문의하기</a>
+    </c:choose>
+    
+    <input type="hidden" name="group" th:value="${group}">
+    <input type="hidden" name="cate" th:value="${cate}">
+    <input type="hidden" name="cate2" th:value="${cate2}">
+</section>
+
+<th:block th:include="@{admin/_footer.html}"/>

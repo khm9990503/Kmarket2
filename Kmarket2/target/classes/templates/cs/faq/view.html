@@ -1,0 +1,80 @@
+<th:block th:include="@{cs/_header.html}"/>
+        <section id="cs">
+            <div class="faq">
+                <nav>
+                    <div>
+                        <p>홈<span>></span>자주묻는 질문</p>
+                    </div>
+                </nav>
+                <section class="view">
+                    <aside>
+                        <h2>자주묻는 질문</h2>
+                       	<ul>
+	                        <li th:classappend="${cate} eq 'member'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=member}">회원</a></li>
+	                        <li th:classappend="${cate} eq 'event'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=event}">쿠폰/이벤트</a></li>
+	                        <li th:classappend="${cate} eq 'order'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=order}">주문/결제</a></li>
+	                        <li th:classappend="${cate} eq 'deli'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=deli}">배송</a></li>
+	                        <li th:classappend="${cate} eq 'cancle'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=cancle}">취소/반품/교환</a></li>
+	                        <li th:classappend="${cate} eq 'trip'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=trip}">여행/숙박/항공</a></li>
+	                        <li th:classappend="${cate} eq 'safe'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=safe}">안전거래</a></li>
+                   	 	</ul>
+                    </aside>
+                     
+                   
+                    
+                    <article>
+                      <nav th:if="${cate} eq 'member'">
+                        <h1>회원</h1>
+                        <h2>회원관련 자주 묻는 질문입니다.</h2>
+	                    </nav>
+	                    <nav th:if="${cate} eq 'event'">
+	                        <h1>쿠폰/이벤트</h1>
+	                        <h2>쿠폰/이벤트관련 자주 묻는 질문입니다.</h2>
+	                    </nav>
+	                    <nav th:if="${cate} eq 'order'">
+	                        <h1>주문/결제</h1>
+	                        <h2>주문/결제관련 자주 묻는 질문입니다.</h2>
+	                    </nav>
+	                    <nav th:if="${cate} eq 'deli'">
+	                        <h1>배송</h1>
+	                        <h2>배송관련 자주 묻는 질문입니다.</h2>
+	                    </nav>
+	                    <nav th:if="${cate} eq 'cancle'">
+	                        <h1>취소/반품/교환</h1>
+	                        <h2>취소/반품/교환관련 자주 묻는 질문입니다.</h2>
+	                    </nav>
+	                    <nav th:if="${cate} eq 'trip'">
+	                        <h1>여행/숙박/항공</h1>
+	                        <h2>여행/숙박/항공관련 자주 묻는 질문입니다.</h2>
+	                    </nav>
+	                    <nav th:if="${cate} eq 'safe'">
+	                        <h1>안전거래</h1>
+	                        <h2>안전거래관련 자주 묻는 질문입니다.</h2>
+	                    </nav>
+                        <nav class="main">
+                            <h1 class="title">
+                                <span>Q.</span>
+                                [[${article.title}]]
+                            </h1>
+                        </nav>
+                        <div class="content">
+                            <p>
+                                [[${article.content}]]
+                            </p>
+                            <p class="fishing">
+                                ※ 피싱 관련 피해신고
+                                <br>
+                                <br>
+                                ▶ 경찰청 사이버수사국 (국번없이)182 : https://cyberbureau.police.go.kr
+                                <br>
+                                ▶ KISA 인터넷침해대응센터 (국번없이)118 : http://www.krcert.or.kr
+                                <br>
+                                감사합니다.
+                            </p>
+                        </div>
+                        <a th:href="@{/cs/faq/list(group='faq',cate=${cate})}" class="btnList">목록보기</a>
+                    </article>
+                </section>
+            </div>
+      </section>
+<th:block th:include="@{cs/_footer.html}"/>

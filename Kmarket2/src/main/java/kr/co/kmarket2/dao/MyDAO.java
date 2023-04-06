@@ -6,11 +6,14 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
 @Mapper
 @Repository
 public interface MyDAO {
+	// 마이페이지 메인 주문 목록
+	public List<OrderVO> selectOrdersIndex(String uid);
 	
 	// 나의 문의 리스트
 	public List<ArticleVO> selectQnaArticles(String uid, int start);

@@ -1,0 +1,140 @@
+<th:block th:include="@{admin/_header.html}"/>
+ <script>
+	$(function(){		
+		// 체크박스 전체 선택, 해제
+		$('#checkAll').click(function(){
+			let checked = $(this).is(':checked');
+	        if(checked){
+	            $('input:checkbox[name=check]').prop('checked',true); 
+	        }else{
+	            $('input:checkbox[name=check]').prop('checked',false); 
+	        }
+	    });
+		
+		// 개별체크 선택 및 해제시 전체 체크 활성 및 비활성
+		$('input:checkbox[name=check]').click(function(){
+			let checked = $('input:checkbox[name=check]:checked').length;
+// 			console.log(checked);
+			let size = $('input[name=size]').val();
+			if (checked == size){
+				$('#checkAll').prop('checked', true);
+			}else{
+				$('#checkAll').prop('checked', false);
+			}
+		});	   
+		
+		// 선택삭제
+		$('#delete').click(function () {
+			if ($('input[name=check]:checked').length == 0) {
+				alert('선택된 상품이 없습니다.');
+				return false;
+		    }
+		    let prodNo = [];
+		    $('input[name=check]:checked').each(function (e) {
+		    	prodNo.push($(this).data("no"));
+	    	});
+		    if (confirm('선택된 상품을 삭제하시겠습니까?')) {
+		    	let jsonData = {
+	    			'prodNo': prodNo.toString()
+    			};
+ 		    	console.log(jsonData);
+		    	$.ajax({
+		    		type: 'get',
+		        	url: '/Kmarket2/admin/product/delete',
+		        	data: jsonData,
+		        	dataType: 'json',
+		        	success: function (data) {
+		        		if (data.result > 0) {
+		        			$('input[name=check]:checked').parents('tr').remove();
+		        			alert('삭제 성공');
+		        			if ($('input[name=check]').length == 0) {
+		        				$('input:checkbox[name=checkAll]').prop('checked', false);
+	        				}
+	        			}else {
+	        				alert('실패');
+        				}
+	        		}
+	        	});
+	    	}
+	    });
+	});
+		
+		
+		
+</script>
+
+    <section id="admin_product_list">
+        <nav>
+            <h3>상품목록</h3>
+            <p>
+            	<a th:href="@{/admin/index}">HOME</a>>
+            	<a th:href="@{/admin/product/list}">상품관리</a>>
+            	<a th:href="@{/admin/product/list}"><strong>상품목록</strong></a>
+            </p>
+        </nav>
+        <!-- 상품목록 컨텐츠 -->
+        <section>
+            <div>
+            	<form th:action="@{/admin/product/list}" method="get">
+	                <select name="type">
+	                    <option value="1">상품명</option>
+	                    <option value="2">상품코드</option>
+	                    <option value="3">제조사</option>
+	                    <option value="4">판매자</option>                               
+	                </select>
+	                <input type="text" name="search">
+	                <button type="submit">검색</button>
+                </form>
+            </div>
+            <table>
+                <tr>
+                    <th><input type="checkbox" name="all" id="checkAll"/></th>
+                    <th>이미지</th>
+                    <th>상품코드</th>
+                    <th>상품명</th>
+                    <th>판매가격</th>
+                    <th>할인율</th>
+                    <th>포인트</th>
+                    <th>재고</th>
+                    <th>판매자</th>
+                    <th>조회</th>
+                    <th>관리</th>
+                </tr>
+	                <tr th:each="product : ${products}">
+	                    <td><input type="checkbox" name="check" th:data-no="${product.prodNo}"/><input type="hidden" name="size" th:value="${products.size()}"/></td>
+	                    <td><img th:src="@{${product.thumb1}}" class="thumb"></td>
+	                    <td><a th:href="@{#}">[[${product.prodNo}]]</a></td>
+	                    <td><a th:href="@{#}">[[${product.prodName}]]</a> </td>
+	                    <td>[[${product.price}]]</td>
+	                    <td>[[${product.discount}]]</td>
+	                    <td>[[${product.point}]]</td>
+	                    <td>[[${product.stock}]]</td>
+	                    <td>[[${product.seller}]]</td>
+	                    <td>[[${product.hit}]]</td>
+	                    <td>
+	                    	<a href="#">[수정]</a>
+	                        <a href="#">[삭제]</a>
+	                    </td>
+	                </tr>
+            </table>
+            
+            <input type="button" id="delete" value="선택삭제" />
+
+			<div class="paging">
+               <span th:if="${pageGroupStart > 1}" class="prev">
+                   <a th:href="@{/admin/product/list(pg=${pageGroupStart-1})}"><&nbsp;이전</a>
+               </span>
+               <span th:each="num,numStat : ${#numbers.sequence(pageGroupStart,pageGroupEnd)}" class="num">
+                   <a th:href="@{/admin/product/list(pg=${num})}" class="" th:classappend="${currentPage}==${num}?'on':''">[[${num}]]</a>
+               </span>
+               <span th:if="${pageGroupEnd lt lastPageNum}" class="next">
+                   <a th:href="@{/admin/product/list(pg=${pageGroupEnd + 1})}">다음&nbsp;></a>
+               </span>
+           </div>
+        </section>                
+        <p class="ico info">
+            <strong>Tip!</strong>
+            전자상거래 등에서의 상품 등의 정보제공에 관한 고시에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.
+        </p>
+    </section>
+<th:block th:include="@{admin/_footer.html}"/>

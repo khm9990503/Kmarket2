@@ -1,0 +1,279 @@
+<th:block th:include="@{product/_header.html}"/>
+<th:block th:include="@{product/_aside.html}"/>
+            <section class="cart">
+                <nav>
+                    <h1>장바구니</h1>
+                    <p>
+                        HOME > 
+                        <span>패션·의류·뷰티</span>
+                         > 
+                        <strong>장바구니</strong>
+                    </p>
+                </nav>
+                <form th:action="@{/product/order}" method="post" onsubmit="return check()">
+                    <table>
+                        <tr>
+                            <th>
+                               <input type="checkbox" name="all"> 
+                            </th>
+                            <th>상품명</th>
+                            <th>총수량</th>
+                            <th>판매가</th>
+                            <th>할인</th>
+                            <th>포인트</th>
+                            <th>배송비</th>
+                            <th>소계</th>
+                        </tr>
+                        <tr class="empty">
+                            <td colspan="7">장바구니에 상품이 없습니다</td>
+                        </tr>
+                        <tr th:each="item :${items}">
+                            <td>
+                                <input type="checkbox" th:name="individualItem" th:value="${item.cartNo}">
+                            </td>
+                            <td>
+                                <article>
+                                    <a th:href="@{/product/view(prodNo=${item.prodNo},cate1=${item.prodCate1},cate2=${item.prodCate2})}">
+                                        <img src="@{__${item.thumb1}__}" alt="thumbnail">
+                                    </a>
+                                    <div>
+                                        <h2>
+                                            <a th:href="@{/product/view(prodNo=${item.prodNo},cate1=${item.prodCate1},cate2=${item.prodCate2})}">[[${item.prodName}]]</a>
+                                        </h2>
+                                        <p>[[${item.descript}]]</p>
+                                    </div>
+                                </article>
+                            </td>
+                            <td>[[${item.count}]]</td>
+                            <td>[[${#numbers.formatInteger(item.price, 3, 'COMMA')}]]</td>
+                            <th:block th:if="${item.discount > 0}">
+                            	<td>[[${item.discount}]]%</td>
+                            </th:block>
+                            <th:block th:unless="${item.discount > 0}">
+                            	<td>0</td>
+                            </th:block>
+                            <td>[[${#numbers.formatInteger(item.point, 3, 'COMMA')}]]</td>
+                            <th:block th:if="${item.delivery > 0}">
+                            	<td>[[${#numbers.formatInteger(item.delivery, 3, 'COMMA')}]]</td>
+                            </th:block>
+                            <th:block th:unless="${item.delivery > 0}">
+                            	<td>무료배송</td>
+                            </th:block>
+                            <td>[[${#numbers.formatInteger(item.total, 3, 'COMMA')}]]</td>
+                        </tr>
+                    </table>
+                    <input type="button" name="del" value="선택 삭제" onclick="remove();">
+                    <div class="total">
+                        <h2>전체합계</h2>
+                        <table border="0">
+                            <tr>
+                                <td>상품수</td>
+                                <td class="totalCount">0</td>
+                            </tr>
+                            <tr>
+                                <td>상품금액</td>
+                                <td class="totalPrice">0</td>
+                            </tr>
+                            <tr>
+                                <td>할인금액</td>
+                                <td class="totalDiscount">0</td>
+                            </tr>
+                            <tr>
+                                <td>배송비</td>
+                                <td class="totalDelivery">0</td>
+                            </tr>
+                            <tr>
+                                <td>포인트</td>
+                                <td class="totalPoint">0</td>
+                            </tr>
+                            <tr>
+                                <td>전체주문금액</td>
+                                <td class="totalPay">0</td>
+                            </tr>
+                        </table>
+                        <input type="submit" value="주문하기">
+                    </div>
+                </form>
+            </section>
+        </main>
+<script th:inline="javascript">
+let totalCount = document.querySelector('.totalCount').innerText;
+let totalPrice = document.querySelector('.totalPrice').innerText;
+let totalDiscount = document.querySelector('.totalDiscount').innerText;
+let totalDelivery = document.querySelector('.totalDelivery').innerText;
+let totalPoint = document.querySelector('.totalPoint').innerText;
+let totalPay = document.querySelector('.totalPay').innerText;
+
+	function remove(){
+		let checkboxes = Array.from(document.getElementsByName("individualItem"));
+		let i = 0;
+		let items = [[${items}]];
+		let itemsToRemove = [];
+		let removedIndex = [];
+		
+		checkboxes.forEach(function(checkbox){
+			if(checkbox.checked){
+				console.log(items[i].prodNo);
+				itemsToRemove[i] = items[i].prodNo;
+			}
+			removedIndex[i] = i;
+			i++;
+		});
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "/Kmarket2/product/remove?items=" + itemsToRemove);
+		xhr.responseType= "json";
+		xhr.send();
+		
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === XMLHttpRequest.DONE){
+				if(xhr.status ===200){
+					const data = xhr.response;
+					const username = data.username;
+					
+					console.log(username);
+					window.location.href = "/Kmarket2/product/cart?uid=" + username;
+					
+					// 전체 합계에서도 값 빼주기
+					for(let n in removedIndex){
+						totalCount -= items[n].count;
+						totalPrice -= items[n].price * items[n].count;
+						totalDiscount -= items[n].price * (items[n].discount * 0.01) * items[n].count;
+						totalDelivery -= items[n].delivery;
+						totalPoint -= items[n].point;
+						totalPay -= items[n].price * (1 - items[n].discount * 0.01) * items[n].count;
+					}
+				}
+			}
+		}	
+	}
+	
+	// 체크박스 선택 및 선택 해제에 따라 전체 합계 값 변화
+	let checkboxes = Array.from(document.getElementsByName("individualItem"));
+	let items = [[${items}]];
+	
+	let intTotalCount = parseInt(totalCount, 10);
+	let intTotalPrice = parseInt(totalPrice, 10);
+	let intTotalDiscount = parseInt(totalDiscount, 10);
+	let intTotalDelivery = parseInt(totalDelivery, 10);
+	let intTotalPoint = parseInt(totalPoint, 10);
+	let intTotalPay = parseInt(totalPay, 10);
+
+	let nf = new Intl.NumberFormat('en-US'); // increase(), decrease()에서 숫자 포맷위해 사용
+	
+	checkboxes.forEach(function(checkbox){
+		checkbox.addEventListener('change', function(){
+			let i = checkboxes.indexOf(checkbox);
+			
+			if(this.checked){
+				increase(i);
+			}else{
+				decrease(i);
+			}
+		});
+	});
+	
+	// checkAll 체크박스 선택 시 모두 선택, 해제 시 모두 해제
+	let checkAll = document.querySelector("input[name=all]");
+	checkAll.addEventListener('change', function(){
+		
+		if(this.checked){
+			clear();
+			checkboxes.forEach(function(checkbox){
+				let i = checkboxes.indexOf(checkbox);
+				checkbox.checked = true;
+				increase(i);
+			});
+		}else{
+			checkboxes.forEach(function(checkbox){
+				let i = checkboxes.indexOf(checkbox);
+				checkbox.checked = false;
+				decrease(i);
+				document.querySelector('.totalDiscount').innerText = (document.querySelector('.totalDiscount').innerText).replace('-', ''); // decrease()개별 실행할 때는 괜찮은데 여기서 여러 번 돌리면 계속 totalDiscount값이 '-0'으로 인식됨 => '-'빼주는 작업
+			});
+		}
+	});
+	
+	// 전체합계값들 무효화해서 chekcAll 체크박스 선택 시 기존에 체크되어있던 값에 중복 더하기/빼기 되지 않도록
+	function clear(){
+		intTotalCount = 0;
+		intTotalPrice = 0;
+		intTotalDiscount = 0;
+		intTotalDelivery = 0;
+		intTotalPoint = 0;
+		intTotalPay = 0;
+	}
+	
+	// 선택한 체크박스에 해당하는 품목의 값들을 전체합계에 더하기
+	function increase(i){
+		document.querySelector('.totalCount').innerText = nf.format(intTotalCount + items[i].count);
+		document.querySelector('.totalPrice').innerText = nf.format(intTotalPrice + items[i].price * items[i].count);
+		
+		let discount = intTotalDiscount + items[i].price * (items[i].discount * 0.01) * items[i].count;
+		if(discount >0){
+			document.querySelector('.totalDiscount').innerText = "-"+nf.format(discount);
+		}else if(discount ===0){
+			document.querySelector('.totalDiscount').innerText = nf.format(discount);
+		}
+		
+		document.querySelector('.totalDelivery').innerText = nf.format(intTotalDelivery + items[i].delivery);
+		document.querySelector('.totalPoint').innerText = nf.format(intTotalPoint + items[i].point);
+		document.querySelector('.totalPay').innerText = nf.format(intTotalPay + items[i].price * (1 - items[i].discount * 0.01) * items[i].count + items[i].delivery);
+		intTotalCount += items[i].count;
+		intTotalPrice += items[i].price * items[i].count;
+		intTotalDiscount += items[i].price * (items[i].discount * 0.01) * items[i].count;
+		intTotalDelivery += items[i].delivery;
+		intTotalPoint += items[i].point;
+		intTotalPay += items[i].price * (1 - items[i].discount * 0.01) * items[i].count + items[i].delivery;
+	}
+	
+	// 선택한 체크박스에 해당하는 품목의 값들을 전체합계에 빼기
+	function decrease(i){
+		if(intTotalCount === 0){
+			return;
+		}
+		
+		document.querySelector('.totalCount').innerText = nf.format(intTotalCount - items[i].count);
+		document.querySelector('.totalPrice').innerText = nf.format(intTotalPrice - items[i].price * items[i].count);
+		
+		let discount = Math.abs(intTotalDiscount - items[i].price * (items[i].discount * 0.01) * items[i].count);
+		if(discount > 1){
+			document.querySelector('.totalDiscount').innerText = "-"+nf.format(discount);
+		}else{
+			document.querySelector('.totalDiscount').innerText = nf.format(discount);
+		}	
+		
+		document.querySelector('.totalDelivery').innerText = nf.format(intTotalDelivery - items[i].delivery);
+		document.querySelector('.totalPoint').innerText = nf.format(intTotalPoint - items[i].point);
+		document.querySelector('.totalPay').innerText = nf.format(intTotalPay - (items[i].price * (1 - items[i].discount * 0.01) * items[i].count + items[i].delivery));
+		intTotalCount -= items[i].count;
+		intTotalPrice -= items[i].price * items[i].count;
+		intTotalDiscount -= items[i].price * (items[i].discount * 0.01) * items[i].count;
+		intTotalDelivery -= items[i].delivery;
+		intTotalPoint -= items[i].point;
+		intTotalPay -= items[i].price * (1 - items[i].discount * 0.01) * items[i].count + items[i].delivery;
+		console.log(discount);
+	}
+	
+	// 주문하기 누를 때 체크박스 한 개 이상 눌렀는 지 확인
+	function check(){
+		if(confirm("주문 페이지로 이동하시겠습니까?")){
+			let j = 0; 
+			
+			checkboxes.forEach(function(checkbox){
+				if(checkbox.checked){
+					j++;
+				}
+			});
+			
+			if(j === 0){
+				alert('상품을 최소 한 개 이상 선택하여야 합니다.');
+				return false;
+			}
+			return true;
+		}else{
+			return false;
+		}
+	}
+</script>
+<th:block th:include="@{product/_footer.html}"/>

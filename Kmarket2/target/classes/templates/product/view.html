@@ -1,0 +1,618 @@
+<th:block th:include="@{product/_header.html}"/>
+<th:block th:include="@{product/_aside.html}"/>
+            <section class="view">
+                <nav>
+                    <h1>상품보기</h1>
+                    <p>
+                        HOME > 
+                        <span>[[${cates.c1Name}]]</span>
+                         > 
+                        <strong>[[${cates.c2Name}]]</strong>
+                    </p>
+                </nav>
+                <article class="info">
+                    <div class="image">
+                        <img th:src="@{__${product.thumb2}__}" alt="product image">
+                    </div>
+                    <div class="summary">
+                        <nav>
+                            <h1>[[${product.seller}]]</h1>
+                            <h2>
+                                상품번호&nbsp;:&nbsp;
+                                <span>[[${product.prodNo}]]</span>
+                            </h2>
+                        </nav>
+                        <nav>
+                            <h3>[[${product.prodName}]]</h3>
+                            <p>[[${product.descript}]]</p>
+                            <th:block th:switch="${product.score}">
+                           		<h5 th:case="1" class="rating star1"><a href="#">상품평보기</a></h5>
+                           		<h5 th:case="2" class="rating star2"><a href="#">상품평보기</a></h5>
+                           		<h5 th:case="3" class="rating star3"><a href="#">상품평보기</a></h5>
+                           		<h5 th:case="4" class="rating star4"><a href="#">상품평보기</a></h5>
+                           		<h5 th:case="5" class="rating star5"><a href="#">상품평보기</a></h5>
+                           	</th:block>
+                        </nav>
+                        <nav>
+                            <div class="org_price" th:if="${product.discount != 0}">
+                                <del>[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</del>
+                                <span>[[${product.discount}]]%</span>
+                            </div>
+                            <div class="org_price" th:unless="${product.discount != 0}">
+                                </br>
+                            </div>
+                            <div class="dis_price">
+                                <ins>[[${#numbers.formatInteger(product.disPrice, 3, 'COMMA')}]]</ins>
+                            </div>
+                        </nav>
+                        <nav>
+                            <span th:class="${product.delivery == 0? 'view-free-delivery': 'view-delivery-fee'}">배송비 [[${#numbers.formatInteger(product.delivery, 3, 'COMMA')}]]원</span>
+                            <span class="arrival">[[${estimatedDeliveryInfo[2]}]]([[${estimatedDeliveryInfo[1]}]]) [[${estimatedDeliveryInfo[0]}]] 도착예정</span>
+                            <span class="desc">본 상품은 국내배송만 가능합니다.</span>
+                        </nav>
+                        <nav>
+                            <span class="card cardfree">
+                                <i>아이콘</i>
+                                무이자할부
+                            </span>
+                            &nbsp;&nbsp;
+                            <span class="card cardadd">
+                                <i>아이콘</i>
+                                카드추가혜택
+                            </span>
+                        </nav>
+                        <nav>
+                            <span class="origin">원산지-상세설명 참조</span>
+                        </nav>
+                        <nav></nav>
+                        <img th:src="@{/img/vip_plcc_banner.png}" alt="100원만 결제해도 1만원 적립 배너" class="banner">
+                        <div class="count">
+                            <button class="decrease" onclick="decrease()">-</button>
+                            <input type="text" name="num" value="1" readonly>
+                            <button class="increase" onclick="increase()">+</button>
+                        </div>
+                        <div class="total">
+                            <span></span>
+                            <em>총 상품금액</em>
+                        </div>
+                        <div class="button">
+                            <button class="cart" onclick="cart()">장바구니</button>
+                            <button class="order" onclick="singlePurchase()">구매하기</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="detail">
+                    <nav>
+                        <h1>상품정보</h1>
+                    </nav>
+                    <img th:src="@{__${product.thumb3}__}" alt="상세페이지1">
+                    <img th:src="@{__${product.detail}__}" alt="상세페이지2">
+                </article>
+                <article class="notice">
+                    <nav>
+                        <h1>상품 정보 제공 공시</h1>
+                        <p>[전자상거래에 관한 상품정보 제공에 관한 고시] 항목에 의거 등록된 정보입니다.</p>
+                    </nav>
+                    <table>
+                        <tr>
+                            <td>상품번호</td>
+                            <td>[[${product.prodNo}]]</td>
+                        </tr>
+                        <tr>
+                            <td>상품상태</td>
+                            <td>[[${product.status}]]</td>
+                        </tr>
+                        <tr>
+                            <td>부가세 면세여부</td>
+                            <td>[[${product.duty}]]</td>
+                        </tr>
+                        <tr>
+                            <td>영수증발행</td>
+                            <td>[[${product.receipt}]]</td>
+                        </tr>
+                        <tr>
+                            <td>사업자구분</td>
+                            <td>[[${product.bizType}]]</td>
+                        </tr>
+                        <tr>
+                            <td>브랜드</td>
+                            <td>[[${product.company}]]</td>
+                        </tr>
+                        <tr>
+                            <td>원산지</td>
+                            <td>[[${product.origin}]]</td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td>제품소개</td>
+                            <td>상세정보 직접입력</td>
+                        </tr>
+                        <tr>
+                            <td>색상</td>
+                            <td>상세정보 직접입력</td>
+                        </tr>
+                        <tr>
+                            <td>치수</td>
+                            <td>상세정보 직접입력</td>
+                        </tr>
+                        <tr>
+                            <td>제조자/수입국</td>
+                            <td>상세정보 직접입력</td>
+                        </tr>
+                        <tr>
+                            <td>제조국</td>
+                            <td>상세정보 직접입력</td>
+                        </tr>
+                        <tr>
+                            <td>취급시 주의사항</td>
+                            <td>상세정보 직접입력</td>
+                        </tr>
+                        <tr>
+                            <td>제조연월</td>
+                            <td>상세정보 직접입력</td>
+                        </tr>
+                        <tr>
+                            <td>품질보증기준</td>
+                            <td>상세정보 직접입력</td>
+                        </tr>
+                        <tr>
+                            <td>A/S 책임자와 전화번호</td>
+                            <td>상세정보 직접입력</td>
+                        </tr>
+                        <tr>
+                            <td>주문후 예상 배송기간</td>
+                            <td>상세정보 직접입력</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">구매, 교환, 반품, 배송, 설치 등과 관련하여 추가비용, 제한조건 등의 특이사항이 있는 경우</td>
+                        </tr>
+                    </table>
+                    <p class="noticeP">
+                        소비자가 전자상거래등에서 소비자 보호에 관한 법률 제 17조 제1항 또는 제3항에 따라 청약철회를 하고 동법 제 18조 제1항 에 따라 청약철회한 물품을 판매자에게 반환하였음에도 불구 하고 결제 대금의 환급이 3영업일을 넘게 지연된 경우, 소비자 는 전자상거래등에서 소비자보호에 관한 법률 제18조 제2항 및 동법 시행령 제21조 2에 따라 지연일수에 대하여 전상법 시행령으로 정하는 이율을 곱하여 산정한 지연이자(“지연배상금”)를 신청할 수 있습니다. 아울러, 교환∙반품∙보증 및 결제대금의 환급신청은 [나의쇼핑정보]에서 하실 수 있으며, 자세한 문의는 개별 판매자에게 연락하여 주시기 바랍니다.
+                    </p>
+                </article>
+                <article class="review">
+                    <nav>
+                        <h1>상품리뷰</h1>
+                    </nav>
+                    <ul th:each = "review : ${reviews}" class="reviewAppend">
+                        <li>
+                            <div>
+                            	<th:block th:switch="${review.rating}">
+	                           		<h5 th:case="1" class="rating star1">상품평</h5>
+	                           		<h5 th:case="2" class="rating star2">상품평</h5>
+	                           		<h5 th:case="3" class="rating star3">상품평</h5>
+	                           		<h5 th:case="4" class="rating star4">상품평</h5>
+	                           		<h5 th:case="5" class="rating star5">상품평</h5>
+                           		</th:block>
+                                <span>[[${review.uid}]]	[[${review.rdate.substring(0, 10)}]]</span>
+                            </div>
+                            <h3>[[${review.prodName}]]/BLUE/L</h3>
+                            <p>[[${review.content}]]</p>
+                        </li>
+                    </ul>
+                    <div class="paging">
+                	<th:block th:if="${groups[0]>1}">
+	                    <span class="prev">
+	                        <a onclick="reviewPrev();">&#60;이전</a>
+	                    </span>
+                    </th:block>
+                    <th:block th:if="${groups[1] != 0}">
+                    	<th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+		                    <span class="num">
+		                        <a onclick="reviewNum(this.innerText);" 
+		                           th:class="${num==currentPage? 'num on' : 'num'}">[[${num}]]</a>
+		                    </span>
+		            	</th:block>
+                    </th:block>
+                    <th:block th:if="${groups[1]<lastPageNum}">
+	                    <span class="next">
+	                        <a onclick="reviewNext();">다음&#62;</a>
+	                    </span>
+                    </th:block>
+                </div>
+                </article>
+            </section>
+        </main>
+<script>
+let num = parseInt(document.querySelector('input[name="num"]').value, 10);
+let disPrice = [[${product.disPrice}]];
+	
+function decrease(){
+	if(num > 1){
+		num -= 1;
+	}
+	document.querySelector('input[name="num"]').value = num;
+	document.querySelector('.total').children[0].textContent = (num * disPrice).toLocaleString();
+}
+
+function increase(){
+	num += 1;
+	document.querySelector('input[name="num"]').value = num;
+	document.querySelector('.total').children[0].textContent = (num * disPrice).toLocaleString();
+}
+
+function cart(){
+	/*
+	csrf 설정을 위해서 필요하지만 SecurityConfig 파일에서 csrf를 disable했기 때문에 필요없음
+	여기서 이 설정을 적용하면 다른 페이지에서 a 태그 링크로 접속할 때마다 토큰값 명시해줘야함
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	
+	//let token = document.querySelector("[name='_csrf']").getAttribute("content");
+	//let header = document.querySelector("[name='_csrf_header']").getAttribute("content");
+	*/
+	
+	// cart 테이블에 항목 담기(ajax)
+	let prodNo = [[${product.prodNo}]];
+	let count = parseInt(document.querySelector('input[name="num"]').value, 10);
+	let price = [[${product.price}]];
+	let discount = [[${product.discount}]];
+	let point = [[${product.point}]];
+	let disPrice = price * (1 - discount/100);
+	let delivery = (count * disPrice >= 50000)? 0 : [[${product.delivery}]];
+	let total = count * disPrice + delivery;
+	
+	let postObj = {
+			"prodNo" : prodNo,
+			"count" : count,
+			"price" : price,
+			"discount" : discount, 
+			"point" : point, 
+			"delivery" : delivery, 
+			"disPrice" : disPrice,
+			"total" : total
+	}
+	
+	let post = JSON.stringify(postObj);
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", "/Kmarket2/product/putInCart", true);
+	//xhr.setRequestHeader(header, token);
+	xhr.setRequestHeader('Content-type', 'application/json');
+	xhr.responseType = "json";
+	xhr.send(post);
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState === XMLHttpRequest.DONE){
+			if(xhr.status ===200){
+				const data = xhr.response;
+				const result = data.result;
+				
+				if(result === 1){
+					// 사용자가 원할 경우 카트 페이지로 이동
+					let response = confirm('상품이 장바구니에 담겼습니다\n장바구니로 이동하시겠습니까?');
+					if(response){
+						window.location.href = "/Kmarket2/product/cart?uid=" + data.username;
+					}
+				}else if(result === 0){
+					alert('로그인 후 이용 가능합니다');
+					window.location.href = "/Kmarket2/member/login";
+				}
+			}
+		}
+	}
+	
+}
+
+function singlePurchase(){
+	window.location.href = "/Kmarket2/product/order?prodNo=" + [[${product.prodNo}]] + "&qty=" + num + "&disPrice=" + disPrice;
+}
+
+function reviewPrev(){
+	let pg = document.querySelectorAll('.num')[0].innerText;
+	let xhr = new XMLHttpRequest();
+	xhr.open("GET", "/Kmarket2/product/retrieveReviews?prodNo=" + [[${product.prodNo}]] + "&pg=" + (pg -1));
+	xhr.responseType = "json";
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState === XMLHttpRequest.DONE){
+			if(xhr.status ===200){
+				const data = xhr.response;
+				const reviews = data.reviews;
+				
+				// 기존 댓글 내용 화면에서 지우기
+				document.querySelector('.review').innerHTML = '';
+				
+				// nav는 최초 1회만 출력
+				if (document.querySelector('.reviewNav') == null){
+					let nav = `
+						<nav>
+	                    	<h1 class="reviewNav">상품리뷰</h1>
+	                	</nav>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('beforebegin', nav);
+				}
+				
+				for(let i =0; i <reviews.length; i++){
+					// 불러온 댓글 내용 화면에 출력하기
+					// rating
+					let html = `
+                    	<ul>
+							<li>
+		                        <div>
+		                       		<h5 class="rating star${reviews[i].rating}">상품평</a></h5>
+		                            <span>${reviews[i].uid}	${reviews[i].rdate.substring(0, 10)}</span>
+		                        </div>
+		                        <h3>${reviews[i].prodName}/BLUE/L</h3>
+		                        <p>${reviews[i].content}</p>
+	                    	</li>
+	                    </ul>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('afterbegin', html);
+					
+					// 페이지 버튼 추가하기
+					if(i == (reviews.length - 1)){
+						let start = `
+							<div class="paging">
+		                `;
+		                
+		               	let prev = `
+		            	   <span class="prev">
+	                        	<a onclick="reviewPrev();">&#60;이전</a>
+	                       </span>
+		               	`;
+		               
+		               	let num = '';
+		               	for(let j = reviews[i].groupStart; j <= reviews[i].groupEnd; j++){
+		               		num += '<span class="num">';
+		               		
+		               		if(j == reviews[i].currentPage){
+		               			num += '<a class="on" onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}else{
+		               			num += '<a onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}
+	                       	
+		                    num += '</span>';
+		               	}
+		               
+		               	let next = `
+		            	   <span class="next">
+	                        	<a onclick="reviewNext();">다음&#62;</a>
+	                       </span>
+		               	`;
+		               
+		               	let end = `
+		               		</div>
+						`;
+						
+						let paging = '';
+						
+		                if(reviews[i].groupStart >1){
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + prev + num + next + end;
+							}else{
+								paging = start + prev + num + end;
+							}
+						}else{
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + num + next + end;
+							}else{
+								paging = start + num + end;
+							}
+						}
+						
+						document.querySelector('.review').insertAdjacentHTML('beforeend', paging);
+					}
+				}
+			}
+		}
+	}
+}
+
+function reviewNum(data){
+	let xhr = new XMLHttpRequest();
+	xhr.open("GET", "/Kmarket2/product/retrieveReviews?prodNo=" + [[${product.prodNo}]] + "&pg=" + data);
+	xhr.responseType = "json";
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState === XMLHttpRequest.DONE){
+			if(xhr.status ===200){
+				const data = xhr.response;
+				const reviews = data.reviews;
+				
+				// 기존 댓글 내용 화면에서 지우기
+				document.querySelector('.review').innerHTML = '';
+				
+				// nav는 최초 1회만 출력
+				if (document.querySelector('.reviewNav') == null){
+					let nav = `
+						<nav>
+	                    	<h1 class="reviewNav">상품리뷰</h1>
+	                	</nav>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('beforebegin', nav);
+				}
+				
+				for(let i =0; i <reviews.length; i++){
+					// 불러온 댓글 내용 화면에 출력하기
+					// rating
+					let html = `
+                    	<ul>
+							<li>
+		                        <div>
+		                       		<h5 class="rating star${reviews[i].rating}">상품평</a></h5>
+		                            <span>${reviews[i].uid}	${reviews[i].rdate.substring(0, 10)}</span>
+		                        </div>
+		                        <h3>${reviews[i].prodName}/BLUE/L</h3>
+		                        <p>${reviews[i].content}</p>
+	                    	</li>
+	                    </ul>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('afterbegin', html);
+					
+					// 페이지 버튼 추가하기
+					if(i == (reviews.length - 1)){
+						let start = `
+							<div class="paging">
+		                `;
+		                
+		               	let prev = `
+		            	   <span class="prev">
+	                        	<a onclick="reviewPrev();">&#60;이전</a>
+	                       </span>
+		               	`;
+		               
+		               	let num = '';
+		               	for(let j = reviews[i].groupStart; j <= reviews[i].groupEnd; j++){
+		               		num += '<span class="num">';
+		               		
+		               		if(j == reviews[i].currentPage){
+		               			num += '<a class="on" onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}else{
+		               			num += '<a onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}
+	                       	
+		                    num += '</span>';
+		               	}
+		               
+		               	let next = `
+		            	   <span class="next">
+	                        	<a onclick="reviewNext();">다음&#62;</a>
+	                       </span>
+		               	`;
+		               
+		               	let end = `
+		               		</div>
+						`;
+						
+						let paging = '';
+						
+		                if(reviews[i].groupStart >1){
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + prev + num + next + end;
+							}else{
+								paging = start + prev + num + end;
+							}
+						}else{
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + num + next + end;
+							}else{
+								paging = start + num + end;
+							}
+						}
+						
+						document.querySelector('.review').insertAdjacentHTML('beforeend', paging);
+					}
+				}
+			}
+		}
+	}
+}
+
+function reviewNext(){
+	let pg = document.querySelectorAll('.num')[0].innerText;
+	let xhr = new XMLHttpRequest();
+	xhr.open("GET", "/Kmarket2/product/retrieveReviews?prodNo=" + [[${product.prodNo}]] + "&pg=" + (pg+10));
+	xhr.responseType = "json";
+	xhr.send();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState === XMLHttpRequest.DONE){
+			if(xhr.status ===200){
+				const data = xhr.response;
+				const reviews = data.reviews;
+				
+				// 기존 댓글 내용 화면에서 지우기
+				document.querySelector('.review').innerHTML = '';
+				
+				// nav는 최초 1회만 출력
+				if (document.querySelector('.reviewNav') == null){
+					let nav = `
+						<nav>
+	                    	<h1 class="reviewNav">상품리뷰</h1>
+	                	</nav>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('beforebegin', nav);
+				}
+				
+				for(let i =0; i <reviews.length; i++){
+					// 불러온 댓글 내용 화면에 출력하기
+					// rating
+					let html = `
+                    	<ul>
+							<li>
+		                        <div>
+		                       		<h5 class="rating star${reviews[i].rating}">상품평</a></h5>
+		                            <span>${reviews[i].uid}	${reviews[i].rdate.substring(0, 10)}</span>
+		                        </div>
+		                        <h3>${reviews[i].prodName}/BLUE/L</h3>
+		                        <p>${reviews[i].content}</p>
+	                    	</li>
+	                    </ul>
+					`;
+					document.querySelector('.review').insertAdjacentHTML('afterbegin', html);
+					
+					// 페이지 버튼 추가하기
+					if(i == (reviews.length - 1)){
+						let start = `
+							<div class="paging">
+		                `;
+		                
+		               	let prev = `
+		            	   <span class="prev">
+	                        	<a onclick="reviewPrev();">&#60;이전</a>
+	                       </span>
+		               	`;
+		               
+		               	let num = '';
+		               	for(let j = reviews[i].groupStart; j <= reviews[i].groupEnd; j++){
+		               		num += '<span class="num">';
+		               		
+		               		if(j == reviews[i].currentPage){
+		               			num += '<a class="on" onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}else{
+		               			num += '<a onclick="reviewNum(this.innerText);">'+j+'</a>';
+		               		}
+	                       	
+		                    num += '</span>';
+		               	}
+		               
+		               	let next = `
+		            	   <span class="next">
+	                        	<a onclick="reviewNext();">다음&#62;</a>
+	                       </span>
+		               	`;
+		               
+		               	let end = `
+		               		</div>
+						`;
+						
+						let paging = '';
+						
+		                if(reviews[i].groupStart >1){
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + prev + num + next + end;
+							}else{
+								paging = start + prev + num + end;
+							}
+						}else{
+							if(reviews[i].groupEnd < reviews[i].lastPageNum){
+								paging = start + num + next + end;
+							}else{
+								paging = start + num + end;
+							}
+						}
+						
+						document.querySelector('.review').insertAdjacentHTML('beforeend', paging);
+					}
+				}
+			}
+		}
+	}
+}
+
+window.onload = () =>{
+	document.querySelector('.total').children[0].textContent = disPrice.toLocaleString();
+	
+	// 댓글 페이징을 위한 ajax
+	let xhr = new XMLHttpRequest();
+	xhr.open("GET", "/Kmarket2/product/view?prodNo=" + [[${product.prodNo}]] + "&cate1=" + [[${cate1}]] + "&cate2=" + [[${cate2}]] + "&pg=1");
+	xhr.send();
+};
+
+</script>
+<th:block th:include="@{product/_footer.html}"/>

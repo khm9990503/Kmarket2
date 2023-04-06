@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>케이마켓 고객센터</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/CSstyle.css}">
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div class="top">
+            	<div>
+                <p sec:authorize="isAnonymous()">
+	                    <a th:href="@{/member/login}">로그인</a>
+	                    <a th:href="@{/member/join}">회원가입</a>
+                    </p>
+                    <p sec:authorize="hasAnyRole('5','6','7')">
+                    	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+                    	<a th:href="@{/admin/index}">관리자</a>
+                    	<a th:href="@{/member/logout}">로그아웃</a>
+	                    <a th:href="@{/my/home}">마이페이지</a>
+	                    <a th:href="@{/product/cart}">
+	                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+	                        장바구니
+	                    </a>
+                    </p>
+                    <p sec:authorize="hasAnyRole('1','2','3','4')">
+                    	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+                    	<a th:href="@{/member/logout}">로그아웃</a>
+	                    <a th:href="@{/my/home}">마이페이지</a>
+	                    <a th:href="@{/product/cart}">
+	                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+	                        장바구니
+	                    </a>
+                    <p>
+                    </div>
+            </div>
+            <div class="logo">
+                <div>
+                    <a th:href="@{/cs/index}">
+                        <img th:src="@{/img/logo.png}" alt="로고">
+                        고객센터
+                    </a>
+                </div>
+            </div>
+        </header>
+  </html>

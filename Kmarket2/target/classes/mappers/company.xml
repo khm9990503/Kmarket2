@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket2.dao.CompanyDAO">	
+
+	<select id="selectCountTotal" resultType="int">
+    	select count(`no`) from `km_article` where `group`='dart';
+    </select>
+	
+	<select id="selectComArticles" resultType="kr.co.kmarket2.vo.ArticleVO">
+		select * FROM `km_article` WHERE `group`='dart' ORDER BY `no` DESC LIMIT #{start},10;
+	</select>
+</mapper>

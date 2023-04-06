@@ -1,0 +1,211 @@
+/* Introduce*/
+#introduce > .cover {
+    background-image: url(/Kmarket2/img/company/bg_company_introduce.jpg);
+}
+
+
+
+#introduce img {
+    display: block;
+    width: 80%;
+    margin: 28px auto;
+}
+
+
+/* Notice */
+#notice > .cover {
+    background-image: url(/Kmarket2/img/company/bg_company_notice.jpg);
+}
+
+#notice > .cover > div {
+    position: relative;
+    width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#notice > .cover > div > h1 {
+    position: absolute;
+    left: 10px;
+    top: 280px;
+    font-size: 52px;
+    font-weight: bold;
+    color: #fff;
+}
+
+#notice > .cover > div > p {
+    position: absolute;
+    left: 10px;
+    top: 380px;
+    font-size: 22px;
+    font-weight: 500;
+    color: #fff;
+}
+
+#notice img {
+    display: block;
+    width: 80%;
+    margin: 28px auto;
+}
+
+#notice > .content > article h2 {
+   font-size: 14px;
+   color: grey;
+   margin-top: 10px;
+}
+  
+#notice > .content > article > table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 2px solid #111;
+}
+#notice > .content > article > table tr{
+    width: 100%;
+    height: 26px;
+}
+#notice > .content > article > table tr:hover{
+    background-color: #f7f7f7;
+}
+
+#notice > .content > article > table th{
+    padding: 16px;
+    border-bottom: 1px solid #ccc;
+    background-color: #e7e7e7;
+}
+
+#notice > .content > article > table th:first-child{
+    text-align: left;
+}
+
+#notice > .content > article > table td{
+	text-align: center;
+    padding: 16px;
+    border-bottom: 1px solid #ccc;
+}
+
+#notice > .content > article > table td:first-child{
+	text-align: left;
+}
+#notice > .content > article > table td:last-child{
+    font-size: 14px;
+}
+#notice > .content > article > table a{
+    font-size: 16px;
+}
+#notice > .content > article > .page{
+    text-align: center;
+    margin-top: 26px;
+}
+#notice > .content > article > .page > a{
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 34px;
+    font-size: 13px;
+    font-weight: bold;
+    vertical-align: bottom;
+}
+#notice > .content > article > .page > .prev{
+    font-size: 0;
+    background-image: url("../img/cs_sprites.png");
+    background-position: -706px -652px;
+}
+#notice > .content > article > .page > .next{
+    font-size: 0;
+    background-image: url("../img/cs_sprites.png");
+    background-position: -628px -652px;
+}
+#notice > .content > article > .page > .on{
+    background-color: #006cff;
+    border-radius: 17px;
+    color: #fff;
+}
+
+
+/* Promote */
+#promote > .cover {
+    background-image: url(/Kmarket2/img/company/bg_company_promote.jpg);  
+}
+
+#promote > .cover > div {
+    position: relative;
+    width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#promote > .content > article {
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    margin-bottom: 26px;
+}
+
+#promote > .content > article > h3 {
+    position: absolute;
+    left: 740px;
+    top: 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#promote > .content > article > p {
+    position: absolute;
+    left: 740px;
+    top: 40px;
+    font-size: 18px;
+}
+
+
+/* Manage */
+#manage > .cover {
+    background-image: url(/Kmarket2/img/company/bg_company_manage.jpg);
+}
+
+#manage > .cover > div {
+    position: relative;
+    width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#manage > .content > ul {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 56px;
+}
+
+#manage > .content > ul > li {
+    float: left;
+    width: 25%;
+    height: 300px;
+    text-align: center;
+}
+
+#manage > .content > ul > li > h4 {
+    margin: 12px 0;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+#manage > .content > ul > li > p {
+    width: 200px;
+    margin: 0 auto;
+}
+
+#manage > .content > h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 16px;
+}
+
+#manage > .content > p {
+    font-size: 19px;
+    line-height: 28px;
+    margin-bottom: 80px;
+}

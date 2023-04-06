@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket2.dao.CsDAO">	
+	<select id="selectArticles" resultType="kr.co.kmarket2.vo.ArticleVO">
+		select * FROM `km_article` WHERE `group`=#{group} ORDER BY `no` DESC LIMIT #{start},10;
+	</select>
+	
+	<select id="selectCateArticles" resultType="kr.co.kmarket2.vo.ArticleVO">
+		SELECT * FROM `km_article` WHERE `group`= #{group} and `cate`=#{cate} ORDER BY `no` DESC LIMIT #{start},10;
+	</select>
+	
+	<select id="selectCountTotal" resultType="int">
+    	select count(`no`) from `km_article` where `group`=#{group};
+    </select>
+    
+    <select id="selectCountCateTotal" resultType="int">
+    	select count(`no`) from `km_article` where `group`=#{group} and `cate`=#{cate};
+    </select>
+    
+    <select id="selectArticle" resultType="kr.co.kmarket2.vo.ArticleVO">
+    	SELECT * FROM `km_article`  WHERE `no`=#{no};
+    </select>
+    
+    <select id="selectNotices" resultType="kr.co.kmarket2.vo.ArticleVO">
+    	SELECT * FROM `km_article` WHERE `group` = 'notice' ORDER BY `no` DESC LIMIT 5;
+    </select>
+    
+    <select id="selectFaqArticles" resultType="kr.co.kmarket2.vo.ArticleVO">
+    	SELECT a.*, b.c2Name FROM `km_article` AS a JOIN `km_article_cate` AS b ON a.cate2=b.cate2 WHERE `group`=#{group} and a.cate =#{cate} ORDER BY `no` DESC;
+    </select>
+    
+    <select id="selectCates" resultType="kr.co.kmarket2.vo.ArticleVO">
+    	SELECT * FROM `km_article_cate` WHERE cate=#{cate};
+    </select>
+    
+    <select id="selectQnaArticle" resultType="kr.co.kmarket2.vo.ArticleVO">
+    	SELECT a.*, b.c2Name FROM `km_article` AS a JOIN `km_article_cate` AS b ON a.cate2=b.cate2 WHERE `no`=#{no};
+    </select>
+    
+    <select id="selectAnswer" resultType="kr.co.kmarket2.vo.ArticleVO">
+    	SELECT `content` FROM `km_article` WHERE `parent`=#{no};
+    </select>
+    
+    <select id="selectQnaArticles" resultType="kr.co.kmarket2.vo.ArticleVO">
+    	SELECT a.*, b.c2Name FROM `km_article` AS a JOIN `km_article_cate` AS b ON a.cate2=b.cate2 WHERE `group`=#{group} and a.cate=#{cate} ORDER BY `no` DESC LIMIT #{start},10;
+    </select>
+    
+    <insert id="insertArticle">
+    	INSERT INTO `km_article` SET `group`='qna' ,`cate`=#{cate}, `cate2`=#{cate2}, `title` = #{title}, `content` = #{content} , `uid` = #{uid}, `regip`=#{regip}, `rdate`=NOW();
+    </insert>
+  
+  	
+  	<select id="selectQnas" resultType="kr.co.kmarket2.vo.ArticleVO">
+  		SELECT * FROM `km_article` WHERE `group` = 'qna' ORDER BY `no` DESC LIMIT 5;
+  	</select>
+  	
+  	
+    
+    
+    
+    
+</mapper>

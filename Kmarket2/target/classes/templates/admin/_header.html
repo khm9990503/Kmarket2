@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Kmarket::관리자</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js"></script>
+    <script>
+    $(document).ready(function(){
+        // menu 클래스 바로 하위에 있는 a 태그를 클릭했을때
+        $(".menu>a").click(function(){
+            var submenu = $(this).next("ol");
+ 
+            // submenu 가 화면상에 보일때는 위로 보드랍게 접고 아니면 아래로 보드랍게 펼치기
+            if( submenu.is(":visible") ){
+                submenu.slideUp();
+            }else{
+                submenu.slideDown();
+            }
+        });
+    });
+    </script>
+    
+</head>
+<body>
+    <div class="admin_wrapper">
+        <header>
+            <div>
+                <a th:href="@{/admin/index}" class="logo">
+                    <img th:src="@{/img/admin_logo.png}" alt="admin_logo">
+                </a>
+                <p>
+                   	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+                   	<a th:href="@{/member/logout}"> 로그아웃 </a>
+                    <a th:href="@{/my/home}"> 마이페이지 </a>
+                </p>
+            </div>
+        </header>
+        <main>
+            <aside>
+                <ul id="gnb">
+                    <li class="menu">
+                        <a href="#">
+                            <i class="fa fa-cogs"></i>환경설정
+                        </a>
+                        <ol class="hide">
+                            <li>
+                                <a href="#">기본환경설정</a>
+                            </li>
+                            <li>
+                                <a href="#">배너관리</a>
+                            </li>
+                        </ol>
+                    </li>
+                    <li class="menu">
+                        <a href="#">
+                            <i class="fas fa-store"></i>상점관리
+                        </a>
+                        <ol class="hide">
+                            <li>
+                                <a href="#">판매자현황</a>
+                            </li>
+                            <li>
+                                <a href="#">재고관리</a>
+                            </li>
+                        </ol>
+                    </li>
+                    <li class="menu">
+                        <a href="#">
+                            <i class="fa fa-users"></i>회원관리
+                        </a>
+                        <ol class="hide">
+                            <li>
+                                <a href="#">회원현황</a>
+                            </li>
+                            <li>
+                                <a href="#">포인트관리</a>
+                            </li>
+                            <li>
+                                <a href="#">비회원관리</a>
+                            </li>
+                            <li>
+                                <a href="#">접속자집계</a>
+                            </li>
+                        </ol>
+                    </li>
+                    <li class="menu">
+                        <a href="#">
+                            <i class="fas fa-box-open"></i>상품관리
+                        </a>
+                        <ol class="hide">
+                            <li>
+                                <a th:href="@{/admin/product/list}">상품현황</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/admin/product/register}">상품등록</a>
+                            </li>
+                            <li>
+                                <a href="#">재고관리</a>
+                            </li>
+                        </ol>
+                    </li>
+                    <li class="menu">
+                        <a href="#">
+                            <i class="fa fa-credit-card"></i>주문관리
+                        </a>
+                        <ol class="hide">
+                            <li>
+                                <a href="#">주문현황</a>
+                            </li>
+                            <li>
+                                <a href="#">매출현황</a>
+                            </li>
+                            <li>
+                                <a href="#">결제관리</a>
+                            </li>
+                            <li>
+                                <a href="#">배송관리</a>
+                            </li>
+                        </ol>
+                    </li>
+                    <li class="menu">
+                        <a href="#">
+                            <i class="fa fa-pencil-square-o"></i>게시판관리
+                        </a>
+                        <ol class="hide">
+                            <li>
+                                <a th:href="@{/admin/cs/list(group='notice')}">공지사항</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/admin/cs/list(group='faq')}">자주묻는질문</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/admin/cs/list(group='qna')}">문의하기</a>
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+            </aside>

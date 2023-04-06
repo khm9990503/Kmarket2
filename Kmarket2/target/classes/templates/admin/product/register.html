@@ -1,0 +1,274 @@
+<th:block th:include="@{admin/_header.html}"/>
+<script type="text/javascript">
+	$(function(){
+		$("select[name=prodCate1]").change(function(){
+			let cate1 = $(this).val(); // 선택된 option의 value = select의 value
+			let jsonData = {
+					"cate1":cate1
+			}
+			$('.opt').remove(); // cate1 다시 선택 시 이전 cate2를 지우기 위해
+			$.ajax({
+				url:'/Kmarket2/admin/product/cate2List',
+				method:'get',
+				data:jsonData,
+				dataType:'json',
+				success:function(data){
+					console.log(data)
+					for(let vo of data.cate2s){
+                        let tag = "<option class='opt' value="+vo.cate2+">"+vo.c2Name+"</option>";
+                        $('select[name=prodCate2]').append(tag); // select에 option을 뒤에 붙임
+                    }
+				}
+			});
+		});
+	});
+</script>
+<script>
+	// 판매가격의 1%를 포인트로 자동 계상
+	$(function(){
+		$('input[name=price]').change(function(){
+			autoPoint();
+			discount();
+		});
+		
+		function autoPoint(){
+			let price = $('input[name=price]').val();
+			//console.log(price);
+			let point = (price/100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			//console.log(point);
+			$('input[name=point]').val(point);
+		}
+		
+		$('#discount').keydown(function(){
+			discount();
+		});
+		
+		function discount(){
+			let price = $('input[name=price]').val();
+			let dis = $('#discount').val();
+			$('.step_val').text("할인가 : "+(price-(price/100*dis)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +"원 ("+(price/100*dis).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원 할인)");
+		}
+		
+		$('.btnSb').click(function() {
+			let point = $('input[name=point]').val();
+			let pt = point.replaceAll(',','');
+			$('input[name=point]').val(pt);
+		});
+		// 상품등록 유효성 검사
+		$('#admin-product-register form').submit(function() {
+			let cate2 = $('select[name=prodCate2]').val(); // 카테고리 유효성
+			let price = $('input[name=price]').val(); // price 유효성
+			let prodName = $('input[name=prodName]').val(); // prodName 유효성
+			let company = $('input[name=company]').val(); // company 유효성
+			let seller = $('input[name=seller]').val(); // seller 유효성
+			let stock = $('input[name=stock]').val(); // stock 유효성
+			let delivery = $('input[name=delivery]').val(); // delivery 유효성
+			let thumb1 = $('input[name=thumb1]').val(); // thumb1 유효성
+			let thumb2 = $('input[name=thumb2]').val(); // thumb2 유효성
+			let thumb3 = $('input[name=thumb3]').val(); // thumb3 유효성
+			let detail = $('input[name=detail]').val(); // detail 유효성
+			
+			if(cate2 == 0){
+				alert('카테고리를 선택해주세요.');
+				return false;
+			}
+			if(prodName == ''){
+				alert('상품이름을 입력해주세요.')
+				return false;
+			}
+			if(price == ''){
+				alert('판매가격을 입력해주세요.')
+				return false;
+			}
+			if(company == ''){
+				alert('제조사를 입력해주세요.')
+				return false;
+			}
+			if(seller == ''){
+				alert('판매자를 입력해주세요.')
+				return false;
+			}
+			if(stock == ''){
+				alert('재고수량을 입력해주세요.')
+				return false;
+			}
+			if(delivery == ''){
+				alert('배송비를 입력해주세요.')
+				return false;
+			}
+			if(thumb1 == ''){
+				alert('썸네일1을 첨부해주세요.')
+				return false;
+			}
+			if(thumb1 == ''){
+				alert('썸네일2을 첨부해주세요.')
+				return false;
+			}
+			if(thumb1 == ''){
+				alert('썸네일3을 첨부해주세요.')
+				return false;
+			}
+			if(detali == ''){
+				alert('상세설명을 첨부해주세요.')
+				return false;
+			}
+			
+		});
+	});
+</script>
+            <section id="admin_product_register">
+                <nav>
+                    <h3>상품등록</h3>
+                    <p>HOME > 상품관리 > <strong>상품등록</strong></p>
+                </nav>
+                <!--상품등록-->
+                <article>
+                    <form th:action="@{/admin/product/register}" method="post" enctype="multipart/form-data">
+                        <!--상품분류-->
+                        <section>
+                            <h4>상품분류</h4>
+                            <p>
+                                기본분류는 반드시 선택하셔야 합니다. 하나의 상품에 1개의 분류를 지정 합니다.
+                            </p>
+                            <table>
+                                <tr>
+                                    <td>1차 분류</td>
+                                    <td>
+                                        <select name="prodCate1">
+                                            <option value="cate0">1차 분류 선택</option>
+                                            <option th:each="c1 : ${cate1s}" th:value="${c1.cate1}">[[${c1.c1Name}]]</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2차 분류</td>
+                                    <td>
+                                        <select name="prodCate2">
+                                            <option value="cate0">2차 분류 선택</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </section>
+                        <!--기본정보-->
+                        <section>
+			                <h4>기본정보</h4>
+			                <p>
+			                    기본정보는 반드시 입력해야 합니다.
+			                </p>
+			                <table>
+			                    <tr>
+			                        <td>상품명</td>
+			                        <td><input type="text" name="prodName"/></td>
+			                        <span class="resultprodName"></span>
+			                    </tr>
+			                    
+			                    <tr>
+			                        <td>기본설명</td>
+			                        <td>
+			                            <span>상품명 하단에 상품에 대한 추가적인 설명이 필요한 경우에 입력</span>
+			                            <input type="text" name="descript"/>
+			                        </td>
+			                    </tr>
+			                    <tr>
+			                        <td>제조사</td>
+			                        <td><input type="text" name="company"/></td>
+			                    </tr>
+			                    <tr>
+			                        <td>판매자</td>
+			                        <td><input type="text" name="seller"/></td><!-- 필수라 추가함 : 구홍모-->
+			                    </tr>
+			                    <tr>
+			                        <td>판매가격</td>
+			                        <td><input type="text" name="price"/>원</td>
+			                    </tr>                                    
+			                    <tr>
+			                        <td>할인율</td>
+			                        <td>
+			                            <span>0을 입력하면 할인율 없음</span>
+			                            <input id="discount" maxlength="2" value="0">		<!-- maxlength 입력값 2개까지 까지 제한 -->
+										<input name="discount" type="hidden" value="0">%
+										<span class="step_val">할인 가격 : </span>
+										<span class="discount_num">0~99 숫자를 입력해주세요.</span>
+			                        </td>
+			                    </tr>
+			                    <tr>
+			                        <td>포인트</td>
+			                        <td>
+			                            <span>0을 입력하면 포인트 없음</span>
+			                            <input type="text" name="point"/>원
+			                            <a id="point">[판매가격의 1% 자동적립]</a>
+			                        </td>
+			                    </tr>
+			                    <tr>
+			                        <td>재고수량</td>
+			                        <td><input type="text" name="stock"/>개</td>
+			                    </tr>
+			                    <tr>
+			                        <td>배송비</td>
+			                        <td>
+			                            <span>0을 입력하면 배송비 무료</span>
+			                            <input type="text" name="delivery"/>원
+			                        </td>
+			                    </tr>
+			                    <tr>
+			                        <td>상품 썸네일</td>
+			                        <td>
+			                            <span>크기 190 x 190, 상품 목록에 출력될 이미지 입니다. </span>
+			                            <input type="file" name="thumb1_" accept="image/gif,image/jpeg,image/png"/> <!-- 이미지만 업로드 가능하게 -->
+			
+			                            <span>크기 230 x 230, 상품 메인에 출력될 이미지 입니다. </span>
+			                            <input type="file" name="thumb2_" accept="image/gif,image/jpeg,image/png"/>
+			
+			                            <span>크기 456 x 456, 상품 상세에 출력될 이미지 입니다. </span>
+			                            <input type="file" name="thumb3_" accept="image/gif,image/jpeg,image/png"/>
+			                        </td>
+			                    </tr>
+			                    <tr>
+			                        <td>상세 상품정보</td>
+			                        <td>
+			                            <span>크기 가로 940px 높이 제약없음, 크기 최대 1MB, 상세페이지 상품정보에 출력될 이미지 입니다.</span>
+			                            <input type="file" name="detail_" accept="image/gif,image/jpeg,image/png"/>
+			                            <input type="hidden" class="suc" value="${success}">
+			                        </td>
+			                    </tr>
+			                </table>                                
+			            </section>
+                        <!--상품정보 제공고시-->
+                        <section>
+			                <h4>상품정보 제공고시</h4>
+			                <p>
+			                    [전자상거래에 관한 상품정보 제공에 관한 고시] 항목에 의거 등록해야 되는 정보입니다.
+			                </p>
+			                <table>
+			                    <tr>
+			                        <td>상품상태</td>
+			                        <td><input type="text" name="status" value="새상품"/></td>
+			                    </tr>
+			                    <tr>
+			                        <td>부가세 면세여부</td>
+			                        <td><input type="text" name="duty" value="과세상품"/></td>
+			                    </tr>
+			                    <tr>
+			                        <td>영수증발행</td>
+			                        <td><input type="text" name="receipt" value="발행가능 - 신용카드 전표, 온라인 현금영수증"/></td>
+			                    </tr>
+			                    <tr>
+			                        <td>사업자구분</td>
+			                        <td><input type="text" name="bizType" value="사업자 판매자"/></td><!-- 테이블에 있어서 추가함 : 구홍모 -->
+			                    </tr>
+			                    <tr>
+			                        <td>원산지</td>
+			                        <td><input type="text" name="origin" value="국내산"/></td>
+			                    </tr>
+			                </table>                                
+			            </section>
+			            <input type="submit" class="btnSb" value="등록하기"/>	
+	                    </form>
+	                </article>   
+	                <p class="ico alert">
+	                    <strong>warning!</strong>
+	                    전자상거래 등에서의 상품 등의 정보제공에 관한 고시에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.
+	                </p>
+	            </section>	
+<th:block th:include="@{admin/_footer.html}"/>

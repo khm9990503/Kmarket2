@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.kmarket2.dao.MyDAO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
 @Service
@@ -14,6 +15,11 @@ public class MyService {
 
 	@Autowired
 	private MyDAO dao;
+	
+	// 마이페이지 메인 주문 목록
+	public List<OrderVO> selectOrdersIndex(String uid){
+		return dao.selectOrdersIndex(uid);
+	};
 	
 	// 나의문의 불러오기
 	public List<ArticleVO> selectQnaArticles(String uid, int start) {

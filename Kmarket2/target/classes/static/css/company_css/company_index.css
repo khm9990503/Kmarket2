@@ -1,0 +1,244 @@
+* {
+    padding: 0;
+    margin: 0;
+    font: normal 16px 'Noto Sans CJK KR';
+}
+ul, ol {list-style: none;}
+a {text-decoration: none; color: #111;}
+#wrapper {width: 100%;height: auto;}
+
+head {display: none;}
+body {display: block;}
+div {display: block;}
+section {display: block;}
+
+/* 스와이퍼 */
+.swiper {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+.swiper-pointer-events {
+    touch-action: pan-y;
+}
+.swiper-pointer-events.swiper-vertical {
+    touch-action: pan-x;
+}
+.swiper-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    transition-property: transform;
+    box-sizing: content-box;
+}
+.swiper-android .swiper-slide, .swiper-wrapper {
+    transform: translate3d(0px,0,0);
+}
+.swiper-vertical>.swiper-wrapper {
+    flex-direction: column;
+}
+.swiper-slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition-property: transform;
+    background-position-x: 50%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+}
+.swiper-backface-hidden .swiper-slide {
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.swiper-slide video {
+    width: 100%;
+    min-width: 1600px;
+    height: auto;
+}
+.swiper-pagination {
+    position: absolute;
+    text-align: center;
+    transition: .3s opacity;
+    transform: translate3d(0,0,0);
+    z-index: 10;
+}
+.swiper-pagination-vertical.swiper-pagination-bullets, .swiper-vertical>.swiper-pagination-bullets {
+    right: 10px;
+    top: 50%;
+    transform: translate3d(0px,-50%,0);
+}
+.swiper-pagination-bullet {
+    width: var(--swiper-pagination-bullet-width,var(--swiper-pagination-bullet-size,8px));
+    height: var(--swiper-pagination-bullet-height,var(--swiper-pagination-bullet-size,8px));
+    display: inline-block;
+    border-radius: 50%;
+    background: var(--swiper-pagination-bullet-inactive-color,#000);
+    opacity: var(--swiper-pagination-bullet-inactive-opacity, .2);
+}
+.swiper-pagination-bullet-active {
+    opacity: var(--swiper-pagination-bullet-opacity, 1);
+    background: var(--swiper-pagination-color,var(--swiper-theme-color));
+}
+.swiper-pagination-vertical.swiper-pagination-bullets .swiper-pagination-bullet, .swiper-vertical>.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: var(--swiper-pagination-bullet-vertical-gap,6px) 0;
+    display: block;
+}
+.swiper .swiper-notification {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    opacity: 0;
+    z-index: -1000;
+}
+.swiper-slide > section {
+    position: relative;
+    width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+/* 스크롤 */
+.scroll-icon {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 34px;
+    height: 62px;
+    border: 2px solid rgba(155, 155, 155, 0.8);
+    border-radius: 25px;
+}
+.scroll-icon span {
+    width: 4px;
+    height: 4px;
+    background-color: #999;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+.scroll-icon span:nth-of-type(1) {
+    animation: scroll-icon .9s -2.3s infinite reverse;
+}
+.scroll-icon span:nth-of-type(2) {
+    margin: 4px auto;
+    animation: scroll-icon .9s -1.3s infinite reverse;
+}
+.scroll-icon span:nth-of-type(3) {
+    animation: scroll-icon .9s -.3s infinite reverse;
+}
+.slide2 {
+    background-image: url(/Kmarket2/img/company/bg_system_sec.jpg);
+}
+
+/* 슬라이더 */
+
+h1.tit1 {
+    position: absolute;
+    font-weight: normal;
+    font-size: 30px;
+    color: #555;
+}
+.slide2 .tit1 {
+    left: 0px;
+    top: 200px;
+}
+h2.tit2 {
+    position: absolute;
+    font-weight: bold;
+    font-size: 46px;
+    color: #111;
+}
+.slide2 .tit2 {
+    left: 0px;
+    top: 260px;
+}
+p.desc {
+    position: absolute;
+    font-size: 18px;
+    line-height: 28px;
+    color: #666;
+}
+.slide2 .desc {
+    left: 0px;
+    top: 460px;
+}
+.slide3 {
+    background-image: url(/Kmarket2/img/company/bg_product_sec.jpg);
+}
+.slide3 .tit1 {
+    left: 720px;
+    top: 120px;
+}
+.slide3 .tit2 {
+    left: 720px;
+    top: 180px;
+}
+.slide3 .desc {
+    left: 720px;
+    top: 320px;
+}
+.slide4 {
+    background-image: url(/Kmarket2/img/company/bg_service_sec.jpg);
+}
+.slide4 .tit1 {
+    left: 160px;
+    top: 120px;
+}
+.slide4 .tit2 {
+    left: 160px;
+    top: 180px;
+}
+.slide4 .desc {
+    left: 160px;
+    bottom: 120px;
+}
+
+
+
+/*******************************************/
+/* Header */
+header {
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    z-index: 100;
+    border-bottom: 1px solid #e1e1e1;
+    transition-duration: 0.5s;
+}
+
+header > div {
+    width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+    padding-top: 16px;
+    box-sizing: border-box;
+}
+
+header ul {
+    float: right;
+    margin-top: 16px;
+    overflow: hidden;
+}
+
+header ul > li {
+    float: left;
+    width: 120px;
+    text-align: center;
+}
+
+header ul > li > a {
+    font-size: 18px;
+}
