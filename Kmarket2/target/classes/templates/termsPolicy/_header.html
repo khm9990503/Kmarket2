@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>판매회원 약관</title>
+    <script src="https://kit.fontawesome.com/78ddb08b0c.css" crossorigin="anonymous"></script>
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" th:href="@{/css/termsPolicy.css}">
+
+    
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="top">
+                <div>
+                    <a th:href="@{/member/login}">로그인</a>
+                    <a th:href="@{/member/join}">회원가입</a>
+                    <a th:href="@{/my/home}">마이페이지</a>
+                    <a th:href="@{/product/cart}">
+                        <i class="fa fa-shopping-cart"></i>
+                        장바구니</a>
+                </div>
+            </div>
+            <div class="logo">
+                <div>
+                    <a th:href="@{/index}">
+                        <img th:src="@{/img/header_logo.png}" alt="logo">
+                    </a>
+                    <form action="#">
+                        <input type="text">
+                        <button>
+                            <a href="#">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </a>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li>
+                            <a href="#">히트상품</a>
+                        </li>
+                        <li>
+                            <a href="#">추천상품</a>
+                        </li>
+                        <li>
+                            <a href="#">최신상품</a>
+                        </li>
+                        <li>
+                            <a href="#">인기상품</a>
+                        </li>
+                        <li>
+                            <a href="#">할인상품</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a th:href="@{/my/coupon}">쿠폰존</a>
+                        </li>
+                        <li>
+                            <a th:href="@{#}">사용후기</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/my/ordered}">개인결제</a>
+                        </li>
+                        <li>
+                            <a href="#">고객센터</a>
+                        </li>
+                        <li>
+                            <a href="#">FAQ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>

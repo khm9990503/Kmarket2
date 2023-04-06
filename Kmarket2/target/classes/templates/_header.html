@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>케이마켓::대한민국 1등 온라인 쇼핑</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <link rel="stylesheet" href="/Kmarket2/css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+          $('.slider').bxSlider({
+            easing:'linear'
+          });
+        
+          // 스크롤 시 사이드 따라오기
+          var best = $("aside > .best");
+
+          $(window).scroll(function(){
+            var t = $(this).scrollTop();
+
+            if(t > 620){
+                best.css({
+                    position:"fixed",
+                    top:"0",
+                });
+            }else{
+                best.css({
+                    position:"static",
+                });
+            }
+          });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div class="top">
+                <div>
+                	<th:block sec:authorize="isAnonymous()">
+	                    <a th:href="@{/member/login}">로그인</a>
+	                    <a th:href="@{/member/join}">회원가입</a>
+                    </th:block>
+                    <th:block sec:authorize="hasAnyRole('5','6','7')">
+                    	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+                    	<a th:href="@{/admin/index}">관리자</a>
+                    	<a th:href="@{/member/logout}">로그아웃</a>
+	                    <a th:href="@{/my/home}">마이페이지</a>
+	                    <a th:href="@{/product/cart}">
+	                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+	                        장바구니
+	                    </a>
+                    </th:block>
+                    <th:block sec:authorize="hasAnyRole('1','2','3','4')">
+                    	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+                    	<a th:href="@{/member/logout}">로그아웃</a>
+	                    <a th:href="@{/my/home}">마이페이지</a>
+	                    <a th:href="@{/product/cart}">
+	                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+	                        장바구니
+	                    </a>
+                    </th:block>
+                </div>
+            </div>
+            <div class="logo">
+                <div>
+                    <a th:href="@{/index}">
+                        <img th:src="@{/img/header_logo.png}" alt="logo">
+                    </a>
+                    <form>
+                        <input type="text">
+                        <button>
+                            <a href="#">
+                                <i class="fa fa-search fa-sm"></i>
+                            </a>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li><a href="#hit">히트상품</a></li>
+                        <li><a href="#recommend">추천상품</a></li>
+                        <li><a href="#new">최신상품</a></li>
+                        <li><a href="#hit">인기상품</a></li>
+                        <li><a href="#discount">할인상품</a></li>
+                    </ul>
+                    <ul>
+                        <li><a th:href="@{/cs/notice/list(group='notice')}">공지사항</a></li>
+                        <li><a th:href="@{/cs/faq/list(group='faq',cate='member')}">자주묻는질문</a></li>
+                        <li><a th:href="@{/cs/qna/list(group='qna',cate='member')}">문의하기</a></li>
+                        <li><a th:href="@{/cs/index}">고객센터</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>

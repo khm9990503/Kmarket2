@@ -1,0 +1,177 @@
+<th:block th:include="@{cs/_header.html}"/>
+
+	<script>
+    	$(function(){
+    		$("select[name=cate]").change(function(){
+    			optChange();
+    		});
+    		
+    		function optChange(){
+    			let optName1 = ["2차 선택", "가입", "탈퇴", "회원정보", "로그인"];
+        		let optName2 = ["2차 선택", "쿠폰/할인혜택", "포인트", "제휴", "이벤트"];
+        		let optName3 = ["2차 선택", "상품", "결제", "구매내역", "영수증/증빙"];
+        		let optName4 = ["2차 선택", "배송상태/기간", "배송정보확인/변경", "해외배송", "당일배송", "해외직구"];
+        		let optName5 = ["2차 선택", "반품신청/철회", "반품정보확인/변경", "교환 AS신청/철회", "교환정보확인/변경", "취소신청/철회", "취소확인/환불정보"];
+        		let optName6 = ["2차 선택", "여행/숙박", "항공"];
+        		let optName7 = ["2차 선택", "서비스 이용규칙 위반", "지식재산권침해", "법령 및 정책위반 상품", "게시물 정책위반", "직거래/외부거래유도", "표시광고", "청소년 위해상품/이미지"];
+        		
+        		let optValue1 = [0, "reg", "drop", "info", "login"];
+        		let optValue2 = [0, "coupon", "point", "alli", "event"];
+        		let optValue3 = [0, "prod", "pay", "hist", "receipt"];
+        		let optValue4 = [0, "period", "dChange", "foreign", "today", "forOrd"];
+        		let optValue5 = [0, "back", "cChange", "AS", "exCon", "can", "canCon"];
+        		let optValue6 = [0, "lodg", "air"];
+        		let optValue7 = [0, "service", "intel", "law", "arti", "ex", "ad", "teen"];
+        		
+    			let selectOpt = $('select[name=cate]').val();
+    			let changeOptName;
+    			let changeOptValue;
+    			
+    			
+    			if(selectOpt == "member"){
+    				changeOptName = optName1;
+    				changeOptValue = optValue1;
+    			}else if(selectOpt == "event") {
+    				changeOptName = optName2;
+    				changeOptValue = optValue2;
+    			}else if(selectOpt == "order") {
+    				changeOptName = optName3;
+    				changeOptValue = optValue3;
+    			}else if(selectOpt == "deli") {
+    				changeOptName = optName4;
+    				changeOptValue = optValue4;
+    			}else if(selectOpt == "cancle") {
+    				changeOptName = optName5;
+    				changeOptValue = optValue5;
+    			}else if(selectOpt == "trip") {
+    				changeOptName = optName6;
+    				changeOptValue = optValue6;
+    			}else if(selectOpt == "safe") {
+    				changeOptName = optName7;
+    				changeOptValue = optValue7;
+    			}
+
+    			
+    			$('select[name=cate2]').empty();
+    			for(let i=0; i<changeOptName.length; i++){
+    				let tag = "<option value='"+changeOptValue[i]+"'>"+changeOptName[i]+"</option>";
+    				$('select[name=cate2]').append(tag);
+    			}
+    		}
+    		
+    		$('form').submit(function(){
+    			if($('select[name=cate]').val() == '0'){
+    				alert('1차 카테고리를 선택하십시오.');
+    				return false;
+    			}
+    			if($('select[name=cate2]').val() == '0'){
+    				alert('2차 카테고리를 선택하십시오.');
+    				return false;
+    			}
+    			if($('input[name=title]').val() == ''){
+    				alert('제목을 입력하십시요.');
+    				return false;
+    			}
+    			if($('textarea[name=content]').val() == ''){
+    				alert('내용을 입력하십시요.');
+    				return false;
+    			}
+    			return true;
+    		});
+    		
+    	});
+    </script>
+        <section id="cs">
+            <div class="qna">
+                <nav>
+                    <div>
+                        <p>홈<span>></span>문의하기</p>
+                    </div>
+                </nav>
+            
+            <section class="write">
+                <aside>
+                    <h2>문의하기</h2>
+                    <ul>
+                        <li th:classappend="${cate} eq 'member'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=member}">회원</a></li>
+	                        <li th:classappend="${cate} eq 'event'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=event}">쿠폰/이벤트</a></li>
+	                        <li th:classappend="${cate} eq 'order'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=order}">주문/결제</a></li>
+	                        <li th:classappend="${cate} eq 'deli'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=deli}">배송</a></li>
+	                        <li th:classappend="${cate} eq 'cancle'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=cancle}">취소/반품/교환</a></li>
+	                        <li th:classappend="${cate} eq 'trip'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=trip}">여행/숙박/항공</a></li>
+	                        <li th:classappend="${cate} eq 'safe'?'on':'off'"><a th:href="@{/cs/qna/list?group=qna&cate=safe}">안전거래</a></li>
+                    </ul>
+                </aside>
+                <article>
+                	<nav th:if="${cate} eq member">
+                            <h1>회원</h1>
+                            <h2>회원관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq event">
+                            <h1>쿠폰/이벤트</h1>
+                            <h2>쿠폰/이벤트관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq order">
+                            <h1>주문/결제</h1>
+                            <h2>주문/결제관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq deli">
+                            <h1>배송</h1>
+                            <h2>배송관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq cancle">
+                            <h1>취소/반품/교환</h1>
+                            <h2>취소/반품/교환관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq trip">
+                            <h1>여행/숙박/항공</h1>
+                            <h2>여행/숙박/항공관련 문의 내용입니다.</h2>
+                        </nav>
+                        <nav th:if="${cate} eq safe">
+                            <h1>안전거래</h1>
+                            <h2>안전거래관련 문의 내용입니다.</h2>
+                        </nav>
+                    <form th:action="@{/cs/qna/write}" method="post">
+                    <input type="hidden" name="uid" th:value="${#authentication.principal.user.uid}"/>
+                        <table>
+                            <tr>
+                                <td>문의유형</td>
+                                <td>
+                                    <select name="cate">
+                                        <option value="0">1차 선택</option>
+                                        <option value="member">회원</option>
+                                        <option value="event">쿠폰/이벤트</option>
+                                        <option value="order">주문/결제</option>
+                                        <option value="deli">배송</option>
+                                        <option value="cancle">취소/반품/교환</option>
+                                        <option value="trip">여행/숙박/항공</option>
+                                        <option value="safe">안전거래</option>
+                                    </select>
+                                    <select name="cate2">
+                                        <option value="0">2차 선택</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>문의제목</td>
+                                <td>
+                                    <input type="text" name="title" placeholder="제목을 입력하세요.">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>문의내용</td>
+                                <td>
+                                    <textarea name="content" placeholder="내용을 입력하세요."></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div>
+                            <a th:href="@{/cs/qna/list(group='qna',cate=${cate})}" class="btnList">취소하기</a>
+                            <input type="submit" class="btnSubmit" value="등록하기">
+                        </div>
+                    </form>    
+                </article>
+            </section>
+            </div>
+        </section>
+<th:block th:include="@{cs/_footer.html}"/>

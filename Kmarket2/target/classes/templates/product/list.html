@@ -1,0 +1,101 @@
+<th:block th:include="@{product/_header.html}"/>
+<th:block th:include="@{product/_aside.html}"/>
+<script>
+	window.onload = () =>{
+		let sort = [[${sort}]] - 1;
+		let a = document.querySelector('.sort').children[sort].children[0];
+		a.classList.add('on');
+	};
+</script>
+            <section class="list">
+                <nav>
+                    <h1>상품목록</h1>
+                    <p>
+                        HOME > 
+                        <span>[[${cates.c1Name}]]</span>
+                         > 
+                        <strong>[[${cates.c2Name}]]</strong>
+                    </p>
+                </nav>
+                <ul class="sort">
+                    <li>
+                        <a th:href="@{/product/list?cate1=__${cate1}__&cate2=__${cate2}__&sort=1}">판매많은순</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/product/list?cate1=__${cate1}__&cate2=__${cate2}__&sort=2}">낮은가격순</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/product/list?cate1=__${cate1}__&cate2=__${cate2}__&sort=3}">높은가격순</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/product/list?cate1=__${cate1}__&cate2=__${cate2}__&sort=4}">평점높은순</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/product/list?cate1=__${cate1}__&cate2=__${cate2}__&sort=5}">후기많은순</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/product/list?cate1=__${cate1}__&cate2=__${cate2}__&sort=6}">최근등록순</a>
+                    </li>
+                </ul>
+                <table>
+                    <tr th:each="product:${products}">
+                        <td>
+                            <a th:href="@{/product/view?prodNo=__${product.prodNo}__}" class="thumb">
+                                <img th:src="@{__${product.thumb1}__}" alt="thumbnail">
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/product/view?prodNo=__${product.prodNo}__&cate1=__${cate1}__&cate2=__${cate2}__}" class="name">[[${product.prodName}]]</a>
+                            <span class="desc">[[${product.descript}]]</span>
+                        </td>
+                        <td>
+                            <ul>
+                                <ins class="dis-price">[[${#numbers.formatInteger(product.disPrice, 3, 'COMMA')}]]</ins>
+                                <li th:style="${product.discount == 0? 'display:none': 'display:block'}">
+                                    <del class="org-price">[[${#numbers.formatInteger(product.price, 3, 'COMMA')}]]</del>
+                                    <span class="discount">[[${product.discount}]]%</span>
+                                </li>
+                                <li th:class="${product.delivery == 0? 'free-delivery': 'delivery-fee'}">
+                                    <span>[[${#numbers.formatInteger(product.delivery, 3, 'COMMA')}]]원</span>
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <h4 class="seller">
+                                <i class="fa-solid fa-house-chimney"></i>
+                                [[${product.seller}]]
+                            </h4>
+                            <h5 class="badge power">파워딜러</h5>
+                            <th:block th:switch="${product.score}">
+                           		<h6 th:case="1" class="rating star1">상품평</h6>
+                           		<h6 th:case="2" class="rating star2">상품평</h6>
+                           		<h6 th:case="3" class="rating star3">상품평</h6>
+                           		<h6 th:case="4" class="rating star4">상품평</h6>
+                           		<h6 th:case="5" class="rating star5">상품평</h6>
+                           	</th:block>
+                        </td>
+                    </tr>
+                </table>
+                <div class="paging">
+                	<th:block th:if="${groups[0]>1}">
+	                    <span class="prev">
+	                        <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=${sort},pg=${groups[0]-1})}">&#60;이전</a>
+	                    </span>
+                    </th:block>
+                    <th:block th:if="${groups[1] != 0}">
+                    	<th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+		                    <span class="num">
+		                        <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=${sort},pg=${#strings.toString(num)})}"
+		                           th:class="${num==currentPage? 'num on' : 'num'}">[[${num}]]</a>
+		                    </span>
+		            	</th:block>
+                    </th:block>
+                    <th:block th:if="${groups[1]<lastPageNum}">
+	                    <span class="next">
+	                        <a th:href="@{/product/list(cate1=${cate1},cate2=${cate2},sort=${sort},pg=${groups[1]+1})}">다음&#62;</a>
+	                    </span>
+                    </th:block>
+                </div>
+            </section>
+        </main>
+<th:block th:include="@{product/_footer.html}"/>

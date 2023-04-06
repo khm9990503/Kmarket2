@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>KMARKET2</title>
+    <script src="https://kit.fontawesome.com/78ddb08b0c.css" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/product.css?v=1}"/>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="top">
+               	<th:block sec:authorize="isAnonymous()">
+               		<div>
+	                    <a th:href="@{/member/login}">로그인</a>
+	                    <a th:href="@{/member/join}">회원가입</a>
+	                </div>
+                   </th:block>
+                   <th:block sec:authorize="hasAnyRole('5','6','7')">
+                   	<div>
+	                   	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+	                   	<a th:href="@{/admin/index}">관리자</a>
+	                   	<a th:href="@{/member/logout}">로그아웃</a>
+	                    <a th:href="@{/my/home}">마이페이지</a>
+	                    <a th:href="@{/product/cart?uid=${#authtentication.getPrincipal().getUsername()}}">
+	                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+	                        장바구니
+	                    </a>
+	                </div>
+                   </th:block>
+                   <th:block sec:authorize="hasAnyRole('1','2','3','4')">
+                   	<div>
+	                   	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+	                   	<a th:href="@{/member/logout}">로그아웃</a>
+	                    <a th:href="@{/my/home}">마이페이지</a>
+	                    <a th:href="@{/product/cart?uid=__${#authentication.name}__}">
+	                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+	                        장바구니
+	                    </a>
+	                </div>
+                   </th:block>
+                </div>
+            <div class="logo">
+                <div>
+                    <a th:href="@{/index}">
+                        <img th:src="@{/img/header_logo.png}" alt="logo">
+                    </a>
+                    <form>
+                        <input type="text">
+                        <button>
+                            <a href="#">
+                                <i class="fa fa-search fa-sm"></i>
+                            </a>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="menu">
+                <div>
+                    <ul>
+                        <li>
+                            <a th:href="@{/product/list}">히트상품</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/product/list}">추천상품</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/product/list}">최신상품</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/product/list}">인기상품</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/product/list}">할인상품</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a href="#">쿠폰존</a>
+                        </li>
+                        <li>
+                            <a href="#">사용후기</a>
+                        </li>
+                        <li>
+                            <a href="#">개인결제</a>
+                        </li>
+                        <li>
+                            <a href="#">고객센터</a>
+                        </li>
+                        <li>
+                            <a href="#">FAQ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>

@@ -1,0 +1,105 @@
+<th:block th:include="@{my/_header.html}"/>
+
+            <div class="info">
+                <ul>
+                    <span class="menu_else"></span>
+                    <li th:classappend="${group} eq 'ordered'?'on':'off'">
+                        <a th:href="@{/my/ordered?group=ordered}">전체주문내역</a>
+                    </li>
+                    <li th:classappend="${group} eq 'point'?'on':'off'">
+                        <a th:href="@{/my/point?group=point}">포인트내역</a>
+                    </li>
+                    <li th:classappend="${group} eq 'coupon'?'on':'off'">
+                        <a th:href="@{/my/coupon?group=coupon}">쿠폰</a>
+                    </li>
+                    <li th:classappend="${group} eq 'review'?'on':'off'">
+                        <a th:href="@{/my/review?group=review}">나의리뷰</a>
+                    </li>
+                    <li th:classappend="${group} eq 'qna'?'on':'off'">
+                        <a th:href="@{/my/qna?group=qna}">문의하기</a>
+                    </li>
+                    <li th:classappend="${group} eq 'info'?'on':'off'">
+                        <a th:href="@{/my/info?group=info}">나의설정</a>
+                </ul>
+                <section>
+                    <a th:href="@{#}">
+                        <img th:src="@{/img/my_banner2.png}" alt="실적/한도 제한없는 스마일 카드 적립 혜택" class="banner">
+                    </a>
+                    <article>
+                        <h3>회원정보 설정</h3>
+                        <table border="0">
+                            <tr>
+                                <td>사용자 ID</td>
+                                <td>tom***</td>
+                            </tr>
+                            <tr>
+                                <td>비밀번호</td>
+                                <td>
+                                    <button id="btnChangePass">비밀번호 수정</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>이름</td>
+                                <td>토*토</td>
+                            </tr>
+                            <tr>
+                                <td>생년월일</td>
+                                <td>2023년 02월 16일</td>
+                            </tr>
+                            <tr>
+                                <td>E-mail</td>
+                                <td>
+                                    <input type="text" name="email1" value="tomato">
+                                    @
+                                    <input type="text" name="email2" value="naver.com">
+                                    <select>
+                                        <option>직접입력</option>
+                                        <option>naver.com</option>
+                                        <option>daum.net</option>
+                                        <option>gmail.com</option>
+                                        <option>nate.com</option>
+                                        <option>outlook.com</option>
+                                    </select>
+                                    <button id="btnChangeEmail">수정하기</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>휴대폰</td>
+                                <td>
+                                    <p class="hp">
+                                        <input type="text" name="hp1" value="010">
+                                        -
+                                        <input type="text" name="hp2" value="1234">
+                                        -
+                                        <input type="text" name="hp3" value="1001">
+                                        <button id="btnChangeEmail">수정하기</button>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>주소</td>
+                                <td>
+                                    <input type="text" name="zip">
+                                    <button id="btnFindZip">주소검색</button>
+                                    <p class="address">
+                                        <input type="text" name="addr1">
+                                        <input type="text" name="addr2">
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>회원탈퇴</td>
+                                <td>
+                                    <button id="btnWithdraw">탈퇴하기</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <button id="btnInfoChange">수정하기</button>
+                    </article>
+                </section>
+            </div>
+        </div>
+<th:block th:include="@{my/_footer.html}"/>
+    </div>
+</body>
+</html>

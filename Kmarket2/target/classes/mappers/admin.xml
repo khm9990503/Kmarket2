@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket2.dao.AdminDAO">
+	<!-- admin / product-->
+   <select id="selectCate1" resultType="kr.co.kmarket2.vo.Cate1VO">
+   		select * from `km_product_cate1`;
+   </select>
+   <select id="selectCate2" resultType="kr.co.kmarket2.vo.Cate2VO">
+   		select * from `km_product_cate2` where `cate1`=#{cate};
+   </select>
+   <insert id="insertProduct">
+   	INSERT INTO `km_product` SET 
+								`prodCate1` = #{prodCate1}, 
+								`prodCate2` = #{prodCate2}, 
+								`prodName` = #{prodName}, 
+								`descript` = #{descript}, 
+								`company` = #{company}, 
+								`seller` = #{seller}, 
+								`price` = #{price}, 
+								`discount` = #{discount}, 
+								`point` = #{point}, 
+								`stock` = #{stock}, 
+								`delivery` = #{delivery}, 
+								`thumb1` = #{thumb1}, 
+								`thumb2` = #{thumb2}, 
+								`thumb3` = #{thumb3}, 
+								`detail` = #{detail}, 
+								`status` = #{status}, 
+								`duty` = #{duty}, 
+								`receipt` = #{receipt}, 
+								`bizType` = #{bizType}, 
+								`origin` = #{origin}, 
+								`ip` = #{ip}, 
+								`rdate`=NOW();
+   </insert>
+   <select id="selectCountTotal" resultType="int">
+   	SELECT COUNT(*) FROM `km_product`;
+   </select>
+   <select id="selectCountTotalSeller" resultType="int">
+   	SELECT COUNT(*) FROM `km_product` where `seller`=#{seller};
+   </select>
+   <select id="selectCountTotalSearch" resultType="int">
+   	SELECT COUNT(*) FROM `km_product` where 
+	   								<choose>
+						    			<when test="type == 1">
+						    				`prodName`
+						    			</when>
+						    			<when test="type == 2">
+						    				`prodNo`
+						    			</when>
+						    			<when test="type == 3">
+						    				`company` 
+						    			</when>
+						    			<when test="type == 4">
+						    				`seller`
+						    			</when>
+						    		</choose>
+   											= #{search};
+   </select>
+   <select id="selectCountTotalSellerSearch" resultType="int">
+   	SELECT COUNT(*) FROM `km_product` where `seller`=#{seller} and 
+   									<choose>
+						    			<when test="type == 1">
+						    				`prodName`
+						    			</when>
+						    			<when test="type == 2">
+						    				`prodNo`
+						    			</when>
+						    			<when test="type == 3">
+						    				`company` 
+						    			</when>
+						    			<when test="type == 4">
+						    				`seller`
+						    			</when>
+						    		</choose>
+   											= #{search};
+   </select>
+   <select id="selectProducts" resultType="kr.co.kmarket2.vo.ProductVO">
+   	SELECT * FROM `km_product` ORDER BY `prodNo` DESC LIMIT #{start},10;
+   </select>
+   <select id="selectProductsSeller" resultType="kr.co.kmarket2.vo.ProductVO">
+   	SELECT * FROM `km_product` WHERE `seller`=#{seller} ORDER BY `prodNo` DESC LIMIT #{start},10;
+   </select>
+   <select id="searchProducts" resultType="kr.co.kmarket2.vo.ProductVO">
+   	SELECT * FROM `km_product` WHERE 
+								<choose>
+					    			<when test="type == 1">
+					    				`prodName`
+					    			</when>
+					    			<when test="type == 2">
+					    				`prodNo`
+					    			</when>
+					    			<when test="type == 3">
+					    				`company` 
+					    			</when>
+					    			<when test="type == 4">
+					    				`seller`
+					    			</when>
+					    		</choose>
+							 	LIKE CONCAT('%',#{search},'%') ORDER BY `prodNo` DESC LIMIT #{start},10;
+   </select>
+   <select id="searchProductSeller">
+   	SELECT * FROM `km_product` WHERE `seller`=#{seller} and 
+								<choose>
+					    			<when test="type == 1">
+					    				`prodName`
+					    			</when>
+					    			<when test="type == 2">
+					    				`prodNo`
+					    			</when>
+					    			<when test="type == 3">
+					    				`company` 
+					    			</when>
+					    			<when test="type == 4">
+					    				`seller`
+					    			</when>
+					    		</choose>
+							 	LIKE CONCAT('%',#{search},'%') ORDER BY `prodNo` DESC LIMIT #{start},10;
+   </select>
+   <update id="updateProduct">
+   	UPDATE `km_product` SET `prodName`=#{prodName}, 
+							 `descript`=#{descript}, 
+							 `company`=#{company}, 
+							 `seller`=#{seller}, 
+							 `price`=#{price}, 
+							 `point`=#{point}, 
+							 `discount`=#{discount}, 
+							 `stock`=#{stock}, 
+							 `delivery`=#{delivery}, 
+							 `thumb1`=#{thumb1}, 
+							 `thumb2`=#{thumb2}, 
+							 `thumb3`=#{thumb3}, 
+							 `detail`=#{detail}, 
+							 `rdate`=now()
+							 WHERE `prodNo` = #{prodNo};
+   </update>
+   <delete id="deleteProduct">
+   	DELETE FROM `km_product` WHERE `prodNo` in (#{prodNo});
+   </delete>
+   <!-- admin / article -->
+   <select id="selectArticeCates" resultType="kr.co.kmarket2.vo.ArticleCateVO">
+   	select * from `km_article_cate`;
+   </select>
+   <select id="selectArticeCatesByCate" resultType="kr.co.kmarket2.vo.ArticleCateVO">
+   	select * from `km_article_cate` where `cate`=#{cate};
+   </select>
+   <select id="selectCountTotalArticle" resultType="int">
+   	SELECT COUNT(*) FROM `km_article` where `group`=#{group} and `parent`= 0
+   								<choose>
+					    			<when test="type == 1">
+					    				;
+					    			</when>
+					    			<when test="type == 2">
+					    				and `cate` = #{cate}; 
+					    			</when>
+					    			<when test="type == 3">
+					    				and `cate` = #{cate} and `cate2` = #{cate2}; 
+					    			</when>
+					    		</choose>
+   </select>
+   <select id="selectArticlesByGroup" resultType="kr.co.kmarket2.vo.ArticleVO">
+   	select * from `km_article` where `group`=#{group} 
+												<choose>
+									    			<when test="type == 1">
+									    				 
+									    			</when>
+									    			<when test="type == 2">
+									    				and `cate` = #{cate} 
+									    			</when>
+									    			<when test="type == 3">
+									    				and `cate` = #{cate} and `cate2` = #{cate2}  
+									    			</when>
+									    		</choose>
+   													and `parent`=0 ORDER BY `no` DESC LIMIT #{start},10;
+   </select>
+   <select id="selectArticle" resultType="kr.co.kmarket2.vo.ArticleVO">
+   	select * from `km_article` where `no`=#{no};
+   </select>
+   <select id="selectReply" resultType="kr.co.kmarket2.vo.ArticleVO">
+   	select * from `km_article` where `parent`=#{parent};
+   </select>
+   <insert id="insertArticle">
+   	insert into `km_article` set
+   								`group`=#{group}, 
+   								`cate`=#{cate}, 
+   								`cate2`=#{cate2}, 
+   								`title`=#{title}, 
+   								`content`=#{content}, 
+   								`uid`=#{uid}, 
+   								`regip`=#{regip}, 
+   								`rdate`=now(); 
+   </insert>
+   <insert id="insertReply">
+   	insert into `km_article` set `parent`=#{parent},`uid`=#{uid},`content`=#{content},`regip`=#{regip},`rdate`=now();
+   </insert>
+   <update id="updateArticle">
+   	update `km_article` set `title`=#{title},`content`=#{content},`cate`=#{cate},`rdate`=now() where `no`=#{no}
+   </update>
+   <update id="updateComment">
+   	UPDATE `km_article` SET `comment`=`comment`+1 WHERE `no`=#{no}
+   </update>
+   <delete id="deleteArticles">
+   	DELETE FROM `km_article` WHERE `no` = #{chk} or `parent` = #{chk};
+   </delete>
+</mapper>

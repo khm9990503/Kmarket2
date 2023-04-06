@@ -1,0 +1,125 @@
+<th:block th:include="@{admin/_header.html}"/>
+<script type="text/javascript">
+$(function(){
+	// 1차 유형 선택 시 2차 유형 카테고리 불러오기
+	let ca = $("select[name=cate]").val();
+	let jsonData = {
+			"cate":ca
+	}
+	$.ajax({
+		url:'/Kmarket2/admin/cs/cateList',
+		method:'GET',
+		data:jsonData,
+		dataType:'json',
+		success:function(data){
+			//console.log(data)
+			for(let vo of data.result){
+				let ca2 = $('input[name=cate2]').val();
+				//console.log(ca2);
+				let tag = null;
+				if(ca2==vo.cate2){
+					tag = "<option class='opt' value="+vo.cate2+" selected>"+vo.c2Name+"</option>";
+				}else{
+					tag = "<option class='opt' value="+vo.cate2+">"+vo.c2Name+"</option>";
+				}
+                $('select[name=cate2]').append(tag); // select에 option을 뒤에 붙임
+            }
+		}
+	});
+	
+	// 1차 유형 선택 시 2차 유형 카테고리 불러오기
+	$("select[name=cate]").change("click",function(){
+		let cate = $(this).val(); // 선택된 option의 value = select의 value
+		let jsonData = {
+				"cate":cate
+		}
+		$('.opt').remove(); // cate1 다시 선택 시 이전 cate2를 지우기 위해
+		$.ajax({
+			url:'/Kmarket2/admin/cs/cateList',
+			method:'GET',
+			data:jsonData,
+			dataType:'json',
+			success:function(data){
+				//console.log(data)
+				for(let vo of data.result){
+                    let tag = "<option class='opt' value="+vo.cate2+">"+vo.c2Name+"</option>";
+                    $('select[name=cate2]').append(tag); // select에 option을 뒤에 붙임
+                }
+			}
+		});
+	});
+	// 글수정 유효성 검사
+	$('.write form').submit(function() {
+		let cate2 = $('select[name=cate2]').val(); // 카테고리 유효성
+		let title = $('input[name=title]').val(); // 제목 유효성
+		let content = $('textarea[name=content]').val(); // 내용 유효성
+		
+		if(cate2 == 0){
+			alert('카테고리를 선택해주세요.');
+			return false;
+		}
+		if(title == ''){
+			alert('제목을 입력해주세요.')
+			return false;
+		}
+		if(content == ''){
+			alert('내용을 입력해주세요.')
+			return false;
+		}
+	});
+});
+</script>
+<section id="csModify">
+	<nav th:if="${group.equals('notice')}">
+        <h3>공지사항 수정</h3>
+        <p>HOME > 고객센터 ><strong>공지사항</strong></p>
+    </nav>
+	<nav th:if="${group.equals('faq')}">
+        <h3>자주묻는질문 수정</h3>
+        <p>HOME > 고객센터 ><strong>자주묻는질문</strong></p>
+    </nav>
+    <article>
+        <form th:action="@{/admin/cs/modify}" method="post">
+       	<input type="hidden" name="group" th:value="${group}">
+       	<input type="hidden" name="uid" value="1234">
+       	<input type="hidden" name="no" th:value="${no}">
+           <table>
+               <tr>
+                   <td>유형</td>
+                   <td>
+		               <select name="cate">
+					    	<th:block th:if="${group.equals('notice')}">
+					    	<option value="0">유형선택</option>
+					    	<option th:each="ca : ${cates}" th:value="${ca.key}" th:selected="${ca.key == article.cate}" >[[${ca.value}]]</option>
+					    	</th:block>
+					    	<th:block th:unless="${group.equals('notice')}">
+					    	<option value="0">1차유형</option>
+					    	<option th:each="ca : ${cates}" th:value="${ca.key}" th:selected="${ca.key == article.cate}" >[[${ca.value}]]</option>
+					    	</th:block>
+					   </select>
+					   <select th:unless="${group.equals('notice')}" name="cate2">
+					   	<option value="0">2차유형</option>
+					   </select>
+                   </td>
+               </tr>
+               <tr>
+                   <td>제목</td>
+                   <td>
+                       <input type="text" name="title" th:value="${article.title}">
+                   </td>
+               </tr>
+               <tr>
+                   <td>내용</td>
+                   <td>
+                       <textarea name="content">[[${article.content}]]</textarea>
+                   </td>
+               </tr>
+           </table>
+           <div>
+               <a th:href="@{/admin/cs/view(group=${group},no=${article.no})}" class="btn btnList">취소하기</a>
+               <input type="submit" class="btn btnSubmit" value="등록하기">
+           </div>
+       </form>
+   </article>
+</section>
+<th:block th:include="@{admin/_footer.html}"/>

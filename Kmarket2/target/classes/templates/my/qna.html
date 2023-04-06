@@ -1,0 +1,72 @@
+<th:block th:include="@{my/_header.html}"/>
+            <div class="qna">
+                 <ul>
+                    <span class="menu_else"></span>
+                   <li th:classappend="${group} eq 'ordered'?'on':'off'">
+                        <a th:href="@{/my/ordered?group=ordered}">전체주문내역</a>
+                    </li>
+                    <li th:classappend="${group} eq 'point'?'on':'off'">
+                        <a th:href="@{/my/point?group=point}">포인트내역</a>
+                    </li>
+                    <li th:classappend="${group} eq 'coupon'?'on':'off'">
+                        <a th:href="@{/my/coupon?group=coupon}">쿠폰</a>
+                    </li>
+                    <li th:classappend="${group} eq 'review'?'on':'off'">
+                        <a th:href="@{/my/review?group=review}">나의리뷰</a>
+                    </li>
+                    <li th:classappend="${group} eq 'qna'?'on':'off'">
+                        <a th:href="@{/my/qna?group=qna}">문의하기</a>
+                    </li>
+                    <li th:classappend="${group} eq 'info'?'on':'off'">
+                        <a th:href="@{/my/info?group=info}">나의설정</a>
+                </ul>
+                <section>
+                    <a th:href="@{#}">
+                        <img th:src="@{/img/my_banner2.png}" alt="실적/한도 제한없는 스마일 카드 적립 혜택" class="banner">
+                    </a>
+                    <article>
+                        <h3>문의하기</h3>
+                        <table border="0">
+                            <tr>
+                                <th>번호</th>
+                                <th>문의채널</th>
+                                <th>문의유형</th>
+                                <th>제목</th>
+                                <th>작성일</th>
+                                <th>상태</th>
+                            </tr>
+                            <tr th:each="article:${articles}">
+                                <td class="no">[[${article.no}]]</td>
+                                <td class="channel">고객센터</td>
+                                <td class="type">[[${article.c1Name}]]</td>
+                                <td class="tit">
+                                    <a th:href="@{/cs/qna/view(group='qna',cate=${article.cate},no=${article.no})}">[[${article.title}]]</a>
+                                </td>
+                                <td class="date">[[${article.rdate.substring(2, 10)}]]</td>
+                                <td class="status" th:if="${article.comment} eq 1">
+                                    <span class="AnswerYet">답변완료</span>
+                                </td>
+                                <td class="status" th:if="${article.comment} eq 0">
+                                    <span class="notAnswerYet">검토중</span>
+                                </td>
+                            </tr>
+                        </table>
+                         <p class="page">
+                        	<th:block th:if="${pageGroupStart > 1}">
+                            	<a th:href="@{/my/qna(pg=${currentPage - 1})}" class="prev">이전</a>
+                            </th:block>
+                            <th:block th:each="num,iterStat : ${#numbers.sequence(pageGroupStart, pageGroupEnd)}">
+                            	<a th:href="@{/my/qna(pg=${num},group='qna')}" th:class="${num} eq ${currentPage} ? 'num on':'num'">[[${num}]]</a>
+                            </th:block>
+                            <th:block th:if="${pageGroupEnd < lastPageNum}">
+                            <a th:href="@{/my/qna(pg=${currentPage+ 1})}" class="next">다음</a>
+                            </th:block>
+                        </p>
+                    </article>
+                </section>
+            </div>
+        </div>
+<th:block th:include="@{my/_footer.html}"/>
+    </div>
+</body>
+</html>

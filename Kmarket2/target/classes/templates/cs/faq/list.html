@@ -1,0 +1,90 @@
+<th:block th:include="@{cs/_header.html}"/>
+ <script>
+    // 더보기 구현
+      $(() => {
+    	  $('.more').click(function (e) {
+    	        e.preventDefault();
+    	        let status = $(this).prev().css('display') === 'none';
+    	      if (status) {
+    	        $(this).siblings('li:nth-child(n+4):nth-child(-n+10)').css('display','block');
+    	        $(this).children('a').text('간단히 보기');
+    	      } else{
+    	        $(this).siblings('li:nth-child(n+4)').css('display','none');
+    	        $(this).children('a').text('더보기');
+    	      }
+    	    });
+      });
+    </script>
+        <section id="cs">
+            <div class="faq">
+                <nav>
+                    <div>
+                        <p>홈<span>></span>자주묻는 질문</p>
+                    </div>
+                </nav>
+            <section class="list">
+                <aside>
+                    <h2>자주묻는 질문</h2>
+                    <ul>
+                        <li th:classappend="${cate} eq 'member'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=member}">회원</a></li>
+                        <li th:classappend="${cate} eq 'event'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=event}">쿠폰/이벤트</a></li>
+                        <li th:classappend="${cate} eq 'order'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=order}">주문/결제</a></li>
+                        <li th:classappend="${cate} eq 'deli'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=deli}">배송</a></li>
+                        <li th:classappend="${cate} eq 'cancle'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=cancle}">취소/반품/교환</a></li>
+                        <li th:classappend="${cate} eq 'trip'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=trip}">여행/숙박/항공</a></li>
+                        <li th:classappend="${cate} eq 'safe'?'on':'off'"><a th:href="@{/cs/faq/list?group=faq&cate=safe}">안전거래</a></li>
+                    </ul>
+                </aside>
+                <article>
+                    <nav th:if="${cate} eq 'member'">
+                        <h1>회원</h1>
+                        <h2>회원관련 자주 묻는 질문입니다.</h2>
+                    </nav>
+                    <nav th:if="${cate} eq 'event'">
+                        <h1>쿠폰/이벤트</h1>
+                        <h2>쿠폰/이벤트관련 자주 묻는 질문입니다.</h2>
+                    </nav>
+                    <nav th:if="${cate} eq 'order'">
+                        <h1>주문/결제</h1>
+                        <h2>주문/결제관련 자주 묻는 질문입니다.</h2>
+                    </nav>
+                    <nav th:if="${cate} eq 'deli'">
+                        <h1>배송</h1>
+                        <h2>배송관련 자주 묻는 질문입니다.</h2>
+                    </nav>
+                    <nav th:if="${cate} eq 'cancle'">
+                        <h1>취소/반품/교환</h1>
+                        <h2>취소/반품/교환관련 자주 묻는 질문입니다.</h2>
+                    </nav>
+                    <nav th:if="${cate} eq 'trip'">
+                        <h1>여행/숙박/항공</h1>
+                        <h2>여행/숙박/항공관련 자주 묻는 질문입니다.</h2>
+                    </nav>
+                    <nav th:if="${cate} eq 'safe'">
+                        <h1>안전거래</h1>
+                        <h2>안전거래관련 자주 묻는 질문입니다.</h2>
+                    </nav>
+                    
+                    <div th:each="cate:${cates}">
+                        <h3>[[${cate.c2Name}]]</h3>
+                        <ul>
+                        	<th:block th:each="article:${articles}">
+                        	<th:block th:if="${cate.c2Name eq article.c2Name}">
+                            <li>
+                                <a th:href="@{/cs/faq/view(group='faq',cate=${article.cate},no=${article.no})}">
+                                    <span>Q.</span>[[${article.title}]]
+                                </a>
+                            </li>
+                            </th:block>
+                            </th:block>
+                            <li class="more">
+                                <a href="#">더보기</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </article>
+            </section>
+        </div>
+  </section>
+<th:block th:include="@{cs/_footer.html}"/>

@@ -1,0 +1,321 @@
+<th:block th:include="@{product/_header.html}"/>
+<th:block th:include="@{product/_aside.html}"/>
+<script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/Kmarket2/js/postcode.js"></script>
+<script>
+	// 포인트 할인 적용하기
+	function deductPoint(){
+		let userPoint = parseInt(document.querySelector('.userPoint').innerText.split(',').join(''));
+		let pointToDeduct = document.querySelector('.pointToDeduct').value;
+		let nf = new Intl.NumberFormat('en-US');
+		
+		// 사용자 입력값이 정수인지 확인
+		if(isInt(pointToDeduct) === true){
+			// 보유 포인트가 5000점 이상인지 확인
+			if(userPoint < 5000){
+				alert('보유 포인트가 5000점 이상일 때 포인트 사용이 가능합니다.');
+				return;
+			}
+			
+			// 보유 포인트보다 더 많은 값을 입력했는지 확인
+			if(pointToDeduct > userPoint){
+				alert('보유 포인트보다 더 많은 포인트를 사용하실 수 없습니다.');
+				return;
+			}
+			
+			// 전체 합계에서 포인트 할인 금액만큼 표시
+			let usedPoint = parseInt(document.querySelector('.usedPoint').innerText);
+			let ordTotPrice = document.querySelector('.ordTotPrice').innerText.split(',').join('');
+			
+			usedPoint += pointToDeduct;
+			ordTotPrice -= pointToDeduct;
+			
+			document.querySelector('.usedPoint').innerText = nf.format(usedPoint);
+			document.querySelector('.ordTotPrice').innerText = nf.format(ordTotPrice);
+			
+			// 쓴 포인트만큼 차감해서 보유 포인트 보여주기
+			document.querySelector('.userPoint').innerText = nf.format(userPoint - pointToDeduct);
+		}else{
+			alert('포인트 입력값은 정수값만 가능합니다.');
+			return;
+		}
+	}
+	
+	// 주문 정보 DB에 저장하기
+	function storeOrderInfo(){
+		let ordUid = document.querySelector("input[name='username']").value;
+		let ordCount = parseInt(document.querySelector('.ordCount').innerText.split(',').join(''));
+		let ordPrice = parseInt(document.querySelector('.ordPrice').innerText.split(',').join(''));
+		let ordDiscount = parseInt(document.querySelector('.ordDiscount').innerText.slice(1).split(',').join(''));
+		let ordDelivery = parseInt(document.querySelector('.ordDelivery').innerText.split(',').join(''));
+		let savePoint = parseInt(document.querySelector('.savePoint').innerText.split(',').join(''));
+		let usedPoint = parseInt(document.querySelector('.usedPoint').innerText.split(',').join(''));
+		let ordTotPrice = parseInt(document.querySelector('.ordTotPrice').innerText.split(',').join(''));
+		let recipName = document.querySelector("input[name='recipName']").value;
+		let recipHP = document.querySelector("input[name='recipHp']").value;
+		let recipZip = document.querySelector("input[name='zip']").value;
+		let recipAddr1 = document.querySelector("input[name='addr1']").value;
+		let recipAddr2 = document.querySelector("input[name='addr2']").value;
+		let deliveryRequest = document.querySelector("input[name='deliveryRequest']").value;
+		let ordPayment = parseInt(document.querySelector("input[name='payment']:checked").value);
+		
+		let prodNos = document.querySelectorAll("input[name='prodNo']");
+		let prodNoList = [];
+		for(let i =0; i < prodNos.length; i++){
+			prodNoList.push(prodNos[i].value);
+		}
+		
+		let orderVO ={
+				"ordUid" : ordUid,
+				"ordCount" : ordCount,
+				"ordPrice" : ordPrice,
+				"ordDiscount" : ordDiscount,
+				"ordDelivery" : ordDelivery,
+				"savePoint" : savePoint,
+				"usedPoint" : usedPoint,
+				"ordTotPrice" : ordTotPrice,
+				"recipName" : recipName,
+				"recipHP" : recipHP,
+				"recipZip" : recipZip,
+				"recipAddr1" : recipAddr1,
+				"recipAddr2" : recipAddr2,
+				"deliveryRequest" : deliveryRequest,
+				"ordPayment" : ordPayment
+				
+		}
+		
+		let order = JSON.stringify(orderVO);
+		
+		// 클릭 시 대화상자 띄워서 결제할 지 최종 확인
+		if(confirm("결제를 진행하시겠습니까?")){
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", "/Kmarket2/product/storeOrderInfo");
+			xhr.setRequestHeader('Content-type', 'application/json');
+			xhr.responseType = "json";
+			xhr.send(order);
+			
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState === XMLHttpRequest.DONE){
+					if(xhr.status ===200){
+						const data = xhr.response;
+						const result = data.result;
+						
+						if(result === 1){
+							
+							// 결제 성공 시 결제 품목 order_item 테이블에 저장
+							let prodNoUid ={
+									"prodNoList" : prodNoList,
+									"uid" : ordUid
+							}
+							
+							let prodNoListToSend = JSON.stringify(prodNoUid);
+							
+							let xhr2 = new XMLHttpRequest();
+							xhr2.open("POST", "/Kmarket2/product/storeOrderItems");
+							xhr2.setRequestHeader('Content-type', 'application/json');
+							xhr2.responseType = "json";
+							xhr2.send(prodNoListToSend);
+							
+							xhr2.onreadystatechange = function(){
+							console.log(xhr2.readyState);
+							console.log(xhr2.status);
+								if(xhr2.readyState === XMLHttpRequest.DONE){
+									if(xhr2.status === 200){
+										let ordResult = xhr2.response.ordResult;
+										let ordNo = xhr2.response.ordNo;
+										
+										if(ordResult === 1){
+											window.location.href = "/Kmarket2/product/complete?ordNo=" + ordNo;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	// 사용자 입력값이 정수인지 확인
+	function isInt(value){
+		return !isNaN(value) && parseInt(Number(value)) == value && (value % 1 ===0);
+	}
+</script>
+            <section class="order">
+                <nav>
+                    <h1>주문결제</h1>
+                    <p>
+                        HOME > 
+                        <span>장바구니</span>
+                         > 
+                        <strong>주문결제</strong>
+                    </p>
+                </nav>
+                <form action="#" method="post">
+                	<input type="hidden" th:value="${#authentication.name}" name="username">
+                    <table>
+                        <tr>
+                            <th>상품명</th>
+                            <th>총수량</th>
+                            <th>판매가</th>
+                            <th>배송비</th>
+                            <th>소계</th>
+                        </tr>
+                        <tr th:each="item : ${orderList}">
+                        	<input type="hidden" th:value="${item.prodNo}" name="prodNo">
+                            <td>
+                                <article>
+                                    <a th:href="@{/product/view(prodNo=${item.prodNo},cate1=${item.prodCate1},cate2=${item.prodCate2})}">
+                                        <img src="https://via.placeholder.com/80" alt="thumbnail">
+                                    </a>
+                                    <div>
+                                        <h2>
+                                            <a th:href="@{/product/view(prodNo=${item.prodNo},cate1=${item.prodCate1},cate2=${item.prodCate2})}">[[${item.prodName}]]</a>
+                                        </h2>
+                                        <p>[[${item.descript}]]</p>
+                                    </div>
+                                </article>
+                            </td>
+                            <td>[[${item.count}]]</td>
+                            <td>[[${#numbers.formatInteger(item.price, 1, 'COMMA')}]]</td>
+                            <th:block th:if="${item.delivery > 0}">
+                            	<td>[[${#numbers.formatInteger(item.delivery, 3, 'COMMA')}]]</td>
+                            </th:block>
+                            <th:block th:unless="${item.delivery > 0}">
+                            	<td>무료배송</td>
+                            </th:block>
+                            <td>[[${#numbers.formatInteger(item.total, 3, 'COMMA')}]]</td>
+                        </tr>
+                    </table>
+                    <div class="final">
+                        <h2>전체합계</h2>
+                        <table border="0">
+                            <tr>
+                                <td>총</td>
+                                <td class="ordCount">[[${#numbers.formatInteger((#aggregates.sum(orderList.![count])), 1, 'COMMA')}]] 건</td>
+                            </tr>
+                            <tr>
+                                <td>상품금액</td>
+                                <td class="ordPrice">[[${#numbers.formatInteger((#aggregates.sum(orderList.![price])), 3, 'COMMA')}]]</td>
+                            </tr>
+                            <tr>
+                                <td>할인금액</td>
+                                <td class="ordDiscount">-[[${#numbers.formatInteger((#aggregates.sum(orderList.![disPrice])), 3, 'COMMA')}]]</td>
+                            </tr>
+                            <tr>
+                                <td>배송비</td>
+                                <td class="ordDelivery">[[${#numbers.formatInteger((#aggregates.sum(orderList.![delivery])), 3, 'COMMA')}]]</td>
+                            </tr>
+                            <tr>
+                                <td>포인트 할인</td>
+                                <td class="usedPoint">0</td>
+                            </tr>
+                            <tr>
+                                <td>적립 포인트</td>
+                                <td class="savePoint">[[${#numbers.formatInteger((#aggregates.sum(orderList.![point])), 3, 'COMMA')}]]</td>
+                            </tr>
+                            <tr>
+                                <td>전체주문금액</td>
+                                <td class="ordTotPrice">[[${#numbers.formatInteger((#aggregates.sum(orderList.![total])), 3, 'COMMA')}]]</td>
+                            </tr>
+                        </table>
+                        <input type="button" value="결제하기" onclick="storeOrderInfo();">
+                    </div>
+                    <article class="delivery">
+                        <h1>배송정보</h1>
+                        <table>
+                            <tr>
+                                <td>수령자</td>
+                                <td>
+                                    <input type="text" name="recipName" th:value="${user.name}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>휴대폰</td>
+                                <td>
+                                    <input type="text" name="recipHp" th:value="${user.hp}">
+                                    <span>- 포함 입력</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>우편번호</td>
+                                <td>
+                                    <input type="text" name="zip" id="zip" readonly th:value="${user.zip}">
+                                    <input type="button" value="검색" id="btnZip" onclick="postcode()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>기본주소</td>
+                                <td>
+                                    <input type="text" name="addr1" id="addr1" th:value="${user.addr1}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>상세주소</td>
+                                <td>
+                                    <input type="text" name="addr2" id="addr2" th:value="${user.addr2}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>요청사항</td>
+                                <td>
+                                    <input type="text" name="deliveryRequest">
+                                </td>
+                            </tr>
+                        </table>
+                    </article>
+                    <article class="discountFinal">
+                        <h1>할인정보</h1>
+                        <div>
+                            <p>
+                                현재 포인트 : 
+                                <span class="userPoint">[[${#numbers.formatInteger(user.point, 1, 'COMMA')}]]</span>
+                                점
+                            </p>
+                            <label>
+                                <input type="text" name="point" class="pointToDeduct">
+                                점
+                                <input type="button" value="적용" onclick="deductPoint();">
+                            </label>
+                            <span>포인트 5,000점 이상이면 현금처럼 사용 가능합니다.</span>
+                        </div>
+                    </article>
+                    <article class="payment">
+                        <h1>결제방법</h1>
+                        <div>
+                            <span>신용카드</span>
+                            <p>
+                                <label><input type="radio" name="payment" value="1"/>신용카드 결제</label>
+                                <label><input type="radio" name="payment" value="2"/>체크카드 결제</label>                                
+                            </p>
+                        </div>
+                        <div>
+                            <span>계좌이체</span>
+                            <p>
+                                <label><input type="radio" name="payment" value="3"/>실시간 계좌이체</label>
+                                <label><input type="radio" name="payment" value="4"/>무통장 입금</label>                                
+                            </p>
+                        </div>
+                        <div>
+                            <span>기타</span>
+                            <p>
+                                <label><input type="radio" name="payment" value="5"/>휴대폰결제</label>
+                                <label>
+                                    <input type="radio" name="payment" value="6"/>카카오페이
+                                    <img th:src="@{/img/ico_kakaopay.gif}" alt="카카오페이"/>
+                                </label>                                
+                            </p>
+                        </div>
+                    </article>
+                    <article class="alert">
+                        <ul>
+                            <li><span>케이마켓의 모든 판매자는 안전거래를 위해 구매금액, 결제수단에 상관없이 모든거래에 대하여 케이마켓 유한책임회사의 구매안전서비스(에스크로)를 제공하고 있습니다.</span></li>
+                            <li><span>케이마켓 유한책임회사의 전자금융거래법에 의해 결제대금예치업 등록번호는 02-006-00008 입니다.</span></li>
+                            <li><span>등록여부는 금융감독원 홈페이지(www.fss.or.kr)의 업무자료>인허가업무안내>전자금융업등록현황에서 확인하실수 있습니다.</span></li>
+                        </ul>
+                      </article>
+                </form>
+            </section>
+        </main>
+<th:block th:include="@{product/_footer.html}"/>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link th:href="@{/css/company_css/company.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/company_css/company_common.css}" rel="stylesheet" type="text/css" />
+    <title>Kmarket Inc. 상상하는 모든것</title>
+    <script>
+    	$(function(){
+    		$(window).scroll(function(){
+			
+    		let top = $(this).scrollTop();
+    		
+    		if(top > 10){
+    			$('#wrapper > header').css('background', 'white');
+    			$('#wrapper > header li > a').css('color', 'black');
+    			$('#wrapper > header img').attr('src', '../img/company/company_header_logo1.png');
+    		}else{
+    			$('#wrapper > header').css('background', 'transparent');
+    			$('#wrapper > header li > a').css('color', 'white');
+    			$('#wrapper > header img').attr('src', '../img/company/company_header_logo2.png');
+    		}
+    		
+    		
+    	});
+    	
+    	});
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <header style="background: transparent;">
+            <div>
+                <a th:href="@{/index}" style="color: rgb(255, 255, 255);">
+                    <img th:src="@{/img/company/company_header_logo2.png}" width="180" alt="로고">
+                </a>
+                <ul>
+                    <li>
+                        <a th:href="@{/company/introduce}" style="color: rgb(255, 255, 255);">회사소개</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/company/notice}" style="color: rgb(255, 255, 255);">전자공시</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/company/promote}" style="color: rgb(255, 255, 255);">홍보채널</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/company/manage}" style="color: rgb(255, 255, 255);">투명경영</a>
+                    </li>
+                </ul>
+            </div>
+        </header>
