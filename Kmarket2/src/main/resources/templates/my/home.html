@@ -38,8 +38,13 @@
                             <tr th:each="order : ${orders}">
                                 <td>[[${order.ordDate.substring(0,10)}]]</td>
                                 <td>
+<<<<<<< HEAD
+                                    <a th:href="@{#}">
+                                        <img src="https://via.placeholder.com/80x80" alt="img" class="thumb">
+=======
                                     <a href="#">
                                         <img style="width: 90px;" th:src="@{${order.thumb1}}" alt="img" class="thumb">
+>>>>>>> 1c1edd4ebf35430964a28bcfb6895139873e2d5c
                                     </a>
                                     <ul style="width: 405px;">
                                         <li class="company"><a href="#">[[${order.company}]]</a></li>
@@ -57,17 +62,17 @@
                                 </td>
                                 <td class="status">배송완료</td>
                                 <td class="confirm">
-                                    <a href="#" class="receive">수취확인</a>
-                                    <a href="#" class="review">상품평</a>
-                                    <a href="#" class="refund">반품신청</a>
-                                    <a href="#" class="exchange">교환신청</a>
+                                    <a th:href="@{#}" class="receive">수취확인</a>
+                                    <a th:href="@{#}" class="review">상품평</a>
+                                    <a th:href="@{#}" class="refund">반품신청</a>
+                                    <a th:href="@{#}" class="exchange">교환신청</a>
                                 </td>
                             </tr>
                         </table>
                     </article>
                     <article class="point">
                         <h3>포인트적립내역</h3>
-                        <a href="#" class="more">더보기</a>
+                        <a th:href="@{#}" class="more">더보기</a>
                         <table>
                             <tr>
                                 <th>날짜</th>
@@ -89,7 +94,7 @@
                     </article>
                     <article class="review">
                         <h3>상품평</h3>
-                        <a href="#" class="more">더보기</a>
+                        <a th:href="@{#}" class="more">더보기</a>
                         <table>
                             <tr>
                                 <th>번호</th>
@@ -147,7 +152,7 @@
                     </article>
                     <article class="qna">
                         <h3>문의내역</h3>
-                        <a href="#" class="more">더보기</a>
+                        <a th:href="@{#}" class="more">더보기</a>
                         <table>
                             <tr>
                                 <th>번호</th>
@@ -194,11 +199,11 @@
                         <div>
                             <div class="address">
                                 <span>기본 배송지설정</span>
-                                <a href="#" class="setting">변경</a>
+                                <a th:href="@{#}" class="setting">변경</a>
                             </div>
                             <div class="email">
                                 <span>email 설정</span>
-                                <a href="#" class="setting">변경</a>
+                                <a th:href="@{#}" class="setting">변경</a>
                                 <p>
                                     <span>abc123@gmail.com</span>
                                     <br>
@@ -209,7 +214,7 @@
                             </div>
                             <div class="hp">
                                 <span>휴대폰 설정</span>
-                                <a href="#" class="setting">변경</a>
+                                <a th:href="@{#}" class="setting">변경</a>
                                 <p>
                                     <span>abc123@gmail.com</span>
                                     <br>

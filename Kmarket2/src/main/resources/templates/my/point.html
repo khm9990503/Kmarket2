@@ -2,6 +2,25 @@
             <div class="point">
                 <ul>
                     <span class="menu_else"></span>
+<<<<<<< HEAD
+                    <li class="on">
+                        <a th:href="@{#}">전체주문내역</a>
+                    </li>
+                    <li>
+                        <a th:href="@{#}">포인트내역</a>
+                    </li>
+                    <li>
+                        <a th:href="@{#}">쿠폰</a>
+                    </li>
+                    <li>
+                        <a th:href="@{#}">나의리뷰</a>
+                    </li>
+                    <li>
+                        <a th:href="@{#}">문의하기</a>
+                    </li>
+                    <li>
+                        <a th:href="@{#}">나의설정</a>
+=======
                     <li th:classappend="${group} eq 'ordered'?'on':'off'">
                         <a th:href="@{/my/ordered?group=ordered}">전체주문내역</a>
                     </li>
@@ -16,6 +35,7 @@
                     </li>
                     <li th:classappend="${group} eq 'qna'?'on':'off'">
                         <a th:href="@{/my/qna?group=qna}">문의하기</a>
+>>>>>>> 1c1edd4ebf35430964a28bcfb6895139873e2d5c
                     </li>
                     <li th:classappend="${group} eq 'info'?'on':'off'">
                         <a th:href="@{/my/info?group=info}">나의설정</a>
@@ -30,44 +50,44 @@
                             <span class="tit">기간별조회</span>
                             <ul class="date_3ea">
                                 <li>
-                                    <a href="#">
+                                    <a th:href="@{#}">
                                         <em>1</em>주일
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a th:href="@{#}">
                                         <em>15</em>일
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="on">
+                                    <a th:href="@{#}" class="on">
                                         <em>1</em>개월
                                     </a>
                                 </li>
                             </ul>
                             <ul class="date_5ea">
                                 <li>
-                                    <a href="#">
+                                    <a th:href="@{#}">
                                         <em>11</em>월
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a th:href="@{#}">
                                         <em>10</em>월
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a th:href="@{#}">
                                         <em>9</em>월
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a th:href="@{#}">
                                         <em>8</em>월
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a th:href="@{#}">
                                         <em>7</em>월
                                     </a>
                                 </li>
@@ -122,11 +142,11 @@
                             </tr>
                         </table>
                         <p class="page">
-                            <a href="#" class="prev">이전</a>
-                            <a href="#" class="num on">1</a>
-                            <a href="#" class="num">2</a>
-                            <a href="#" class="num">3</a>
-                            <a href="#" class="next">다음</a>
+                            <a th:href="@{#}" class="prev">이전</a>
+                            <a th:href="@{#}" class="num on">1</a>
+                            <a th:href="@{#}" class="num">2</a>
+                            <a th:href="@{#}" class="num">3</a>
+                            <a th:href="@{#}" class="next">다음</a>
                         </p>
                     </article>
                 </section>
