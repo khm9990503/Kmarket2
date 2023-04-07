@@ -27,7 +27,19 @@ public class ProductService {
 	
 	// aside
 	public List<ProductVO> selectProducts(String cate1, String cate2, String sort, int start){
-		return dao.selectProducts(cate1, cate2, sort, start);
+		// 썸네일 수정 - 구홍모
+		List<ProductVO> products = dao.selectProducts(cate1, cate2, sort, start);
+		for(ProductVO product : products) {
+			
+			char isJ  = product.getThumb1().charAt(1);
+			if(isJ == 'J') {
+				product.setThumb1(product.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+				product.setThumb2(product.getThumb2().replaceFirst("/Java1_Kmarket1", ""));
+				product.setThumb3(product.getThumb3().replaceFirst("/Java1_Kmarket1", ""));
+				product.setDetail(product.getDetail().replaceFirst("/Java1_Kmarket1", ""));
+			}
+		}
+		return products;
 	}
 	
 	// list
@@ -39,7 +51,16 @@ public class ProductService {
 	// view
 	// prodNo값으로 상품 정보 불러오기
 	public ProductVO selectProduct(String prodNo) {
-		return dao.selectProduct(prodNo);
+		// 썸네일 수정 - 구홍모
+		ProductVO product = dao.selectProduct(prodNo);
+		char isJ  = product.getThumb1().charAt(1);
+		if(isJ == 'J') {
+			product.setThumb1(product.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+			product.setThumb2(product.getThumb2().replaceFirst("/Java1_Kmarket1", ""));
+			product.setThumb3(product.getThumb3().replaceFirst("/Java1_Kmarket1", ""));
+			product.setDetail(product.getDetail().replaceFirst("/Java1_Kmarket1", ""));
+		}
+		return product;
 	}
 	
 	// 배송 예정일 구하기(현재 날짜 + 3 영업일)
