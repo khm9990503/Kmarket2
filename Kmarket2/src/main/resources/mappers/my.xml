@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket2.dao.MyDAO">	
 	<select id="selectOrdersIndex" resultType="kr.co.kmarket2.vo.OrderVO">
-		SELECT b.*,c.thumb1 from `km_product_order_item` AS a
+		SELECT b.*,c.thumb1,c.company,c.prodName,a.`count`, a.total from `km_product_order_item` AS a
 													LEFT JOIN `km_product_order` AS b USING(`ordNo`)
 													left JOIN `km_product` AS c ON a.prodNo = c.prodNo
 													WHERE `ordUid`=#{uid};

@@ -30,28 +30,28 @@
                         <a href="#" class="more">더보기</a>
                         <table>
                             <tr>
-                                <th>날짜</th>
-                                <th>상품정보</th>
-                                <th>상태</th>
-                                <th>확인/신청</th>
+                                <th style="width: 12%;">날짜</th>
+                                <th style="width: 68%;">상품정보</th>
+                                <th style="width: 10%;">상태</th>
+                                <th style="width: 10%;">확인/신청</th>
                             </tr>
-                            <tr>
-                                <td>2023-12-13</td>
+                            <tr th:each="order : ${orders}">
+                                <td>[[${order.ordDate.substring(0,10)}]]</td>
                                 <td>
                                     <a href="#">
-                                        <img src="https://via.placeholder.com/80x80" alt="img" class="thumb">
+                                        <img style="width: 90px;" th:src="@{${order.thumb1}}" alt="img" class="thumb">
                                     </a>
-                                    <ul>
-                                        <li class="company"><a href="#">상호명</a></li>
+                                    <ul style="width: 405px;">
+                                        <li class="company"><a href="#">[[${order.company}]]</a></li>
                                         <li class="prodName">
-                                            <a href="#">상품명</a>
+                                            <a href="#">[[${order.prodName}]]</a>
                                         </li>
                                         <li>
-                                            수량 : <span class="prodCount">1</span>
-                                            개 / 주문번호 : <span class="orderNo"><a href="#">1012211341</a></span>
+                                            수량 : <span class="prodCount">[[${order.count}]]</span>
+                                            개 / 주문번호 : <span class="orderNo"><a href="#">[[${order.ordNo}]]</a></span>
                                         </li>
                                         <li class="prodPrice">
-                                            34,000
+                                            [[${order.total}]]
                                         </li>
                                     </ul>
                                 </td>
