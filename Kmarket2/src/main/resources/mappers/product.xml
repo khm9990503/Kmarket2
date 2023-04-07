@@ -93,7 +93,7 @@
     	update `km_member` set `point` = `point` + #{pointSum} where `uid`=#{username};
     </update>
     <update id="insertPoint">
-    	insert `km_member_point` values (default, #{username}, #{ordNo}, #{point}, NOW());
+    	insert `km_member_point` values (default, #{username}, #{ordNo}, #{point}, NOW(), );
     </update>
     <select id="selectOrder" resultType="kr.co.kmarket2.vo.OrderItemVO">
     	select a.*, b.* from `km_product_order_item` as a 

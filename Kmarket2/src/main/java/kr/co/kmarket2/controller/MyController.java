@@ -13,6 +13,7 @@ import kr.co.kmarket2.security.MyUserDetails;
 import kr.co.kmarket2.service.MyService;
 import kr.co.kmarket2.vo.ArticleVO;
 import kr.co.kmarket2.vo.OrderVO;
+import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
 @Controller
@@ -25,7 +26,12 @@ public class MyController {
 	public String home(@AuthenticationPrincipal MyUserDetails member, String group,Model model) {
 		String uid = member.getUser().getUid();
 		List<OrderVO> orders = service.selectOrdersIndex(uid);
-		
+		for(OrderVO order : orders) {
+			char isJ  = order.getThumb1().charAt(1);
+			if(isJ == 'J') {
+				order.setThumb1(order.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+			}
+		}
 		model.addAttribute("orders",orders);
 		model.addAttribute("group",group);
 		
