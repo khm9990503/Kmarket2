@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import kr.co.kmarket2.entity.MemberEntity;
 import kr.co.kmarket2.security.MyUserDetails;
 import kr.co.kmarket2.service.MyService;
 import kr.co.kmarket2.vo.ArticleVO;
@@ -38,7 +39,7 @@ public class MyController {
 		return "my/home";
 	}
 	@GetMapping("my/ordered")
-	public String ordered(String group,Model model) {
+	public String ordered( String group,Model model) {
 		
 		model.addAttribute("group",group);
 		return "my/ordered";
@@ -56,8 +57,9 @@ public class MyController {
 		return "my/coupon";
 	}
 	@GetMapping("my/info")
-	public String info(String group,Model model) {
-		
+	public String info(@AuthenticationPrincipal MyUserDetails member, String group,Model model) {
+		MemberEntity user = member.getUser();
+		model.addAttribute("user", user);
 		model.addAttribute("group",group);
 		return "my/info";
 	}
