@@ -27,4 +27,8 @@ public class ReviewVO {
 	private int groupEnd;
 	private int lastPageNum;
 	private int currentPage;
+	
+	// 상품카테고리
+	private int prodCate1;
+	private int prodCate2;
 }
