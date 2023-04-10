@@ -3,17 +3,22 @@ package kr.co.kmarket2.controller;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.co.kmarket2.entity.MemberEntity;
 import kr.co.kmarket2.security.MyUserDetails;
 import kr.co.kmarket2.service.MyService;
 import kr.co.kmarket2.vo.ArticleVO;
 import kr.co.kmarket2.vo.OrderVO;
+import kr.co.kmarket2.vo.PointVO;
 import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
@@ -33,11 +38,26 @@ public class MyController {
 				order.setThumb1(order.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
 			}
 		}
+		List<PointVO> points = service.selectMemberPointsIndex(uid);
+		List<ReviewVO> reviews = service.selectReviewsIndex(uid);
+		model.addAttribute("reviews",reviews);
 		model.addAttribute("orders",orders);
+		model.addAttribute("points",points);
 		model.addAttribute("group",group);
+		model.addAttribute("uid",uid);
 		
 		return "my/home";
 	}
+	
+	@PostMapping("my/home/review")
+	public String homeReview(ReviewVO vo, HttpServletRequest req) {
+		vo.setRegip(req.getRemoteAddr());
+		
+		int result = service.insertReview(vo);
+		
+		return "redirect:/my/review";
+	}
+	
 	@GetMapping("my/ordered")
 	public String ordered( String group,Model model) {
 		
@@ -76,8 +96,6 @@ public class MyController {
 		
 		total = service.selectReviewCountTotal(uid); //전체 리뷰 갯수
 		
-			
-		
 		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
 		int[] result = service.getPageGroupNum(currentPage, lastPageNum); // 페이지 그룹번호
 		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작번호
@@ -93,8 +111,7 @@ public class MyController {
 		// reivew 목록(prodName join) 가져오기
 		List<ReviewVO> reviews = service.selectReview(uid, start);
 		
-		model.addAttribute("reivews", reviews);
-		
+		model.addAttribute("reviews", reviews);
 		
 		model.addAttribute("group", group);
 		return "my/review";

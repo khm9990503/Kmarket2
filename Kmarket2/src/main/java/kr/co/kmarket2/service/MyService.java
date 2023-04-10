@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.co.kmarket2.dao.MyDAO;
 import kr.co.kmarket2.vo.ArticleVO;
 import kr.co.kmarket2.vo.OrderVO;
+import kr.co.kmarket2.vo.PointVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
 @Service
@@ -19,6 +20,19 @@ public class MyService {
 	// 마이페이지 메인 주문 목록
 	public List<OrderVO> selectOrdersIndex(String uid){
 		return dao.selectOrdersIndex(uid);
+	};
+	
+	// 마이페이지 홈 포인트 적립내역 목록
+	public List<PointVO> selectMemberPointsIndex(String uid){
+		return dao.selectMemberPointsIndex(uid);
+	};
+	// 마이페이지 홈 상품리뷰 목록
+	public List<ReviewVO> selectReviewsIndex(String uid){
+		return dao.selectReviewsIndex(uid);
+	};
+	// 마이페이지 홈 상품리뷰 등록
+	public int insertReview(ReviewVO vo) {
+		return dao.insertReview(vo);
 	};
 	
 	// 나의문의 불러오기

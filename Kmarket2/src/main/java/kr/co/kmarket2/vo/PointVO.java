@@ -14,9 +14,10 @@ import lombok.ToString;
 public class PointVO {
 	private int pointNo;
 	private String uid;
-	private int ordNO;
+	private int ordNo;
 	private int point;
 	private String pointDate;
+	private String expiration;
 	
 	
 }

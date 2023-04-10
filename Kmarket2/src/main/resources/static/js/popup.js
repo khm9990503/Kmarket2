@@ -29,6 +29,10 @@ $(function(){
     $('.latest .confirm > .review').click(function(e){
         e.preventDefault();
         $('#popReview').addClass('on');
+        let prodName = $(this).data("prodname");
+        let prodNo = $(this).data("prodno");
+        $('#popReview .productName').text(prodName);
+        $('#popReview input[name=prodNo]').val(prodNo);
     });
                
     // 팝업 닫기
@@ -45,7 +49,8 @@ $(function(){
         minRating: 1,
         ratedColors: ['#ffa400', '#ffa400', '#ffa400', '#ffa400', '#ffa400'],
         callback: function(currentRating, $el){
-            alert('rated ' + currentRating);
+            alert('별점을 ' + currentRating + "개 주셨습니다.");
+            $('input[name=rating]').val(currentRating);
             console.log('DOM element ', $el);
         }
     });

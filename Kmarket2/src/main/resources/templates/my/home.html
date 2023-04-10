@@ -1,5 +1,4 @@
 <th:block th:include="@{my/_header.html}"/>
-
             <div class="home">
                 <ul>
                     <span class="menu_else"></span>
@@ -35,16 +34,14 @@
                                 <th style="width: 10%;">상태</th>
                                 <th style="width: 10%;">확인/신청</th>
                             </tr>
+                            <tr>
+                            	<td colspan="4" align="center" th:if="${#lists.isEmpty(orders)}">주문하신 내역이 없습니다.</td>
+                            </tr>
                             <tr th:each="order : ${orders}">
                                 <td>[[${order.ordDate.substring(0,10)}]]</td>
                                 <td>
-<<<<<<< HEAD
-                                    <a th:href="@{#}">
-                                        <img src="https://via.placeholder.com/80x80" alt="img" class="thumb">
-=======
                                     <a href="#">
                                         <img style="width: 90px;" th:src="@{${order.thumb1}}" alt="img" class="thumb">
->>>>>>> 1c1edd4ebf35430964a28bcfb6895139873e2d5c
                                     </a>
                                     <ul style="width: 405px;">
                                         <li class="company"><a href="#">[[${order.company}]]</a></li>
@@ -63,7 +60,7 @@
                                 <td class="status">배송완료</td>
                                 <td class="confirm">
                                     <a th:href="@{#}" class="receive">수취확인</a>
-                                    <a th:href="@{#}" class="review">상품평</a>
+                                    <a th:href="@{#}" class="review" th:data-prodNo="${order.prodNo}" th:data-prodName="${order.prodName}">상품평</a>
                                     <a th:href="@{#}" class="refund">반품신청</a>
                                     <a th:href="@{#}" class="exchange">교환신청</a>
                                 </td>
@@ -83,18 +80,21 @@
                                 <th>유효기간</th>
                             </tr>
                             <tr>
-                                <td>2022-12-10</td>
+                            	<td colspan="6" align="center" th:if="${#lists.isEmpty(points)}">적립하신 포인트가 없습니다.</td>
+                            </tr>
+                            <tr th:each="pit : ${points}">
+                                <td>[[${pit.pointDate.substring(0,10)}]]</td>
                                 <td>적립</td>
-                                <td>2022121001</td>
-                                <td>340</td>
+                                <td>[[${pit.ordNo}]]</td>
+                                <td>[[${pit.point}]]</td>
                                 <td>상품 구매확정</td>
-                                <td>2024-12-10</td>
+                                <td>[[${pit.expiration.substring(0,10)}]]</td>
                             </tr>
                         </table>
                     </article>
                     <article class="review">
                         <h3>상품평</h3>
-                        <a th:href="@{#}" class="more">더보기</a>
+                        <a th:href="@{/my/review}" class="more">더보기</a>
                         <table>
                             <tr>
                                 <th>번호</th>
@@ -103,9 +103,9 @@
                                 <th>평점</th>
                                 <th>작성일</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>감자</td>
+                            <tr th:each="review,stat : ${reviews}">
+                                <td>[[${stat.count}]]</td>
+                                <td></td>
                                 <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
                                 <td>
                                     <span class="rating star1">상품평</span>
@@ -439,7 +439,10 @@
                     <button class="btnClose">X</button>
                 </nav>
                 <section>
-                    <form action="#">
+                    <form th:action="@{/my/home/review}" method="post">
+                    <input type="hidden" name='rating'>
+                    <input type="hidden" name='prodNo'>
+                    <input type="hidden" name='uid' th:value="${uid}">
                         <table border="0">
                             <tr>
                                 <th>상품명</th>
@@ -455,7 +458,7 @@
                             <tr>
                                 <th></th>
                                 <td class="review">
-                                    <textarea name="review" placeholder="내용입력"></textarea>
+                                    <textarea name="content" placeholder="내용입력"></textarea>
                                 </td>
                             </tr>
                         </table>

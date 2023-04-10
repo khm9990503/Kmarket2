@@ -4,11 +4,18 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket2.dao.MyDAO">	
 	<select id="selectOrdersIndex" resultType="kr.co.kmarket2.vo.OrderVO">
-		SELECT b.*,c.thumb1,c.company,c.prodName,a.`count`, a.total from `km_product_order_item` AS a
+		SELECT b.*,c.prodNo,c.thumb1,c.company,c.prodName,a.`count`, a.total from `km_product_order_item` AS a
 													LEFT JOIN `km_product_order` AS b USING(`ordNo`)
 													left JOIN `km_product` AS c ON a.prodNo = c.prodNo
-													WHERE `ordUid`=#{uid};
+													WHERE `ordUid`=#{uid} limit 5;
 	</select>
+	<select id="selectMemberPointsIndex" resultType="kr.co.kmarket2.vo.PointVO">
+		select * from `km_member_point` where `uid`=#{uid} limit 5;
+	</select>
+	<select id="selectReviewsIndex" resultType="kr.co.kmarket2.vo.ReviewVO">
+		select * from `km_product_review` where `uid`=#{uid} limit 5;
+	</select>
+	
 	
 	<select id="selectQnaArticles" resultType="kr.co.kmarket2.vo.ArticleVO">
 		SELECT a.* ,b.c1Name FROM `km_article` AS a JOIN `km_qna_cate` AS b ON a.cate=b.cate WHERE `group`='qna' AND `uid`=#{uid} ORDER BY `no` DESC LIMIT #{start},10;
@@ -29,4 +36,14 @@
 	<update id="updateMemberInfo">
 		UPDATE `km_member` SET `pass`='asdf1234', `email`='rudwns@naver.com', `hp`='010-9778-6644', `zip`='12121', `addr1`='부산', `addr2`='수영구' WHERE `uid`='rudwns2';
 	</update>
+	
+	<insert id="insertReview">
+		insert into `km_product_review` set 
+											`prodNo`=#{prodNo},
+											`content`=#{content},
+											`uid`=#{uid},
+											`rating`=#{rating},
+											`regip`=#{regip},
+											`rdate`=NOW();
+	</insert>
 </mapper>

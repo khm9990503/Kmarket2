@@ -239,6 +239,13 @@ footer > div > p:nth-of-type(2){
 #my > .home > section > article > table li {
     margin: 4px 0;
 }
+#my > .home > section > article > table li.prodName a{
+	display: inline-block;
+    width: 410px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 #my > .home > section > article > table .prodPrice {
     margin-top: 6px;
     font-family: '고딕';
@@ -1319,8 +1326,34 @@ footer > div > p:nth-of-type(2){
             overflow: hidden;
         }
         #my > .review > section > article > table td:first-child{border-left: none;}
+        #my > .review > section > article > table .no {
+        	width: 8%;
+        	text-align: center;
+        }
+        #my > .review > section > article > table .date {
+        	width:10%;
+        	text-align: center;
+        }
         #my > .review > section > article > table .prodName {
+        	width:300px;
             text-decoration: underline;
+        }
+        #my > .review > section > article > table .content {
+        	width: 300px;
+        }
+        #my > .review > section > article > table .content a {
+        	display: inline-block;
+		    width: 300px;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+        }
+        #my > .review > section > article > table .prodName a {
+        	display: inline-block;
+		    width: 300px;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
         }
         #my > .review > section > article > table .rating {
             display: block;
