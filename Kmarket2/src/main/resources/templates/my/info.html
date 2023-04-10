@@ -1,5 +1,7 @@
 <th:block th:include="@{my/_header.html}"/>
-
+<script>
+	$(function){};
+</script>
             <div class="info">
                 <ul>
                     <span class="menu_else"></span>
@@ -30,7 +32,7 @@
                         <table border="0">
                             <tr>
                                 <td>사용자 ID</td>
-                                <td>tom***</td>
+                                <td th:text=${user.uid}></td>
                             </tr>
                             <tr>
                                 <td>비밀번호</td>
@@ -40,18 +42,18 @@
                             </tr>
                             <tr>
                                 <td>이름</td>
-                                <td>토*토</td>
+                                <td>[[${user.name}]]</td>
                             </tr>
                             <tr>
-                                <td>생년월일</td>
-                                <td>2023년 02월 16일</td>
+                                <td>가입날</td>
+                                <td>[[${user.rdate.substring(2, 10)}]]</td>
                             </tr>
                             <tr>
                                 <td>E-mail</td>
                                 <td>
-                                    <input type="text" name="email1" value="tomato">
+                                    <input type="text" name="email1" th:value="${user.email.substring(0, user.email.indexOf('@'))}">
                                     @
-                                    <input type="text" name="email2" value="naver.com">
+                                    <input type="text" name="email2" th:value="${user.email.substring(user.email.indexOf('@')+1, user.email.length)}">
                                     <select>
                                         <option>직접입력</option>
                                         <option>naver.com</option>
