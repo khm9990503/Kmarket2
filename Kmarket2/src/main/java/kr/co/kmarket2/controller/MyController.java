@@ -93,7 +93,7 @@ public class MyController {
 		// reivew 목록(prodName join) 가져오기
 		List<ReviewVO> reviews = service.selectReview(uid, start);
 		
-		model.addAttribute("reivews", reviews);
+		model.addAttribute("reviews", reviews);
 		
 		
 		model.addAttribute("group", group);
