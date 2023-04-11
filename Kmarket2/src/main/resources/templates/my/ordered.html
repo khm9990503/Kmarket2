@@ -2,25 +2,6 @@
             <div class="ordered">
                 <ul>
                     <span class="menu_else"></span>
-<<<<<<< HEAD
-                    <li class="on">
-                        <a th:href="@{#}">전체주문내역</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">포인트내역</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">쿠폰</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">나의리뷰</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">문의하기</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">나의설정</a>
-=======
                     <li th:classappend="${group} eq 'ordered'?'on':'off'">
                         <a th:href="@{/my/ordered?group=ordered}">전체주문내역</a>
                     </li>
@@ -35,8 +16,6 @@
                     </li>
                     <li th:classappend="${group} eq 'qna'?'on':'off'">
                         <a th:href="@{/my/qna?group=qna}">문의하기</a>
->>>>>>> 1c1edd4ebf35430964a28bcfb6895139873e2d5c
-                    </li>
                     <li th:classappend="${group} eq 'info'?'on':'off'">
                         <a th:href="@{/my/info?group=info}">나의설정</a>
                 </ul>

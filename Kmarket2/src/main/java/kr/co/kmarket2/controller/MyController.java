@@ -40,11 +40,14 @@ public class MyController {
 		}
 		List<PointVO> points = service.selectMemberPointsIndex(uid);
 		List<ReviewVO> reviews = service.selectReviewsIndex(uid);
+		List<ArticleVO> articles = service.selectQnaArticles(uid, 0);
+		model.addAttribute("articles",articles);
 		model.addAttribute("reviews",reviews);
 		model.addAttribute("orders",orders);
 		model.addAttribute("points",points);
 		model.addAttribute("group",group);
 		model.addAttribute("uid",uid);
+		model.addAttribute("member",member.getUser());
 		
 		return "my/home";
 	}

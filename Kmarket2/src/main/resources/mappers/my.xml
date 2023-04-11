@@ -13,7 +13,9 @@
 		select * from `km_member_point` where `uid`=#{uid} limit 5;
 	</select>
 	<select id="selectReviewsIndex" resultType="kr.co.kmarket2.vo.ReviewVO">
-		select * from `km_product_review` where `uid`=#{uid} limit 5;
+		SELECT a.*,b.prodName from `km_product_review` AS a
+										JOIN `km_product` AS b USING(`prodNo`)
+										where `uid`=#{uid} limit 5;
 	</select>
 	
 	

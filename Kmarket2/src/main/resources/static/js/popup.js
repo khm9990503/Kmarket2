@@ -34,7 +34,7 @@ $(function(){
         $('#popReview .productName').text(prodName);
         $('#popReview input[name=prodNo]').val(prodNo);
     });
-               
+
     // 팝업 닫기
     $('.btnClose, .btnNegative').click(function(){                
         $(this).closest('.popup').removeClass('on');                

@@ -69,7 +69,7 @@
                     </article>
                     <article class="point">
                         <h3>포인트적립내역</h3>
-                        <a th:href="@{#}" class="more">더보기</a>
+                        <a th:href="@{/my/point}" class="more">더보기</a>
                         <table>
                             <tr>
                                 <th>날짜</th>
@@ -97,65 +97,29 @@
                         <a th:href="@{/my/review}" class="more">더보기</a>
                         <table>
                             <tr>
-                                <th>번호</th>
-                                <th>상품명</th>
-                                <th>내용</th>
-                                <th>평점</th>
-                                <th>작성일</th>
+                                <th style="width: 5%;">번호</th>
+                                <th style="width: 35%;">상품명</th>
+                                <th style="width: 35%;">내용</th>
+                                <th style="width: 10%;">평점</th>
+                                <th style="width: 10%;">작성일</th>
                             </tr>
                             <tr th:each="review,stat : ${reviews}">
-                                <td>[[${stat.count}]]</td>
-                                <td></td>
-                                <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
+                                <td align="center">[[${review.revNo}]]</td>
+                                <td>[[${review.prodName}]]</td>
+                                <td>[[${review.content}]]</td>
                                 <td>
-                                    <span class="rating star1">상품평</span>
+                                    <span class="rating" th:classappend="star + ${review.rating}">상품평</span>
                                 </td>
-                                <td>2022-12-10</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>감자</td>
-                                <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                <td>
-                                    <span class="rating star2">상품평</span>
-                                </td>
-                                <td>2022-12-10</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>감자</td>
-                                <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                <td>
-                                    <span class="rating star3">상품평</span>
-                                </td>
-                                <td>2022-12-10</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>감자</td>
-                                <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                <td>
-                                    <span class="rating star4">상품평</span>
-                                </td>
-                                <td>2022-12-10</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>감자</td>
-                                <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                <td>
-                                    <span class="rating star5">상품평</span>
-                                </td>
-                                <td>2022-12-10</td>
+                                <td align="center">[[${review.rdate.substring(2,10)}]]</td>
                             </tr>
                         </table>
                     </article>
                     <article class="qna">
                         <h3>문의내역</h3>
-                        <a th:href="@{#}" class="more">더보기</a>
+                        <a th:href="@{/my/qna}" class="more">더보기</a>
                         <table>
                             <tr>
-                                <th>번호</th>
+                                <th style="width: 8%;">문의번호</th>
                                 <th>문의채널</th>
                                 <th>문의유형</th>
                                 <th>제목</th>
@@ -163,33 +127,21 @@
                                 <th>상태</th>
                             </tr>
                             <tr>
-                                <td>5</td>
-                                <td>고객센터</td>
-                                <td>주문/결제</td>
-                                <td>신용카드 결제 중 오류가 난 경우 어떻게 하나요?</td>
-                                <td>2024-12-12</td>
-                                <td>
+                            	<td colspan="6" align="center" th:if="${#lists.isEmpty(articles)}">문의 내역이 없습니다.</td>
+                            </tr>
+                            <tr th:each="article:${articles}">
+                                <td class="no" align="center">[[${article.no}]]</td>
+                                <td class="channel">고객센터</td>
+                                <td class="type">[[${article.c1Name}]]</td>
+                                <td class="tit">
+                                    <a th:href="@{/cs/qna/view(group='qna',cate=${article.cate},no=${article.no})}">[[${article.title}]]</a>
+                                </td>
+                                <td class="date" align="center">[[${article.rdate.substring(2, 10)}]]</td>
+                                <td class="status" th:if="${article.comment} eq 1" align="center">
+                                    <span class="AnswerYet">답변완료</span>
+                                </td>
+                                <td class="status" th:if="${article.comment} eq 0" align="center">
                                     <span class="notAnswerYet">검토중</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>고객센터</td>
-                                <td>주문/결제</td>
-                                <td>신용카드 결제 중 오류가 난 경우 어떻게 하나요?</td>
-                                <td>2024-12-12</td>
-                                <td>
-                                    <span class="answered">답변완료</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>판매자게시판</td>
-                                <td>배송</td>
-                                <td>배송기간이 보통 얼마나 걸리나요?</td>
-                                <td>2024-12-12</td>
-                                <td>
-                                    <span class="answered">답변완료</span>
                                 </td>
                             </tr>
                         </table>
@@ -199,27 +151,31 @@
                         <div>
                             <div class="address">
                                 <span>기본 배송지설정</span>
-                                <a th:href="@{#}" class="setting">변경</a>
+                                <a th:href="@{/my/info}" class="setting">변경</a>
+                                <p>
+                                	<span>[[${member.addr1}]]</span><br>
+                                	<span>[[${member.addr2}]]</span>
+                                </p>
                             </div>
                             <div class="email">
                                 <span>email 설정</span>
-                                <a th:href="@{#}" class="setting">변경</a>
+                                <a th:href="@{/my/info}" class="setting">변경</a>
                                 <p>
-                                    <span>abc123@gmail.com</span>
+                                    <span>[[${member.email}]]</span>
                                     <br>
                                     (최종수정일 
-                                    <span>2021-12-10</span>
+                                    <span>[[${member.mdate.substring(2,10)}]]</span>
                                     )
                                 </p>
                             </div>
                             <div class="hp">
                                 <span>휴대폰 설정</span>
-                                <a th:href="@{#}" class="setting">변경</a>
+                                <a th:href="@{/my/info}" class="setting">변경</a>
                                 <p>
-                                    <span>abc123@gmail.com</span>
+                                    <span>[[${member.hp}]]</span>
                                     <br>
                                     (최종수정일 
-                                    <span>2021-12-10</span>
+                                    <span>[[${member.mdate.substring(2,10)}]]</span>
                                     )
                                 </p>
                             </div>
@@ -401,7 +357,7 @@
                         </p>
                         <div>
                             <input type="submit" class="btnPositive" value="등록하기">
-                            <button class="btnNegative btnCancel">취소</button>
+                            <button type="button" class="btnNegative btnCancel">취소</button>
                         </div>
                     </form>
                 </section>
@@ -425,7 +381,7 @@
                     </p>
                     <div>
                         <button class="btnPositive btnConfirm">확인</button>
-                        <button class="btnNegative btnCancel">취소</button>
+                        <button type="button" class="btnNegative btnCancel">취소</button>
                     </div>
                 </section>
             </div>
@@ -467,7 +423,7 @@
                         </p>
                         <div>
                             <input type="submit" class="btnPositive" value="작성완료">
-                            <button class="btnNegative btnCancel">취소</button>
+                            <button type="button" class="btnNegative btnCancel">취소</button>
                         </div>
                     </form>
                 </section>
