@@ -39,6 +39,10 @@
 		UPDATE `km_member` SET `pass`='asdf1234', `email`='rudwns@naver.com', `hp`='010-9778-6644', `zip`='12121', `addr1`='부산', `addr2`='수영구' WHERE `uid`='rudwns2';
 	</update>
 	
+	<update id="updateOrderComplete">
+		update `km_product_order` set `ordComplete`=2 where `ordNo`=#{ordNo};
+	</update>
+	
 	<insert id="insertReview">
 		insert into `km_product_review` set 
 											`prodNo`=#{prodNo},

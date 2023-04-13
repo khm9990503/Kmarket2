@@ -36,7 +36,7 @@
                     <img th:src="@{/img/admin_logo.png}" alt="admin_logo">
                 </a>
                 <p>
-                   	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+                   	<a><span class="nick" sec:authentication="principal.user.name">길동이</span>님 반갑습니다.</a>
                    	<a th:href="@{/member/logout}"> 로그아웃 </a>
                     <a th:href="@{/my/home}"> 마이페이지 </a>
                 </p>

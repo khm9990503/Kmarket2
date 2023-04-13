@@ -665,7 +665,7 @@ footer > div > p:nth-of-type(2){
 }
 #my > .ordered > section > article > .byDate > p > span {
     display: inline-block;
-    margin: 0 4px;
+    margin: 0;
 }
 #my > .ordered > section > article > .byDate input[type=date] {
     width: 80px;

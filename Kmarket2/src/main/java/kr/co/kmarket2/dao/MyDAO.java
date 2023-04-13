@@ -21,7 +21,8 @@ public interface MyDAO {
 	public List<ReviewVO> selectReviewsIndex(String uid);
 	// 마이페이지 홈 상품리뷰 등록
 	public int insertReview(ReviewVO vo);
-	
+	// 마이페이지 홈 수취확인 업데이트
+	public int updateOrderComplete(int ordNo);
 	// 나의 문의 리스트
 	public List<ArticleVO> selectQnaArticles(String uid, int start);
 	

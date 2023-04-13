@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket2.entity.MemberEntity;
 import kr.co.kmarket2.security.MyUserDetails;
@@ -50,6 +52,12 @@ public class MyController {
 		model.addAttribute("member",member.getUser());
 		
 		return "my/home";
+	}
+	
+	@ResponseBody
+	@GetMapping("my/home/receive")
+	public int homeReceive(int ordNo) {
+		return service.updateOrderComplete(ordNo);
 	}
 	
 	@PostMapping("my/home/review")

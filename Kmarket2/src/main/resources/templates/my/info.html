@@ -1,4 +1,14 @@
 <th:block th:include="@{my/_header.html}"/>
+<script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script th:src="@{/js/postcode.js}"></script>
+<script type="text/javascript">
+$(function(){
+	$('.emailAuto').change(function(){
+		let slc = $(this).val()
+		$('input[name=email2]').val(slc);
+	});
+})
+</script>
             <div class="info">
                 <ul>
                     <span class="menu_else"></span>
@@ -29,7 +39,7 @@
                         <table border="0">
                             <tr>
                                 <td>사용자 ID</td>
-                                <td th:text=${user.uid}></td>
+                                <td th:text="'****'+${user.uid.substring(4,user.uid.length)}"></td>
                             </tr>
                             <tr>
                                 <td>비밀번호</td>
@@ -39,7 +49,7 @@
                             </tr>
                             <tr>
                                 <td>이름</td>
-                                <td>[[${user.name}]]</td>
+                                <td>[[${user.name.charAt(0)+'*'+user.name.charAt(user.name.length-1)}]]</td>
                             </tr>
                             <tr>
                                 <td>가입날</td>
@@ -51,7 +61,7 @@
                                     <input type="text" name="email1" th:value="${user.email.substring(0, user.email.indexOf('@'))}">
                                     @
                                     <input type="text" name="email2" th:value="${user.email.substring(user.email.indexOf('@')+1, user.email.length)}">
-                                    <select>
+                                    <select class="emailAuto">
                                         <option>직접입력</option>
                                         <option>naver.com</option>
                                         <option>daum.net</option>
@@ -66,11 +76,11 @@
                                 <td>휴대폰</td>
                                 <td>
                                     <p class="hp">
-                                        <input type="text" name="hp1" value="010">
+                                        <input type="text" name="hp1" th:value="${user.hp.substring(0,3)}">
                                         -
-                                        <input type="text" name="hp2" value="1234">
+                                        <input type="text" name="hp2" th:value="${user.hp.substring(4,8)}">
                                         -
-                                        <input type="text" name="hp3" value="1001">
+                                        <input type="text" name="hp3" th:value="${user.hp.substring(9,13)}">
                                         <button id="btnChangeEmail">수정하기</button>
                                     </p>
                                 </td>
@@ -78,12 +88,16 @@
                             <tr>
                                 <td>주소</td>
                                 <td>
-                                    <input type="text" name="zip">
-                                    <button id="btnFindZip">주소검색</button>
-                                    <p class="address">
-                                        <input type="text" name="addr1">
-                                        <input type="text" name="addr2">
-                                    </p>
+                                    <div>
+                                        <input type="text" name="zip" id="zip" th:value="${user.zip}" readonly>
+                                        <button type="button" id="btnZip" onclick="postcode()">우편번호 찾기</button>
+                                    </div>
+                                    <div>
+                                        <input type="text" name="addr1" id="addr1" size="50" th:value="${user.addr1}" style="margin: 3px 0px;" readonly>
+                                    </div>
+                                    <div>
+                                        <input type="text" name="addr2" id="addr2" size="50" th:value="${user.addr2}" placeholder="상세주소를 입력하세요.">
+                                    </div>
                                 </td>
                             </tr>
                             <tr>

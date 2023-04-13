@@ -34,7 +34,10 @@ public class MyService {
 	public int insertReview(ReviewVO vo) {
 		return dao.insertReview(vo);
 	};
-	
+	// 마이페이지 홈 수취확인 업데이트
+	public int updateOrderComplete(int ordNo) {
+		return dao.updateOrderComplete(ordNo);
+	};
 	// 나의문의 불러오기
 	public List<ArticleVO> selectQnaArticles(String uid, int start) {
 		return dao.selectQnaArticles(uid, start);
