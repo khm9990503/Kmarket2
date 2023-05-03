@@ -1,0 +1,44 @@
+<th:block th:include="@{my/_header.html}"/>
+<script th:src="@{/js/PwChange.js}"></script>
+            <div class="info">
+                <th:block th:include="@{my/_side.html}"/>
+                <section>
+                    <a th:href="@{#}">
+                        <img th:src="@{/img/my_banner2.png}" alt="실적/한도 제한없는 스마일 카드 적립 혜택" class="banner">
+                    </a>
+                    <article>
+                        <h3>비밀번호 변경</h3>
+                        <form class="form" th:action="@{/my/info/pwChange}" method="post">
+				            <table border="0">
+				                <tr>
+				                    <td>아이디</td>
+				                    <td><input type="text" name="uid" th:value="${user.uid}" readonly style="border: none"></td>
+				                </tr>
+				                <tr>
+				                    <td>새 비밀번호</td>
+				                    <td>
+				                        <input type="password" name="pass1" placeholder="새 비밀번호 입력"/>
+				                    </td>
+				                </tr>
+				                <tr>
+				                    <td>새 비밀번호 확인</td>
+				                    <td>
+				                        <input type="password" name="pass2" placeholder="새 비밀번호 확인"/>
+				                        &nbsp;
+				                        <span class="resultPass"></span>
+				                    </td>
+				                </tr>
+				            </table>                                        
+					        <div style="display: inline-block; float: right;">
+					            <a th:href="@{/my/info?group=info}" class="btnNegative">취소</a>
+					            <input type="submit" value="완료" class="btnPositive"/>
+					        </div>
+				        </form>
+                    </article>
+                </section>
+            </div>
+        </div>
+<th:block th:include="@{my/_footer.html}"/>
+    </div>
+</body>
+</html>

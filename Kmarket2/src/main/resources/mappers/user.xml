@@ -19,6 +19,7 @@
 				`addr2`=#{addr2},
 				`regip`=#{regip},
 				`rdate`=now(),
+				`mdate`=now(),
 				`locationTerms`=#{locationTerms};
 	</insert>
 	

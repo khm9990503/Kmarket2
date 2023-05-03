@@ -1,11 +1,18 @@
 <th:block th:include="@{member/_header.html}"/>
-
-
+<script>
+$(function(){
+	let success= $("input[name=success]").val();
+	if(success == 100){
+		alert("존재하지 않는 아이디 혹은 비밀번호가 맞지 않습니다.")	
+	}
+});
+</script>
         <main id="member">
             <div class="login">
                 <nav>
                     <h1>로그인</h1>
                 </nav>
+                <input type="hidden" name="success" th:value="${success}">
                 <form action="#" method="Post">
                     <table border="0">
                         <tr>
@@ -20,7 +27,7 @@
                     <input type="submit" value="로그인">
                     <span>
                         <label>
-                            <input type="checkbox" name="auto">자동로그인
+                            <input type="checkbox" name="remember">자동로그인
                         </label>
                         <a th:href="@{#}">아이디찾기</a>
                         <a th:href="@{#}">비밀번호찾기</a>

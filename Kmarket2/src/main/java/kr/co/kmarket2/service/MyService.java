@@ -3,10 +3,12 @@ package kr.co.kmarket2.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.kmarket2.dao.MyDAO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.PointVO;
 import kr.co.kmarket2.vo.ReviewVO;
@@ -16,6 +18,9 @@ public class MyService {
 
 	@Autowired
 	private MyDAO dao;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	// 마이페이지 메인 주문 목록
 	public List<OrderVO> selectOrdersIndex(String uid){
@@ -38,6 +43,10 @@ public class MyService {
 	public int updateOrderComplete(int ordNo) {
 		return dao.updateOrderComplete(ordNo);
 	};
+	// 마이페이지 홈 판매자정보 보기
+	public MemberVO selectSellerIndex(String company) {
+		return dao.selectSellerIndex(company);
+	};
 	// 나의문의 불러오기
 	public List<ArticleVO> selectQnaArticles(String uid, int start) {
 		return dao.selectQnaArticles(uid, start);
@@ -58,6 +67,22 @@ public class MyService {
 		return dao.selectReviewCountTotal(uid);
 	}
 
+	// 나의 정보 수정
+	public int updateMemberInfo(MemberVO vo) {
+		return dao.updateMemberInfo(vo);
+	};
+	
+	// 나의 정보 비밀번호 수정
+	public int updatePassword(String uid, String pass2) {
+		String pass = encoder.encode(pass2);
+		return dao.updatePassword(uid, pass);
+	};
+	
+	// 나의 정보 회원탈퇴
+	public int dropMember(String uid) {
+		return dao.dropMember(uid);
+	}
+	
 	// paging
 	public int getLastPageNum(int total) {
 

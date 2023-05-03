@@ -6,22 +6,23 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket2.entity.MemberEntity;
 import kr.co.kmarket2.security.MyUserDetails;
 import kr.co.kmarket2.service.MyService;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.PointVO;
-import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
 @Controller
@@ -59,13 +60,16 @@ public class MyController {
 	public int homeReceive(int ordNo) {
 		return service.updateOrderComplete(ordNo);
 	}
+	@ResponseBody
+	@GetMapping("my/home/seller")
+	public MemberVO homeSeller(String company) {
+		return service.selectSellerIndex(company);
+	}
 	
 	@PostMapping("my/home/review")
 	public String homeReview(ReviewVO vo, HttpServletRequest req) {
 		vo.setRegip(req.getRemoteAddr());
-		
-		int result = service.insertReview(vo);
-		
+		service.insertReview(vo);
 		return "redirect:/my/review";
 	}
 	
@@ -87,6 +91,13 @@ public class MyController {
 		model.addAttribute("group",group);
 		return "my/coupon";
 	}
+	@GetMapping("my/pwChange")
+	public String pwChange(@AuthenticationPrincipal MyUserDetails member, String group,Model model) {
+		MemberEntity user = member.getUser();
+		model.addAttribute("user", user);
+		model.addAttribute("group",group);
+		return "my/pwChange";
+	}
 	@GetMapping("my/info")
 	public String info(@AuthenticationPrincipal MyUserDetails member, String group,Model model) {
 		MemberEntity user = member.getUser();
@@ -94,6 +105,28 @@ public class MyController {
 		model.addAttribute("group",group);
 		return "my/info";
 	}
+	@ResponseBody
+	@PutMapping("my/info")
+	public int updateMemberInfo(@AuthenticationPrincipal MyUserDetails member,MemberVO vo) {
+		MemberEntity user = member.getUser();
+		user.setEmail(vo.getEmail());
+		user.setHp(vo.getHp());
+		user.setZip(vo.getZip());
+		user.setAddr1(vo.getAddr1());
+		user.setAddr2(vo.getAddr2());
+		return service.updateMemberInfo(vo);
+	}
+	@PostMapping("my/info/pwChange")
+	public String pwChange(String uid, String pass2) {
+		service.updatePassword(uid, pass2);
+		return "redirect:/member/logout";
+	}
+	@ResponseBody
+	@DeleteMapping("my/info/dropMember")
+	public int dropMember(String uid) {
+		return service.dropMember(uid);
+	}
+	
 	@GetMapping("my/review")
 	public String review(String group, String pg, Model model,Principal principal) {
 		
@@ -119,7 +152,7 @@ public class MyController {
 		model.addAttribute("pageGroupEnd", result[1]);
 		model.addAttribute("pageStartNum", pageStartNum+1);
 		
-		// reivew 목록(prodName join) 가져오기
+		// review 목록(prodName join) 가져오기
 		List<ReviewVO> reviews = service.selectReview(uid, start);
 		
 		model.addAttribute("reviews", reviews);

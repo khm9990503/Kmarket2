@@ -3,6 +3,28 @@ $(function(){
     // 판매자 정보 팝업 띄우기
     $('.latest .company > a').click(function(e){
         e.preventDefault();
+        let company = $(this).text();
+        let jsonData = {
+			"company":company
+		}
+        $.ajax({
+			url:"/Kmarket2/my/home/seller",
+			method:"get",
+			data:jsonData,
+			dataType:"json",
+			success:function(data){
+				$("#popSeller .level").text(data.level);
+				$("#popSeller .company").text(data.company);
+				$("#popSeller .ceo").text(data.ceo);
+				$("#popSeller .tel").text(data.tel);
+				$("#popSeller .fax").text(data.fax);
+				$("#popSeller .email").text(data.email);
+				$("#popSeller .bizNum").text(data.bizNum);
+				$("#popSeller .address").text(data.addr1+" "+data.addr2);
+			},
+		})
+        
+        
         $('#popSeller').addClass('on');
     });
 
