@@ -1,7 +1,9 @@
 package kr.co.kmarket2.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +22,7 @@ import kr.co.kmarket2.entity.MemberEntity;
 import kr.co.kmarket2.security.MyUserDetails;
 import kr.co.kmarket2.service.MyService;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.CouponVO;
 import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.PointVO;
@@ -80,14 +83,69 @@ public class MyController {
 		return "my/ordered";
 	}
 	@GetMapping("my/point")
-	public String point(String group,Model model) {
+	public String point(String group,@AuthenticationPrincipal MyUserDetails member,String pg,Model model) {
+		String uid = member.getUsername();
+		// 페이징
+		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
+		int total = 0;
 		
+		
+		total = service.selectPointsCountTotal(uid,8); //전체 리뷰 갯수
+		
+		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
+		int[] result = service.getPageGroupNum(currentPage, lastPageNum); // 페이지 그룹번호
+		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작번호
+		int start = service.getStartNum(currentPage); // 시작 인덱스
+		
+		
+		model.addAttribute("lastPageNum", lastPageNum);		
+		model.addAttribute("currentPage", currentPage);		
+		model.addAttribute("pageGroupStart", result[0]);
+		model.addAttribute("pageGroupEnd", result[1]);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		
+		// points 목록 가져오기
+		List<PointVO> points= service.selectPoints(uid, 8, start);
+		
+		model.addAttribute("points",points);
 		model.addAttribute("group",group);
+		model.addAttribute("uid",uid);
+		model.addAttribute("pg",pg);
 		return "my/point";
 	}
-	@GetMapping("my/coupon")
-	public String coupon(String group,Model model) {
+	
+	@ResponseBody
+	@GetMapping("my/pointBySort")
+	public Map<String, Object> pointBySort(String uid, String pg, int sort){
+		// 페이징
+		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
+		int total = 0;
 		
+		total = service.selectPointsCountTotal(uid,sort); //전체 리뷰 갯수
+		
+		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
+		int[] result = service.getPageGroupNum(currentPage, lastPageNum); // 페이지 그룹번호
+		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작번호
+		int start = service.getStartNum(currentPage); // 시작 인덱스
+		
+		// points 목록 가져오기
+		List<PointVO> points= service.selectPoints(uid, sort, start);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("lastPageNum", lastPageNum);
+		map.put("currentPage", currentPage);
+		map.put("pageGroupStart", result[0]);
+		map.put("pageGroupEnd", result[1]);
+		map.put("pageStartNum", pageStartNum+1);
+		map.put("points", points);
+		
+		return map;
+	}
+	
+	@GetMapping("my/coupon")
+	public String coupon(String group,@AuthenticationPrincipal MyUserDetails member, Model model) {
+		List<CouponVO> coupons = service.selectCoupons(member.getUsername());
+		model.addAttribute("coupons",coupons);
 		model.addAttribute("group",group);
 		return "my/coupon";
 	}

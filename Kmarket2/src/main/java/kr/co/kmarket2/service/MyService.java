@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.kmarket2.dao.MyDAO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.CouponVO;
 import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.PointVO;
@@ -56,6 +57,21 @@ public class MyService {
 	public int selectQnaCountTotal(String uid, String group) {
 		return dao.selectQnaCountTotal(uid, group);
 	}
+	
+	// 나의 쿠폰 불러오기
+	public List<CouponVO> selectCoupons(String uid){
+		return dao.selectCoupons(uid);
+	};
+	
+	// 나의 포인트 내역 불러오기
+	public List<PointVO> selectPoints(String uid, int sort, int start){
+		return dao.selectPoints(uid, sort, start);
+	};
+	
+	// 나의 포인트 내역 총 갯수
+	public int selectPointsCountTotal(String uid, int sort) {
+		return dao.selectPointsCountTotal(uid,  sort);
+	};
 	
 	// 리뷰 불러오기
 	public List<ReviewVO> selectReview(String uid, int start){

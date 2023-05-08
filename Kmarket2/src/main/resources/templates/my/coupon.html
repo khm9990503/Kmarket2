@@ -12,7 +12,7 @@
                             <dl>
                                 <dt>· 나의 보유쿠폰</dt>
                                 <dd>
-                                    <strong>2</strong>
+                                    <strong>[[${coupons.size()}]]</strong>
                                     <span>장</span>
                                 </dd>
                             </dl>
@@ -25,27 +25,21 @@
                                 <th>유효기간</th>
                                 <th>상태</th>
                             </tr>
-                            <tr>
-                                <td class="tit">1만원 할인 중복쿠폰</td>
+                            <tr th:if="${coupons.size()} > 0" th:each="coupon : ${coupons}">
+                                <td class="tit">[[${coupon.name}]]</td>
                                 <td class="discount">
-                                    <span>10,000</span>원
+                                    <span>[[${#numbers.formatInteger(coupon.discount,1,'COMMA')}]]</span>원
                                 </td>
                                 <td class="condition">
-                                    <span>10,100</span>원 이상 구매시
+                                    <span>[[${#numbers.formatInteger(coupon.limit,1,'COMMA')}]]</span>원 이상 구매시
                                 </td>
-                                <td class="expire">~12/29</td>
-                                <td class="status">사용가능</td>
+                                <td class="expire">~[[${coupon.exDate.substring(2,10)}]]</td>
+                                <td class="status" th:if="${coupon.state < 1}">사용가능</td>
+                                <td class="status" th:if="${coupon.state == 1}">사용완료</td>
+                                <td class="status" th:if="${coupon.state > 1}">기간만료</td>
                             </tr>
-                            <tr>
-                                <td class="tit">회원가입 축하 5천원 할인쿠폰</td>
-                                <td class="discount">
-                                    <span>5,000</span>원
-                                </td>
-                                <td class="condition">
-                                    <span>5,100</span>원 이상 구매시
-                                </td>
-                                <td class="expire">~12/29</td>
-                                <td class="status">사용가능</td>
+                            <tr th:unless="${coupons.size()} > 0">
+                            	<td colspan="5" style="text-align: center;">사용가능한 쿠폰이 없습니다.</td>
                             </tr>
                         </table>
                         <ul class="info" style="margin-top:10px;">

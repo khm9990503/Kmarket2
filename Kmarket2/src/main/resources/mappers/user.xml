@@ -50,7 +50,12 @@
 				`rdate`=now(),
 				`locationTerms`=#{locationTerms};
 	</insert>
-				
+	
+	<insert id="insertCoupon">
+		insert into `km_member_coupon` set `uid`=#{uid},`name`=#{name},`discount`=#{discount},`limit`=#{limit},`exDate`=DATE_ADD(NOW(),INTERVAL 1 YEAR), state=#{state};
+	</insert>
+	
+	
 	<select id="selectCountUid" resultType="int">
 		select count(`uid`) from `km_member` where `uid`=#{uid};
 	</select>

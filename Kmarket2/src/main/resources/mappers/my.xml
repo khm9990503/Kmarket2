@@ -62,4 +62,49 @@
 											`regip`=#{regip},
 											`rdate`=NOW();
 	</insert>
+
+	<select id="selectPoints" resultType="kr.co.kmarket2.vo.PointVO">
+		select * from `km_member_point` where `uid`=#{uid}
+											 <choose>
+											 	<when test="sort lt 5">
+											 		and YEAR(pointDate) = YEAR(NOW()) and MONTH(pointDate) = MONTH(NOW()) - #{sort}
+											 	</when>
+											 	<when test="sort == 5">
+											 		and `pointDate` >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+											 	</when>
+											 	<when test="sort == 6">
+											 		and `pointDate` >= DATE_SUB(NOW(), INTERVAL 15 DAY)
+											 	</when>
+											 	<when test="sort == 7">
+											 		and `pointDate` >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+											 	</when>
+											 	<when test="sort == '8'">
+											 	
+											 	</when>
+											 </choose>
+											 ORDER BY `pointDate` DESC LIMIT #{start}, 10;
+	</select>
+	<select id="selectPointsCountTotal" resultType="int">
+		select count(`pointNo`) from `km_member_point` where `uid`=#{uid}
+											<choose>
+											 	<when test="sort lt 5">
+											 		and YEAR(pointDate) = YEAR(NOW()) and MONTH(pointDate) = MONTH(NOW()) - #{sort}
+											 	</when>
+											 	<when test="sort == 5">
+											 		and `pointDate` >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+											 	</when>
+											 	<when test="sort == 6">
+											 		and `pointDate` >= DATE_SUB(NOW(), INTERVAL 15 DAY)
+											 	</when>
+											 	<when test="sort == 7">
+											 		and `pointDate` >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+											 	</when>
+											 	<when test="sort == '8'">
+											 	
+											 	</when>
+											 </choose>;
+	</select>
+	<select id="selectCoupons" resultType="kr.co.kmarket2.vo.CouponVO">
+		select * from `km_member_coupon` where `uid`=#{uid};
+	</select>
 </mapper>
