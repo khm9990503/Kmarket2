@@ -1,6 +1,7 @@
 package kr.co.kmarket2.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,13 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket2.entity.MemberEntity;
@@ -27,7 +28,9 @@ import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.PointVO;
 import kr.co.kmarket2.vo.ReviewVO;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Controller
 public class MyController {
 
@@ -79,6 +82,8 @@ public class MyController {
 	@GetMapping("my/ordered")
 	public String ordered( String group,Model model) {
 		
+		
+		
 		model.addAttribute("group",group);
 		return "my/ordered";
 	}
@@ -116,20 +121,31 @@ public class MyController {
 	
 	@ResponseBody
 	@GetMapping("my/pointBySort")
-	public Map<String, Object> pointBySort(String uid, String pg, int sort){
+	public Map<String, Object> pointBySort(String uid, String pg, @RequestParam(name = "sort", required = false) Integer sort, String srt, String end){
 		// 페이징
 		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
 		int total = 0;
-		
-		total = service.selectPointsCountTotal(uid,sort); //전체 리뷰 갯수
-		
+		if(srt != null) {
+			total = service.selectPointsCountDuring(uid, srt, end);
+			log.info("srt가 null이 아닙니다.");
+		}else {
+			total = service.selectPointsCountTotal(uid,sort); //전체 포인트내역 갯수
+			log.info("srt가 null입니다.");
+		}
 		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
 		int[] result = service.getPageGroupNum(currentPage, lastPageNum); // 페이지 그룹번호
 		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작번호
 		int start = service.getStartNum(currentPage); // 시작 인덱스
 		
 		// points 목록 가져오기
-		List<PointVO> points= service.selectPoints(uid, sort, start);
+		List<PointVO> points = new ArrayList<>();
+		if(srt != null) {
+			points = service.selectPointsDuring(uid, start, srt, end);
+			log.info("srt가 null이 아닙니다.");
+		}else {
+			points = service.selectPoints(uid, sort, start);
+			log.info("srt가 null입니다.");
+		}
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("lastPageNum", lastPageNum);

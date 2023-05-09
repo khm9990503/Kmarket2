@@ -35,7 +35,7 @@
                                 </td>
                             </tr>
                         </table>
-                         <p class="page">
+                         <p class="page" th:if="${!#lists.isEmpty(articles)}">
                         	<th:block th:if="${pageGroupStart > 1}">
                             	<a th:href="@{/my/qna(pg=${currentPage - 1})}" class="prev">이전</a>
                             </th:block>

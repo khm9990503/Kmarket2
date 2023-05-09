@@ -44,9 +44,11 @@ public interface MyDAO {
 	
 	// 나의 포인트 내역 불러오기
 	public List<PointVO> selectPoints(String uid, int sort, int start);
+	public List<PointVO> selectPointsDuring(String uid, int start, String srt, String end);
 	
 	// 나의 포인트 내역 총 갯수
 	public int selectPointsCountTotal(String uid, int sort);
+	public int selectPointsCountDuring(String uid, String srt, String end);
 	
 	// 나의 정보 수정
 	public int updateMemberInfo(MemberVO vo);

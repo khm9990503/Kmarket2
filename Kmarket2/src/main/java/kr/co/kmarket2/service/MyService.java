@@ -67,10 +67,16 @@ public class MyService {
 	public List<PointVO> selectPoints(String uid, int sort, int start){
 		return dao.selectPoints(uid, sort, start);
 	};
+	public List<PointVO> selectPointsDuring(String uid, int start, String srt, String end){
+		return dao.selectPointsDuring(uid, start, srt, end);
+	};
 	
 	// 나의 포인트 내역 총 갯수
 	public int selectPointsCountTotal(String uid, int sort) {
 		return dao.selectPointsCountTotal(uid,  sort);
+	};
+	public int selectPointsCountDuring(String uid, String srt, String end) {
+		return dao.selectPointsCountDuring(uid, srt, end);
 	};
 	
 	// 리뷰 불러오기

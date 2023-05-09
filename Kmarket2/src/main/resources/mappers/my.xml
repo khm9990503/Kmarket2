@@ -63,6 +63,31 @@
 											`rdate`=NOW();
 	</insert>
 
+	<select id="selectOrders" resultType="kr.co.kmarket2.vo.OrderVO">
+		select * from `km_product_order` where `uid`=#{uid}
+											 <choose>
+											 	<when test="sort lt 5">
+											 		and YEAR(ordDate) = YEAR(NOW()) and MONTH(ordDate) = MONTH(NOW()) - #{sort}
+											 	</when>
+											 	<when test="sort == 5">
+											 		and `ordDate` >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+											 	</when>
+											 	<when test="sort == 6">
+											 		and `ordDate` >= DATE_SUB(NOW(), INTERVAL 15 DAY)
+											 	</when>
+											 	<when test="sort == 7">
+											 		and `ordDate` >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+											 	</when>
+											 	<when test="sort == 8">
+											 	
+											 	</when>
+											 	<when test="sort == 9">
+											 		and `ordDate` BETWEEN #{srt} AND #{end} 
+											 	</when>
+											 </choose>
+											 ORDER BY `ordDate` DESC LIMIT #{start}, 10;
+	</select>
+
 	<select id="selectPoints" resultType="kr.co.kmarket2.vo.PointVO">
 		select * from `km_member_point` where `uid`=#{uid}
 											 <choose>
@@ -78,11 +103,18 @@
 											 	<when test="sort == 7">
 											 		and `pointDate` >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
 											 	</when>
-											 	<when test="sort == '8'">
+											 	<when test="sort == 8">
 											 	
 											 	</when>
 											 </choose>
 											 ORDER BY `pointDate` DESC LIMIT #{start}, 10;
+	</select>
+	<select id="selectPointsDuring" resultType="kr.co.kmarket2.vo.PointVO">
+		select * from `km_member_point` where `uid`=#{uid} and `pointDate` BETWEEN #{srt} AND #{end} 
+											 ORDER BY `pointDate` DESC LIMIT #{start}, 10;
+	</select>
+	<select id="selectPointsCountDuring" resultType="int">
+		select count(`pointNo`) from `km_member_point` where `uid`=#{uid} and `pointDate` BETWEEN #{srt} AND #{end};
 	</select>
 	<select id="selectPointsCountTotal" resultType="int">
 		select count(`pointNo`) from `km_member_point` where `uid`=#{uid}
