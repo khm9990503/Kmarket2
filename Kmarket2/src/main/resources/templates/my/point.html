@@ -37,7 +37,7 @@ $(function(){
 		let lastChar = parseInt(oriEnd.charAt(oriEnd.length-1)) + 1;
 		let end = $("input[name=end]").val().substring(0,10).slice(0,-1) + lastChar;
 		
-		if(srt != "" && end != ""){
+		if(srt != "" && oriEnd != ""){
 			handleAjax(0,uid,pg,srt,end);
 		}else{
 			alert("연도월일을 모두 선택해주세요.")
@@ -73,7 +73,7 @@ $(function(){
 								tag += "<td class='type'>만료</td>";
 							}
 							tag += "<td class='ordNo'>"+item.ordNo+"</td>";
-							tag += "<td class='point'>"+item.point+"</td>";
+							tag += "<td class='point'>"+item.point.toLocaleString('ko-KR');+"</td>";
 							tag += "<td class='desc'>"+item.desc+"</td>";
 							tag += "<td class='expire'>"+item.expiration.substring(2,10)+"</td>"
 							tag += "</tr>"
@@ -167,7 +167,7 @@ $(function(){
 							tag += "<td class='type'>만료</td>";
 						}
 						tag += "<td class='ordNo'>"+item.ordNo+"</td>";
-						tag += "<td class='point'>"+item.point+"</td>";
+						tag += "<td class='point'>"+item.point.toLocaleString('ko-KR');+"</td>";
 						tag += "<td class='desc'>"+item.desc+"</td>";
 						tag += "<td class='expire'>"+item.expiration.substring(2,10)+"</td>"
 						tag += "</tr>"
@@ -242,7 +242,7 @@ $(function(){
                                 <td class="type" th:if="${item.type}==1">사용</td>
                                 <td class="type" th:if="${item.type}==2">만료</td>
                                 <td class="ordNo">[[${item.ordNo}]]</td>
-                                <td class="point">[[${item.point}]]</td>
+                                <td class="point">[[${#numbers.formatInteger(item.point,1,'COMMA')}]]</td>
                                 <td class="desc">[[${item.desc}]]</td>
                                 <td class="expire">[[${item.expiration.substring(2,10)}]]</td>
                             </tr>

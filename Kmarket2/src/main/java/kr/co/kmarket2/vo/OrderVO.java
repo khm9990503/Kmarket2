@@ -32,10 +32,14 @@ public class OrderVO {
 	
 	// 배송 요청사항 추가
 	private String deliveryRequest;
+	
+	// 추가 필드
 	private int prodNo;
 	private String thumb1;
 	private String company;
 	private String prodName;
 	private int count;
 	private int total;
+	private int prodCate1;
+	private int prodCate2;
 }

@@ -70,25 +70,25 @@
                         <li>
                             <a href="#">
                                 주문·배송
-                                <span class="delivery">1</span>
+                                <span class="delivery">[[${orderCount}]]</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                 할인쿠폰
-                                <span class="coupon">1</span>
+                                <span class="coupon">[[${couponCount}]]</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                 포인트
-                                <span class="point">1,000</span>
+                                <span class="point">[[${#numbers.formatInteger(pointCount,1,'COMMA')}]]</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                 문의내역
-                                <span class="qna">1</span>
+                                <span class="qna">[[${qnaCount}]]</span>
                             </a>
                         </li>
                     </ol>

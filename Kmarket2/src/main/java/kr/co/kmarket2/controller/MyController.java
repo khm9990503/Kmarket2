@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +39,7 @@ public class MyController {
 	private MyService service;
 	
 	@GetMapping("my/home")
-	public String home(@AuthenticationPrincipal MyUserDetails member, String group,Model model) {
+	public String home(@AuthenticationPrincipal MyUserDetails member, String group,Model model,Authentication authentication) {
 		String uid = member.getUser().getUid();
 		List<OrderVO> orders = service.selectOrdersIndex(uid);
 		for(OrderVO order : orders) {
@@ -79,16 +80,90 @@ public class MyController {
 		return "redirect:/my/review";
 	}
 	
+	@PostMapping("/my/home/qna")
+	public String homeQna(@AuthenticationPrincipal MyUserDetails member, ArticleVO vo, int kind, String email, HttpServletRequest req) {
+		if(kind == 1) {
+			vo.setCate("order");
+			vo.setCate2("prod");
+		}else if(kind == 2) {
+			vo.setCate("deli");
+			vo.setCate2("dChange");
+		}else if(kind == 3) {
+			vo.setCate("cancle");
+			vo.setCate2("back");
+		}else if(kind == 4) {
+			vo.setCate("cancle");
+			vo.setCate2("AS");
+		}else if(kind == 5) {
+			vo.setCate("cancle");
+			vo.setCate2("can");
+		}
+		vo.setUid(member.getUsername());
+		vo.setRegip(req.getRemoteAddr());
+		service.insertQna(vo);
+		return "redirect:/my/qna";
+	}
+	
 	@GetMapping("my/ordered")
-	public String ordered( String group,Model model) {
+	public String ordered( String group,@AuthenticationPrincipal MyUserDetails member, String pg, Model model,Authentication authentication) {
+		String uid = member.getUsername();
+		
+		// 페이징
+		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
+		int total = 0;
+		
+		total = service.selectOrdersCountTotal(uid,8,null,null); //전체 주문내역 갯수
+		
+		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
+		int[] result = service.getPageGroupNum(currentPage, lastPageNum); // 페이지 그룹번호
+		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작번호
+		int start = service.getStartNum(currentPage); // 시작 인덱스
 		
 		
+		model.addAttribute("lastPageNum", lastPageNum);		
+		model.addAttribute("currentPage", currentPage);		
+		model.addAttribute("pageGroupStart", result[0]);
+		model.addAttribute("pageGroupEnd", result[1]);
+		model.addAttribute("pageStartNum", pageStartNum+1);
 		
+		List<OrderVO> orders = service.selectOrders(uid, 8, start, null, null);
+		
+		model.addAttribute("orders",orders);
 		model.addAttribute("group",group);
+		model.addAttribute("uid",uid);
+		model.addAttribute("pg",pg);
+		model.addAttribute("member",member.getUser());
 		return "my/ordered";
 	}
+	
+	@ResponseBody
+	@GetMapping("my/orderBySort")
+	public Map<String, Object> orderBySort(String uid, String pg, @RequestParam(name = "sort", required = false) Integer sort, String srt, String end){
+		// 페이징
+		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
+		int total = service.selectOrdersCountTotal(uid, sort, srt, end);
+		
+		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
+		int[] result = service.getPageGroupNum(currentPage, lastPageNum); // 페이지 그룹번호
+		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작번호
+		int start = service.getStartNum(currentPage); // 시작 인덱스
+		
+		// points 목록 가져오기
+		List<OrderVO> orders = service.selectOrders(uid, sort, start,srt,end);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("lastPageNum", lastPageNum);
+		map.put("currentPage", currentPage);
+		map.put("pageGroupStart", result[0]);
+		map.put("pageGroupEnd", result[1]);
+		map.put("pageStartNum", pageStartNum+1);
+		map.put("orders", orders);
+		
+		return map;
+	}
+	
 	@GetMapping("my/point")
-	public String point(String group,@AuthenticationPrincipal MyUserDetails member,String pg,Model model) {
+	public String point(String group,@AuthenticationPrincipal MyUserDetails member,String pg,Model model,Authentication authentication) {
 		String uid = member.getUsername();
 		// 페이징
 		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
@@ -127,10 +202,8 @@ public class MyController {
 		int total = 0;
 		if(srt != null) {
 			total = service.selectPointsCountDuring(uid, srt, end);
-			log.info("srt가 null이 아닙니다.");
 		}else {
 			total = service.selectPointsCountTotal(uid,sort); //전체 포인트내역 갯수
-			log.info("srt가 null입니다.");
 		}
 		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
 		int[] result = service.getPageGroupNum(currentPage, lastPageNum); // 페이지 그룹번호
@@ -159,21 +232,21 @@ public class MyController {
 	}
 	
 	@GetMapping("my/coupon")
-	public String coupon(String group,@AuthenticationPrincipal MyUserDetails member, Model model) {
+	public String coupon(String group,@AuthenticationPrincipal MyUserDetails member, Model model,Authentication authentication) {
 		List<CouponVO> coupons = service.selectCoupons(member.getUsername());
 		model.addAttribute("coupons",coupons);
 		model.addAttribute("group",group);
 		return "my/coupon";
 	}
 	@GetMapping("my/pwChange")
-	public String pwChange(@AuthenticationPrincipal MyUserDetails member, String group,Model model) {
+	public String pwChange(@AuthenticationPrincipal MyUserDetails member, String group,Model model,Authentication authentication) {
 		MemberEntity user = member.getUser();
 		model.addAttribute("user", user);
 		model.addAttribute("group",group);
 		return "my/pwChange";
 	}
 	@GetMapping("my/info")
-	public String info(@AuthenticationPrincipal MyUserDetails member, String group,Model model) {
+	public String info(@AuthenticationPrincipal MyUserDetails member, String group,Model model,Authentication authentication) {
 		MemberEntity user = member.getUser();
 		model.addAttribute("user", user);
 		model.addAttribute("group",group);

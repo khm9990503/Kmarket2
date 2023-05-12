@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket2.dao.MyDAO">	
 	<select id="selectOrdersIndex" resultType="kr.co.kmarket2.vo.OrderVO">
-		SELECT b.*,c.prodNo,c.thumb1,c.company,c.prodName,a.`count`, a.total from `km_product_order_item` AS a
+		SELECT b.*,c.prodNo,c.thumb1,c.company,c.prodName,c.prodCate1,c.prodCate2,a.`count`, a.total from `km_product_order_item` AS a
 													LEFT JOIN `km_product_order` AS b USING(`ordNo`)
 													left JOIN `km_product` AS c ON a.prodNo = c.prodNo
 													WHERE `ordUid`=#{uid} limit 5;
@@ -64,8 +64,38 @@
 	</insert>
 
 	<select id="selectOrders" resultType="kr.co.kmarket2.vo.OrderVO">
-		select * from `km_product_order` where `uid`=#{uid}
-											 <choose>
+		SELECT b.*,c.prodNo,c.thumb1,c.company,c.prodName,c.prodCate1,c.prodCate2,a.`count`, a.total from `km_product_order_item` AS a
+													LEFT JOIN `km_product_order` AS b USING(`ordNo`)
+													left JOIN `km_product` AS c ON a.prodNo = c.prodNo 
+													where `ordUid`=#{uid}
+													 <choose>
+													 	<when test="sort lt 5">
+													 		and YEAR(ordDate) = YEAR(NOW()) and MONTH(ordDate) = MONTH(NOW()) - #{sort}
+													 	</when>
+													 	<when test="sort == 5">
+													 		and `ordDate` >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+													 	</when>
+													 	<when test="sort == 6">
+													 		and `ordDate` >= DATE_SUB(NOW(), INTERVAL 15 DAY)
+													 	</when>
+													 	<when test="sort == 7">
+													 		and `ordDate` >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+													 	</when>
+													 	<when test="sort == 8">
+													 	
+													 	</when>
+													 	<when test="sort == 9">
+													 		and `ordDate` BETWEEN #{srt} AND #{end} 
+													 	</when>
+													 </choose>
+													 ORDER BY `ordDate` DESC LIMIT #{start}, 10;
+	</select>
+	<select id="selectOrdersCountTotal" resultType="int">
+		SELECT count(`ordNo`) from `km_product_order_item` AS a
+													LEFT JOIN `km_product_order` AS b USING(`ordNo`)
+													left JOIN `km_product` AS c ON a.prodNo = c.prodNo 
+													where `ordUid`=#{uid}
+											<choose>
 											 	<when test="sort lt 5">
 											 		and YEAR(ordDate) = YEAR(NOW()) and MONTH(ordDate) = MONTH(NOW()) - #{sort}
 											 	</when>
@@ -78,16 +108,14 @@
 											 	<when test="sort == 7">
 											 		and `ordDate` >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
 											 	</when>
-											 	<when test="sort == 8">
+											 	<when test="sort == '8'">
 											 	
 											 	</when>
 											 	<when test="sort == 9">
-											 		and `ordDate` BETWEEN #{srt} AND #{end} 
+													 		and `ordDate` BETWEEN #{srt} AND #{end} 
 											 	</when>
-											 </choose>
-											 ORDER BY `ordDate` DESC LIMIT #{start}, 10;
+											 </choose>;
 	</select>
-
 	<select id="selectPoints" resultType="kr.co.kmarket2.vo.PointVO">
 		select * from `km_member_point` where `uid`=#{uid}
 											 <choose>
@@ -139,4 +167,32 @@
 	<select id="selectCoupons" resultType="kr.co.kmarket2.vo.CouponVO">
 		select * from `km_member_coupon` where `uid`=#{uid};
 	</select>
+	<select id="selectMypageHeaderInfo" resultType="int">
+		select 
+				<choose>
+					<when test="sort != 3">count(*)</when>
+					<when test="sort == 3">`point`</when>
+				</choose>
+		 from 
+							<choose>
+								<when test="sort == 1">
+									`km_product_order_item` AS a
+									LEFT JOIN `km_product_order` AS b USING(`ordNo`)
+									left JOIN `km_product` AS c ON a.prodNo = c.prodNo 
+									where `ordUid`=#{uid} and b.ordComplete &lt; 2; 
+								</when>
+								<when test="sort == 2">
+									`km_member_coupon` where `uid`=#{uid} and `state` &lt; 1;
+								</when>
+								<when test="sort == 3">
+									`km_member` where `uid`=#{uid};
+								</when>
+								<when test="sort == 4">
+									`km_article` where `uid`=#{uid} and `group`='qna';
+								</when>
+							</choose>
+	</select>
+	<insert id="insertQna">
+    	INSERT INTO `km_article` SET `group`='qna' ,`cate`=#{cate}, `cate2`=#{cate2}, `title` = #{title}, `content` = #{content} , `uid` = #{uid}, `regip`=#{regip}, `rdate`=NOW();
+    </insert>
 </mapper>

@@ -38,7 +38,7 @@
                     </a>
                     <article class="latest">
                         <h3>최근주문내역</h3>
-                        <a href="#" class="more">더보기</a>
+                        <a th:href="@{/my/ordered(group='ordered')}" class="more">더보기</a>
                         <table>
                             <tr>
                                 <th style="width: 12%;">날짜</th>
@@ -52,7 +52,7 @@
                             <tr th:each="order : ${orders}">
                                 <td>[[${order.ordDate.substring(0,10)}]]</td>
                                 <td>
-                                    <a href="#">
+                                    <a th:href="@{/product/view(prodNo=${order.prodNo},cate1=${order.prodCate1},cate2=${order.prodCate2})}">
                                         <img style="width: 90px;" th:src="@{${order.thumb1}}" alt="img" class="thumb">
                                     </a>
                                     <ul style="width: 405px;">
@@ -65,13 +65,15 @@
                                             개 / 주문번호 : <span class="orderNo"><a href="#">[[${order.ordNo}]]</a></span>
                                         </li>
                                         <li class="prodPrice">
-                                            [[${order.total}]]
+                                            [[${#numbers.formatInteger(order.total,1,'COMMA')}]]
                                         </li>
                                     </ul>
                                 </td>
-                                <td class="status">배송완료</td>
+                                <td class="status" th:if="${order.ordComplete == 0}">결제대기</td>
+                                <td class="status" th:if="${order.ordComplete == 1}">주문완료</td>
+                                <td class="status" th:if="${order.ordComplete == 2}">구매확정</td>
                                 <td class="confirm">
-                                    <a th:href="@{#}" class="receive" th:data-ordno="${order.ordNo}">수취확인</a>
+                                    <a th:href="@{#}" class="receive" th:data-ordno="${order.ordNo}" th:if="${order.ordComplete == 1}">수취확인</a>
                                     <a th:href="@{#}" class="review" th:data-prodNo="${order.prodNo}" th:data-prodName="${order.prodName}">상품평</a>
                                     <a th:href="@{#}" class="refund">반품신청</a>
                                     <a th:href="@{#}" class="exchange">교환신청</a>
@@ -98,7 +100,7 @@
                                 <td>[[${pit.pointDate.substring(0,10)}]]</td>
                                 <td>적립</td>
                                 <td>[[${pit.ordNo}]]</td>
-                                <td>[[${pit.point}]]</td>
+                                <td>[[${#numbers.formatInteger(pit.point,1,'COMMA')}]]</td>
                                 <td>상품 구매확정</td>
                                 <td>[[${pit.expiration.substring(0,10)}]]</td>
                             </tr>
@@ -321,35 +323,35 @@
                     <button class="btnClose">X</button>
                 </nav>
                 <section>
-                    <form action="#">
+                    <form th:action="@{/my/home/qna}" method="post">
                         <table border="0">
                             <tr>
                                 <th>문의종류</th>
                                 <td class="kind">
                                     <label>
-                                        <input type="radio" name="kind">
+                                        <input type="radio" name="kind" value="1">
                                         상품
                                     </label>
                                     <label>
-                                        <input type="radio" name="kind">
+                                        <input type="radio" name="kind" value="2">
                                         배송
                                     </label>
                                     <label>
-                                        <input type="radio" name="kind">
+                                        <input type="radio" name="kind" value="3">
                                         반품/취소
                                     </label>
                                     <label>
-                                        <input type="radio" name="kind">
+                                        <input type="radio" name="kind" value="4">
                                         교환
                                     </label>
                                     <label>
-                                        <input type="radio" name="kind">
+                                        <input type="radio" name="kind" value="5">
                                         기타
                                     </label>
                                 </td>
                             </tr>
                             <tr>
-                                <th>Email</th>
+                                <th>답변받을 Email</th>
                                 <td class="email">
                                     <input type="text" name="email" th:value="${member.email}">
                                 </td>

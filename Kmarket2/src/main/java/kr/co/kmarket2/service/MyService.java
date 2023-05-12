@@ -12,6 +12,7 @@ import kr.co.kmarket2.vo.CouponVO;
 import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderVO;
 import kr.co.kmarket2.vo.PointVO;
+import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
 @Service
@@ -25,7 +26,14 @@ public class MyService {
 	
 	// 마이페이지 메인 주문 목록
 	public List<OrderVO> selectOrdersIndex(String uid){
-		return dao.selectOrdersIndex(uid);
+		List<OrderVO> orders = dao.selectOrdersIndex(uid);
+		for(OrderVO order : orders) {
+			char isJ  = order.getThumb1().charAt(1);
+			if(isJ == 'J') {
+				order.setThumb1(order.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+			}
+		}
+		return orders;
 	};
 	
 	// 마이페이지 홈 포인트 적립내역 목록
@@ -48,6 +56,30 @@ public class MyService {
 	public MemberVO selectSellerIndex(String company) {
 		return dao.selectSellerIndex(company);
 	};
+	// 마이페이지 홈 문의하기
+	public int insertQna(ArticleVO vo) {
+		return dao.insertQna(vo);
+	};
+	// 마이페이지 헤더 정보 불러오기
+	public int selectMypageHeaderInfo(String uid, int sort) {
+		return dao.selectMypageHeaderInfo(uid, sort);
+	};
+	// 나의 전체주문내역 목록
+	public List<OrderVO> selectOrders(String uid, int sort, int start, String srt, String end){
+		List<OrderVO> orders = dao.selectOrders(uid, sort, start, srt, end);
+		for(OrderVO order : orders) {
+			char isJ  = order.getThumb1().charAt(1);
+			if(isJ == 'J') {
+				order.setThumb1(order.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+			}
+		}
+		return orders;
+	};
+	// 나의 전체주문내역 총 갯수
+	public int selectOrdersCountTotal(String uid, int sort, String srt, String end) {
+		return dao.selectOrdersCountTotal(uid, sort, srt, end);
+	};
+	
 	// 나의문의 불러오기
 	public List<ArticleVO> selectQnaArticles(String uid, int start) {
 		return dao.selectQnaArticles(uid, start);

@@ -27,6 +27,17 @@ public interface MyDAO {
 	public int updateOrderComplete(int ordNo);
 	// 마이페이지 홈 판매자정보 보기
 	public MemberVO selectSellerIndex(String company);
+	// 마이페이지 홈 문의하기
+	public int insertQna(ArticleVO vo);
+	// 마이페이지 헤더 정보 불러오기
+	public int selectMypageHeaderInfo(String uid, int sort);
+	
+	// 나의 전체주문내역 목록
+	public List<OrderVO> selectOrders(String uid, int sort, int start, String srt, String end);
+	
+	// 나의 전체주문내역 총 갯수
+	public int selectOrdersCountTotal(String uid, int sort, String srt, String end);
+	
 	// 나의 문의 리스트
 	public List<ArticleVO> selectQnaArticles(String uid, int start);
 	

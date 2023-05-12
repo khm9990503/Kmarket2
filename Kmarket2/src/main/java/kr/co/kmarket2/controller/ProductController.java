@@ -243,7 +243,7 @@ public class ProductController {
 	}
 	
 	@PostMapping("product/order")
-	public String order(@RequestParam(value="individualItem") String[] individualItem, Model model, Principal principal){
+	public String order(@RequestParam(value="individualItem") String[] individualItem, @RequestParam(name = "num",required = false) int num, @RequestParam(name="disPrice",required = false) int disPrice, Model model, Principal principal){
 		// cart 페이지에서 주문하기 누를 경우(폼 submit) 체크된 체크박스에 바인딩된 cartNo값 전송한다
 		List<CartVO> orderList = service.selectCartByCartNo(individualItem);
 		
