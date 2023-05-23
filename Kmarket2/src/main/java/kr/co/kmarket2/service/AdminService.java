@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.kmarket2.dao.AdminDAO;
 import kr.co.kmarket2.vo.ArticleCateVO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.BannerVO;
 import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.ProductVO;
@@ -29,6 +30,16 @@ public class AdminService {
 
 	@Autowired
 	private AdminDAO dao; 
+	
+	public int insertBanner (BannerVO vo) {
+		String bFile = bannerUpload(vo);
+		vo.setBFile(bFile);
+		int result = 0;
+		if(vo.getBFile() != null) {
+			result = dao.insertBanner(vo);
+		}
+		return result;
+	};
 	
 	public List<Cate1VO> selectCate1 (){
 		return dao.selectCate1();
@@ -96,6 +107,31 @@ public class AdminService {
 				
 		}
 		return names;
+	}
+	// 배너 업로드
+	public String bannerUpload(BannerVO vo) throws NullPointerException {
+		// 첨부 파일
+		MultipartFile file = vo.getBFile_();
+		String upPath = "banner/"+vo.getBLocate()+"/";
+		// 시스템 경로
+		String path = new File(upPath).getAbsolutePath();
+		String bFile = null;
+		// 새 파일명 생성
+		String oName = file.getOriginalFilename();
+		String ext = oName.substring(oName.lastIndexOf("."));
+		String nName = UUID.randomUUID().toString()+ext;
+		
+		// 파일 저장
+		try {
+			file.transferTo(new File(path, nName));
+			bFile = nName;
+		} catch (IllegalStateException e) {
+			log.error(e.getMessage());
+		} catch (IOException e) {
+			log.error(e.getMessage());
+		}
+			
+		return bFile;
 	}
 	// 페이징 처리 시작 ///////////////////////////////////////////////////////
 		// 현재 페이지 번호

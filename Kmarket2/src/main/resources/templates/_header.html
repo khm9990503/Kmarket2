@@ -16,7 +16,13 @@
     <script>
         $(document).ready(function(){
           $('.slider').bxSlider({
-            easing:'linear'
+            easing:'linear',
+           	auto: true,
+       		speed: 500,
+       		pause: 4000,
+       		autoControls: false,
+       		controls:false,
+       		pager:false,
           });
         
           // 스크롤 시 사이드 따라오기
@@ -42,6 +48,14 @@
 <body>
     <div id="wrapper">
         <header>
+        	<!-- <div class="banner">
+				<section class="Slider">
+		            <div class="slider">
+		                <div><a href="#"><img th:src="@{/img/my_banner1.jpg}" alt="item1"></a></div>
+		                <div><a href="#"><img th:src="@{/img/my_banner2.png}" alt="item2"></a></div>
+		            </div>
+		        </section>
+        	</div> -->
             <div class="top">
                 <div>
                 	<th:block sec:authorize="isAnonymous()">

@@ -195,6 +195,9 @@
    <insert id="insertReply">
    	insert into `km_article` set `parent`=#{parent},`uid`=#{uid},`content`=#{content},`regip`=#{regip},`rdate`=now();
    </insert>
+   <insert id="insertBanner">
+   	insert into `km_banner` set `bName`=#{bName},`bSize`=#{bSize},`bColor`=#{bColor},`bLink`=#{bLink},`bLocate`=#{bLocate},`beginDate`=#{beginDate},`endDate`=#{endDate},`beginTime`=#{beginTime},`endTime`=#{endTime};
+   </insert>
    <update id="updateArticle">
    	update `km_article` set `title`=#{title},`content`=#{content},`cate`=#{cate},`rdate`=now() where `no`=#{no}
    </update>

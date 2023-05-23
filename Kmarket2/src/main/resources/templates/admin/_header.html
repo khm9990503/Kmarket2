@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://kit.fontawesome.com/20962f3e4b.js"></script>
+    <script th:src="@{/js/popup.js}"></script>
     <script>
     $(document).ready(function(){
         // menu 클래스 바로 하위에 있는 a 태그를 클릭했을때
@@ -54,7 +55,7 @@
                                 <a href="#">기본환경설정</a>
                             </li>
                             <li>
-                                <a href="#">배너관리</a>
+                                <a th:href="@{/admin/config/banner}">배너관리</a>
                             </li>
                         </ol>
                     </li>

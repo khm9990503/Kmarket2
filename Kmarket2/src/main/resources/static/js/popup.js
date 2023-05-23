@@ -57,6 +57,12 @@ $(function(){
         $('#popReview input[name=prodNo]').val(prodNo);
     });
 
+	// 배너 등록 띄우기
+    $('.btnWrite').click(function(e){
+        e.preventDefault();
+        $('#popBanner').addClass('on');
+    });
+
     // 팝업 닫기
     $('.btnClose, .btnNegative').click(function(){                
         $(this).closest('.popup').removeClass('on');                

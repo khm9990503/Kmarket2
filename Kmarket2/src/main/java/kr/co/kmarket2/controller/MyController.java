@@ -169,14 +169,12 @@ public class MyController {
 		int currentPage = service.getCurrentPage(pg); // 현재 페이지 번호
 		int total = 0;
 		
-		
 		total = service.selectPointsCountTotal(uid,8); //전체 리뷰 갯수
 		
 		int lastPageNum = service.getLastPageNum(total);// 마지막 페이지 번호
 		int[] result = service.getPageGroupNum(currentPage, lastPageNum); // 페이지 그룹번호
 		int pageStartNum = service.getPageStartNum(total, currentPage); // 페이지 시작번호
 		int start = service.getStartNum(currentPage); // 시작 인덱스
-		
 		
 		model.addAttribute("lastPageNum", lastPageNum);		
 		model.addAttribute("currentPage", currentPage);		
