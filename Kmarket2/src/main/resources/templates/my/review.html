@@ -1,6 +1,31 @@
 <th:block th:include="@{my/_header.html}"/>
             <div class="review">
+
                 <th:block th:include="@{my/_side.html}"/>
+/*
+                <ul>
+                    <span class="menu_else"></span>
+
+                   	<li th:classappend="${group} eq 'ordered'?'on':'off'">
+                        <a th:href="@{/my/ordered?group=ordered}">전체주문내역</a>
+                    </li>
+                    <li th:classappend="${group} eq 'point'?'on':'off'">
+                        <a th:href="@{/my/point?group=point}">포인트내역</a>
+                    </li>
+                    <li th:classappend="${group} eq 'coupon'?'on':'off'">
+                        <a th:href="@{/my/coupon?group=coupon}">쿠폰</a>
+                    </li>
+                    <li th:classappend="${group} eq 'review'?'on':'off'">
+                        <a th:href="@{/my/review?group=review}">나의리뷰</a>
+                    </li>
+                    <li th:classappend="${group} eq 'qna'?'on':'off'">
+                        <a th:href="@{/my/qna?group=qna}">문의하기</a>
+                    </li>
+                    <li th:classappend="${group} eq 'info'?'on':'off'">
+                        <a th:href="@{/my/info?group=info}">나의설정</a>
+                    </li>
+                </ul>
+*/
                 <section>
                     <a href="#">
                         <img src="../img/my_banner2.png" alt="패션, 타운 하나로 끝" class="banner">
@@ -21,11 +46,19 @@
                             <tr th:each="review,stat:${reviews}">
                                 <td class="no">[[${pageStartNum-stat.count}]]</td>
                                 <td class="prodName">
-                                    <a href="#">[[${review.prodName}]]</a>
+                                    <a th:href="@{/product/view(prodNo=${review.prodNo},cate1=${review.prodCate1},cate2=${review.prodCate2})}">[[${review.prodName}]]</a>
                                 </td>
                                 <td class="content">[[${review.content}]]</td>
                                 <td class="score">
+
                                     <span class="rating" th:classappend="star+${review.rating}"></span>
+/*
+                                    <span th:if="${review.rating == 1}" class="rating star1"></span>
+                                    <span th:if="${review.rating == 2}" class="rating star2"></span>
+                                    <span th:if="${review.rating == 3}" class="rating star3"></span>
+                                    <span th:if="${review.rating == 4}" class="rating star4"></span>
+                                    <span th:if="${review.rating == 5}" class="rating star5"></span>
+*/
                                 </td>
                                 <td class="date">[[${review.rdate.substring(2, 10)}]]</td>
                             </tr>

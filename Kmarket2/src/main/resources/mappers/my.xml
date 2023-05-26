@@ -30,16 +30,18 @@
 	</select>
 	
 	<select id="selectReview" resultType="kr.co.kmarket2.vo.ReviewVO">
-		SELECT a.*,b.prodName FROM `km_product_review` AS a JOIN `km_product` AS b ON a.prodNo=b.prodNo WHERE `uid`=#{uid} ORDER BY `revNo` DESC LIMIT #{start},10;
+		SELECT a.*,b.* FROM `km_product_review` AS a JOIN `km_product` AS b ON a.prodNo=b.prodNo WHERE `uid`=#{uid} ORDER BY `revNo` DESC LIMIT #{start},10;
 	</select>
 	
 	<select id="selectReviewCountTotal" resultType="int">
 		select count(`revNo`) from `km_product_review` where `uid`=#{uid};
 	</select>
 	
+
 	<update id="updatePassword">
 		update `km_member` set `pass`=#{pass} where `uid`=#{uid};
 	</update>
+
 	
 	<update id="updateMemberInfo">
 		UPDATE `km_member` SET `email`=#{email}, `hp`=#{hp}, `zip`=#{zip}, `addr1`=#{addr1}, `addr2`=#{addr2}, `mdate`=NOW() WHERE `uid`=#{uid};

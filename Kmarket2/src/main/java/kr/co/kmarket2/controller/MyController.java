@@ -301,6 +301,7 @@ public class MyController {
 		List<ReviewVO> reviews = service.selectReview(uid, start);
 		
 		model.addAttribute("reviews", reviews);
+
 		
 		model.addAttribute("group", group);
 		return "my/review";
