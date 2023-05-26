@@ -2,7 +2,7 @@
             <div class="review">
 
                 <th:block th:include="@{my/_side.html}"/>
-/*
+<!-- 
                 <ul>
                     <span class="menu_else"></span>
 
@@ -25,7 +25,7 @@
                         <a th:href="@{/my/info?group=info}">나의설정</a>
                     </li>
                 </ul>
-*/
+ -->
                 <section>
                     <a href="#">
                         <img src="../img/my_banner2.png" alt="패션, 타운 하나로 끝" class="banner">
@@ -52,13 +52,13 @@
                                 <td class="score">
 
                                     <span class="rating" th:classappend="star+${review.rating}"></span>
-/*
+<!-- 
                                     <span th:if="${review.rating == 1}" class="rating star1"></span>
                                     <span th:if="${review.rating == 2}" class="rating star2"></span>
                                     <span th:if="${review.rating == 3}" class="rating star3"></span>
                                     <span th:if="${review.rating == 4}" class="rating star4"></span>
                                     <span th:if="${review.rating == 5}" class="rating star5"></span>
-*/
+ -->
                                 </td>
                                 <td class="date">[[${review.rdate.substring(2, 10)}]]</td>
                             </tr>
