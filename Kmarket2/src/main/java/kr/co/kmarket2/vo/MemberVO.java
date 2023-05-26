@@ -37,6 +37,7 @@ public class MemberVO {
 	private String regip;
 	private String wdate;
 	private String rdate;
+	private String mdate;
 	private int locationTerms;
 	
 	

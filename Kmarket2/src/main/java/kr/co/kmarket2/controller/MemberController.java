@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.kmarket2.service.MemberService;
@@ -29,7 +30,8 @@ public class MemberController {
 	}
 	
 	@GetMapping("member/login")
-	public String login() {
+	public String login(Model model, @RequestParam(required = false) Integer success) {
+		model.addAttribute("success",success!=null?success:0);
 		return "member/login";
 	}
 	

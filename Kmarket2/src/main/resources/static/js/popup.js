@@ -3,6 +3,28 @@ $(function(){
     // 판매자 정보 팝업 띄우기
     $('.latest .company > a').click(function(e){
         e.preventDefault();
+        let company = $(this).text();
+        let jsonData = {
+			"company":company
+		}
+        $.ajax({
+			url:"/Kmarket2/my/home/seller",
+			method:"get",
+			data:jsonData,
+			dataType:"json",
+			success:function(data){
+				$("#popSeller .level").text(data.level);
+				$("#popSeller .company").text(data.company);
+				$("#popSeller .ceo").text(data.ceo);
+				$("#popSeller .tel").text(data.tel);
+				$("#popSeller .fax").text(data.fax);
+				$("#popSeller .email").text(data.email);
+				$("#popSeller .bizNum").text(data.bizNum);
+				$("#popSeller .address").text(data.addr1+" "+data.addr2);
+			},
+		})
+        
+        
         $('#popSeller').addClass('on');
     });
 
@@ -29,8 +51,18 @@ $(function(){
     $('.latest .confirm > .review').click(function(e){
         e.preventDefault();
         $('#popReview').addClass('on');
+        let prodName = $(this).data("prodname");
+        let prodNo = $(this).data("prodno");
+        $('#popReview .productName').text(prodName);
+        $('#popReview input[name=prodNo]').val(prodNo);
     });
-               
+
+	// 배너 등록 띄우기
+    $('.btnWrite').click(function(e){
+        e.preventDefault();
+        $('#popBanner').addClass('on');
+    });
+
     // 팝업 닫기
     $('.btnClose, .btnNegative').click(function(){                
         $(this).closest('.popup').removeClass('on');                
@@ -45,7 +77,8 @@ $(function(){
         minRating: 1,
         ratedColors: ['#ffa400', '#ffa400', '#ffa400', '#ffa400', '#ffa400'],
         callback: function(currentRating, $el){
-            alert('rated ' + currentRating);
+            alert('별점을 ' + currentRating + "개 주셨습니다.");
+            $('input[name=rating]').val(currentRating);
             console.log('DOM element ', $el);
         }
     });

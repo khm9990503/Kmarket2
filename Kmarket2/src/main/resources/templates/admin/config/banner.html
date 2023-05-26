@@ -1,0 +1,190 @@
+<th:block th:include="@{admin/_header.html}"/>
+  <script>
+  $( function() {
+    $( "#tabs" ).tabs();
+    
+    $(".bLocate").change(function(){
+    	let value = $(this).val();
+    	let url = null;
+    	if(value == "MAIN1" || value == "MAIN2"){
+    		url = "http://127.0.0.1:8181/Kmarket2/";
+    	}else if(value == "PRODUCT1"){
+    		url = "http://127.0.0.1:8181/Kmarket2/product/view?prodNo=1000508&cate1=17&cate2=10";
+    	}else if(value == "MEMBER1"){
+    		url = "http://127.0.0.1:8181/Kmarket2/member/login";
+    	}else if(value == "MY1"){
+    		url = "http://127.0.0.1:8181/Kmarket2/my/home";
+    	}else if(value == "#"){
+    		url = "선택하셔야 등록됩니다."
+    	}
+    	$("input[name=bLink]").val(url);
+    });
+  } );
+  </script>
+    <section id="admin_banner">
+        <nav>
+            <h3>배너관리</h3>
+            <p>
+            	<a th:href="@{/admin/index}">HOME</a>&nbsp;>&nbsp;
+            	<a th:href="@{/admin/config/banner}">환결설정</a>&nbsp;>&nbsp;
+            	<a th:href="@{/admin/config/banner}"><strong>배너관리</strong></a>
+            </p>
+        </nav>
+        <section>
+        	<div id="tabs">
+			  <ul>
+			    <li><a href="#tabs-1">메인 상단배너</a></li>
+			    <li><a href="#tabs-2">메인 슬라이더배너</a></li>
+			    <li><a href="#tabs-3">상품 상세보기 배너</a></li>
+			    <li><a href="#tabs-4">회원로그인 배너</a></li>
+			    <li><a href="#tabs-5">마이페이지 배너</a></li>
+			  </ul>
+			  <div id="tabs-1">
+			  	<h2>메인 상단배너</h2>
+			  	<table>
+	                <tr>
+	                    <th><input type="checkbox" name="all" id="checkAll"/></th>
+	                    <th>번호</th>
+	                    <th>이미지</th>
+	                    <th>배너정보</th>
+	                    <th>배너위치</th>
+	                    <th>시작일</th>
+	                    <th>종료일</th>
+	                    <th>시작시간</th>
+	                    <th>종료시간</th>
+	                    <th>관리</th>
+	                </tr>
+	                <tr>
+	                    <td><input type="checkbox" name="check"/></td>
+	                    <td>1</td>
+	                    <td><img alt="배너" src="#"></td>
+	                    <td>
+	                    	<p>배너명</p>
+	                    	<p>크기 : 1200 X 80</p>
+	                    	<p>배경색 : #ffff00</p>
+	                    	<p><a href="#">배너링크</a></p>
+	                    </td>
+	                    <td>MAIN1</td>
+	                    <td>2023/05/01</td>
+	                    <td>2023/05/31</td>
+	                    <td>13:00</td>
+	                    <td>15:00</td>
+	                    <td>
+	                    	<a href="#">[활성]</a>
+	                        <a href="#">[비활성]</a>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td><input type="checkbox" name="check"/></td>
+	                    <td>2</td>
+	                    <td><img alt="배너" src="#"></td>
+	                    <td>
+	                    	<p>배너명</p>
+	                    	<p>크기 : 1200 X 80</p>
+	                    	<p>배경색 : #ffff00</p>
+	                    	<p><a href="#">배너링크</a></p>
+	                    </td>
+	                    <td>MAIN1</td>
+	                    <td>2023/05/01</td>
+	                    <td>2023/05/31</td>
+	                    <td>13:00</td>
+	                    <td>15:00</td>
+	                    <td>
+	                    	<a href="#">[활성]</a>
+	                        <a href="#">[비활성]</a>
+	                    </td>
+	                </tr>
+            	</table>
+            	<div style="margin-top: 50px;">
+            		<a href="#" class="btn btnDel">선택삭제</a>
+			    	<a href="#" class="btn btnWrite">배너등록</a>
+            	</div>
+			  </div>
+			  <div id="tabs-2">
+			  </div>
+			  <div id="tabs-3">
+			  </div>
+			  <div id="tabs-4">
+			  </div>
+			  <div id="tabs-5">
+			  </div>
+			</div>
+        </section>
+    </section>
+    <!-- 배너등록 팝업 -->
+        <div id="popBanner" class="popup">
+            <div>
+                <nav>
+                    <h1>문의하기</h1>
+                    <button class="btnClose">X</button>
+                </nav>
+                <section>
+                    <form th:action="@{/admin/config/banner}" method="post" enctype="multipart/form-data">
+                        <table border="0">
+                            <tr>
+                                <th>배너이름</th>
+                                <td>
+                                   <input type="text" name="bName" placeholder="배너명 입력"> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>배너크기</th>
+                                <td>
+                                   <input type="text" name="bSize" placeholder="배너크기 입력"> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>배경색</th>
+                                <td>
+                                   <input type="text" name="bColor" placeholder="배경색 입력"> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>배너링크</th>
+                                <td>
+                                   <input type="text" name="bLink" placeholder="배너링크는 배너위치를 선택 시 자동입력" readonly="readonly"> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>배너파일</th>
+                                <td>
+                                   <input type="file" name="bFile_" accept="image/gif,image/jpeg,image/png" style="border: none;"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>배너위치</th>
+                                <td>
+                                   <select name="bLocate" class="bLocate">
+                                   	<option value="#">선택</option>
+                                   	<option value="MAIN1">MAIN1</option>
+                                   	<option value="MAIN2">MAIN2</option>
+                                   	<option value="PRODUCT1">PRODUCT1</option>
+                                   	<option value="MEMBER1">MEMBER1</option>
+                                   	<option value="MY1">MY1</option>
+                                   </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>노출날짜</th>
+                                <td>
+                                   <input type="date" name="beginDate">&nbsp;~&nbsp;
+                                   <input type="date" name="endDate">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>노출날짜</th>
+                                <td>
+                                   <input type="time" name="beginTime">&nbsp;~&nbsp;
+                                   <input type="time" name="endTime">
+                                </td>
+                            </tr>
+                        </table>
+                        <div>
+                            <input type="submit" class="btnPositive" value="등록하기">
+                            <button type="button" class="btnNegative btnCancel">취소</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+<th:block th:include="@{admin/_footer.html}"/>

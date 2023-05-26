@@ -239,6 +239,13 @@ footer > div > p:nth-of-type(2){
 #my > .home > section > article > table li {
     margin: 4px 0;
 }
+#my > .home > section > article > table li.prodName a{
+	display: inline-block;
+    width: 410px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 #my > .home > section > article > table .prodPrice {
     margin-top: 6px;
     font-family: '고딕';
@@ -658,7 +665,7 @@ footer > div > p:nth-of-type(2){
 }
 #my > .ordered > section > article > .byDate > p > span {
     display: inline-block;
-    margin: 0 4px;
+    margin: 0;
 }
 #my > .ordered > section > article > .byDate input[type=date] {
     width: 80px;
@@ -948,7 +955,7 @@ footer > div > p:nth-of-type(2){
     color: #444;
 }
 
-#my > div > section > article > table {
+#my > div > section > article table {
     width: 100%;
     height: auto;
     border-top: 2px solid #444;
@@ -956,11 +963,11 @@ footer > div > p:nth-of-type(2){
     border-collapse: collapse;
 }
 
-#my > div > section > article > table * {
+#my > div > section > article table * {
     font-family: 돋움;
 }
 
-#my > div > section > article > table td {
+#my > div > section > article table td {
     padding: 10px;
     border-left: 1px solid #f1f1f1;
     border-bottom: 1px solid #f1f1f1;
@@ -968,33 +975,33 @@ footer > div > p:nth-of-type(2){
     overflow: hidden;
 }
 
-#my > div > section > article > table td:first-child {
+#my > div > section > article table td:first-child {
     width: 120px;
     border-left: none;
     background-color: #f7f7f7;
 }
 
-#my > div > section > article > table input {
+#my > div > section > article table input {
     padding: 2px;
     box-sizing: border-box;
     border: 1px solid #999;
 }
 
-#my > div > section > article > table select {
+#my > div > section > article table select {
     padding: 2px;
 }
 
-#my > div > section > article > table .hp input {
+#my > div > section > article table .hp input {
     width: 60px;
 }
 
-#my > div > section > article > table input {
+#my > div > section > article table input {
     padding: 2px;
     box-sizing: border-box;
     border: 1px solid #999;
 }
 
-#my > .info > section > article > table .address > input {
+#my > .info > section > article table .address > input {
     display: block;
     width: 300px;
     margin-top: 2px;
@@ -1319,8 +1326,34 @@ footer > div > p:nth-of-type(2){
             overflow: hidden;
         }
         #my > .review > section > article > table td:first-child{border-left: none;}
+        #my > .review > section > article > table .no {
+        	width: 8%;
+        	text-align: center;
+        }
+        #my > .review > section > article > table .date {
+        	width:10%;
+        	text-align: center;
+        }
         #my > .review > section > article > table .prodName {
+        	width:300px;
             text-decoration: underline;
+        }
+        #my > .review > section > article > table .content {
+        	width: 300px;
+        }
+        #my > .review > section > article > table .content a {
+        	display: inline-block;
+		    width: 300px;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+        }
+        #my > .review > section > article > table .prodName a {
+        	display: inline-block;
+		    width: 300px;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
         }
         #my > .review > section > article > table .rating {
             display: block;

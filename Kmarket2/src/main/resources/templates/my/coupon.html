@@ -1,45 +1,6 @@
 <th:block th:include="@{my/_header.html}"/>
             <div class="coupon">
-                <ul>
-                    <span class="menu_else"></span>
-<<<<<<< HEAD
-                    <li class="on">
-                        <a th:href="@{#}">전체주문내역</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">포인트내역</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">쿠폰</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">나의리뷰</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">문의하기</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">나의설정</a>
-=======
-                   <li th:classappend="${group} eq 'ordered'?'on':'off'">
-                        <a th:href="@{/my/ordered?group=ordered}">전체주문내역</a>
-                    </li>
-                    <li th:classappend="${group} eq 'point'?'on':'off'">
-                        <a th:href="@{/my/point?group=point}">포인트내역</a>
-                    </li>
-                    <li th:classappend="${group} eq 'coupon'?'on':'off'">
-                        <a th:href="@{/my/coupon?group=coupon}">쿠폰</a>
-                    </li>
-                    <li th:classappend="${group} eq 'review'?'on':'off'">
-                        <a th:href="@{/my/review?group=review}">나의리뷰</a>
-                    </li>
-                    <li th:classappend="${group} eq 'qna'?'on':'off'">
-                        <a th:href="@{/my/qna?group=qna}">문의하기</a>
->>>>>>> 1c1edd4ebf35430964a28bcfb6895139873e2d5c
-                    </li>
-                    <li th:classappend="${group} eq 'info'?'on':'off'">
-                        <a th:href="@{/my/info?group=info}">나의설정</a>
-                </ul>
+                <th:block th:include="@{my/_side.html}"/>
                 <section>
                     <a href="#">
                         <img th:src="@{/img/my_banner2.png}" alt="패션, 타운 하나로 끝" class="banner">
@@ -51,7 +12,7 @@
                             <dl>
                                 <dt>· 나의 보유쿠폰</dt>
                                 <dd>
-                                    <strong>2</strong>
+                                    <strong>[[${coupons.size()}]]</strong>
                                     <span>장</span>
                                 </dd>
                             </dl>
@@ -64,30 +25,24 @@
                                 <th>유효기간</th>
                                 <th>상태</th>
                             </tr>
-                            <tr>
-                                <td class="tit">1만원 할인 중복쿠폰</td>
+                            <tr th:if="${coupons.size()} > 0" th:each="coupon : ${coupons}">
+                                <td class="tit">[[${coupon.name}]]</td>
                                 <td class="discount">
-                                    <span>10,000</span>원
+                                    <span>[[${#numbers.formatInteger(coupon.discount,1,'COMMA')}]]</span>원
                                 </td>
                                 <td class="condition">
-                                    <span>10,100</span>원 이상 구매시
+                                    <span>[[${#numbers.formatInteger(coupon.limit,1,'COMMA')}]]</span>원 이상 구매시
                                 </td>
-                                <td class="expire">~12/29</td>
-                                <td class="status">사용가능</td>
+                                <td class="expire">~[[${coupon.exDate.substring(2,10)}]]</td>
+                                <td class="status" th:if="${coupon.state < 1}">사용가능</td>
+                                <td class="status" th:if="${coupon.state == 1}">사용완료</td>
+                                <td class="status" th:if="${coupon.state > 1}">기간만료</td>
                             </tr>
-                            <tr>
-                                <td class="tit">회원가입 축하 5천원 할인쿠폰</td>
-                                <td class="discount">
-                                    <span>5,000</span>원
-                                </td>
-                                <td class="condition">
-                                    <span>5,100</span>원 이상 구매시
-                                </td>
-                                <td class="expire">~12/29</td>
-                                <td class="status">사용가능</td>
+                            <tr th:unless="${coupons.size()} > 0">
+                            	<td colspan="5" style="text-align: center;">사용가능한 쿠폰이 없습니다.</td>
                             </tr>
                         </table>
-                        <ul class="info">
+                        <ul class="info" style="margin-top:10px;">
                             <li>순금/골드바/돌반지/상품권 등 환금성 카테고리 및 중고상품 및 일부 프로모션 상품에는 쿠폰사용이 제한됩니다.</li>
                             <li>쿠폰 적용 가능한 금액기준은 판매자 상품별할인과 G마켓 추가할인이 모두 포함된 할인적용가입니다.</li>
                             <li>중복쿠폰은 판매자 할인, G마켓 할인과 중복 적용 가능하며 하나의 상품당 한장의 중복쿠폰만 사용 가능합니다.</li>

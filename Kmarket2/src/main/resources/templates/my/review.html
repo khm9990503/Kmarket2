@@ -1,5 +1,8 @@
 <th:block th:include="@{my/_header.html}"/>
             <div class="review">
+
+                <th:block th:include="@{my/_side.html}"/>
+/*
                 <ul>
                     <span class="menu_else"></span>
 
@@ -22,6 +25,7 @@
                         <a th:href="@{/my/info?group=info}">나의설정</a>
                     </li>
                 </ul>
+*/
                 <section>
                     <a href="#">
                         <img src="../img/my_banner2.png" alt="패션, 타운 하나로 끝" class="banner">
@@ -30,29 +34,36 @@
                         <h3>나의 리뷰</h3>
                         <table border="0">
                             <tr>
-                                <th>번호</th>
+                                <th>리뷰번호</th>
                                 <th>상품명</th>
                                 <th>내용</th>
                                 <th>평점</th>
                                 <th>작성일</th>
                             </tr>
-                            <tr th:each="review:${reviews}">
-                                <td class="no">[[${review.revNo}]]</td>
+                            <tr>
+                            	<td colspan="5" align="center" th:if="${#lists.isEmpty(reviews)}">작성하신 리뷰가 없습니다.</td>
+                            </tr>
+                            <tr th:each="review,stat:${reviews}">
+                                <td class="no">[[${pageStartNum-stat.count}]]</td>
                                 <td class="prodName">
                                     <a th:href="@{/product/view(prodNo=${review.prodNo},cate1=${review.prodCate1},cate2=${review.prodCate2})}">[[${review.prodName}]]</a>
                                 </td>
                                 <td class="content">[[${review.content}]]</td>
                                 <td class="score">
+
+                                    <span class="rating" th:classappend="star+${review.rating}"></span>
+/*
                                     <span th:if="${review.rating == 1}" class="rating star1"></span>
                                     <span th:if="${review.rating == 2}" class="rating star2"></span>
                                     <span th:if="${review.rating == 3}" class="rating star3"></span>
                                     <span th:if="${review.rating == 4}" class="rating star4"></span>
                                     <span th:if="${review.rating == 5}" class="rating star5"></span>
+*/
                                 </td>
                                 <td class="date">[[${review.rdate.substring(2, 10)}]]</td>
                             </tr>
                         </table>
-                        <p class="page">
+                        <p class="page" th:if="${!#lists.isEmpty(reviews)}">
                         	<th:block th:if="${pageGroupStart > 1}">
                             	<a th:href="@{/my/review(pg=${currentPage - 1})}" class="prev">이전</a>
                             </th:block>

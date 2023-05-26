@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.kmarket2.service.AdminService;
 import kr.co.kmarket2.vo.ArticleCateVO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.BannerVO;
 import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.ProductVO;
@@ -37,6 +38,24 @@ public class AdminController {
 	public String index() {
 		return "admin/index";
 	}
+	
+	@GetMapping("admin/config/banner")
+	public String banner() {
+		return "admin/config/banner";
+	}
+	
+	@PostMapping("admin/config/banner")
+	public String banner(BannerVO vo) {
+		int result = service.insertBanner(vo);
+		String redirect = "/admin/config/banner"; // 
+		if(result > 0) {
+			String url = vo.getBLink();
+			int startInd = url.lastIndexOf("Kmarket2")+8;
+			redirect = url.substring(startInd);
+		}
+		return "redirect:"+redirect;
+	};
+	
 	@GetMapping("admin/product/list")
 	public String list(Model model, String pg, Principal principal, String search, String type) {
 		

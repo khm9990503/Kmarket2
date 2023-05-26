@@ -1,60 +1,124 @@
 <th:block th:include="@{my/_header.html}"/>
-<script>
-	$(function){};
+<script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script th:src="@{/js/postcode.js}"></script>
+<script type="text/javascript">
+$(function(){
+	$('.emailAuto').change(function(){
+		let slc = $(this).val()
+		$('input[name=email2]').val(slc);
+	});
+	
+	$("#btnChangeEmail").click(function(){
+		$(".email").css({"display":"inline-block"});
+		$(this).hide();
+	});
+	$("#btnChangeHp").click(function(){
+		$(".hp").css({"display":"inline-block"}); 
+		$(this).hide();
+	});
+	
+	$("#btnInfoChange").click(function(){
+		let email1 = $("input[name=email1]").val();
+		let email2 = $("input[name=email2]").val();
+		let email = email1 + "@" + email2;
+		let hp1 = $("input[name=hp1]").val();
+		let hp2 = $("input[name=hp2]").val();
+		let hp3 = $("input[name=hp3]").val();
+		let hp = hp1 + "-" + hp2 + "-" + hp3;
+		let zip = $("input[name=zip]").val();
+		let addr1 = $("input[name=addr1]").val();
+		let addr2 = $("input[name=addr2]").val();
+		let uid = $("input[name=uid]").val();
+		let json = {
+				"email":email,
+				"hp":hp,
+				"zip":zip,
+				"addr1":addr1,
+				"addr2":addr2,
+				"uid":uid
+		}
+		$.ajax({
+			url:"/Kmarket2/my/info",
+			method:"put",
+			data:json,
+			dataType:"json",
+			success:function(data){
+				if(data>0){
+					alert("수정 완료!");
+					location.href = "/Kmarket2/my/home"
+				}
+			}
+		})
+	});
+	
+	// 회원 탈퇴 버튼 클릭 시
+	$("#btnWithdraw").click(function() {
+		let uid = $("input[name=uid]").val();
+		let jsonData = {
+				"uid":uid
+		}
+	   if (!confirm("정말 탈퇴하시겠습니까?")) {
+	        // 취소(아니오) 버튼 클릭 시 이벤트
+	        return false;
+	    } else {
+	        // 확인(예) 버튼 클릭 시 이벤트
+			$.ajax({
+				url:'/Kmarket2/my/info/dropMember',
+				method:'delete',
+				data:jsonData,
+				dataType:'json',
+				success:function(data){
+					if(data > 0){
+						alert("회원탈퇴 성공!");
+						// 회원 탈퇴 성공
+						location.href="/Kmarket2/member/login";
+					}else {
+						// 회원 탈퇴 실패
+						alert("나중에 다시 시도하십시오.")
+						return false;
+					}
+				}
+			});
+	    }
+	});
+})
 </script>
             <div class="info">
-                <ul>
-                    <span class="menu_else"></span>
-                    <li th:classappend="${group} eq 'ordered'?'on':'off'">
-                        <a th:href="@{/my/ordered?group=ordered}">전체주문내역</a>
-                    </li>
-                    <li th:classappend="${group} eq 'point'?'on':'off'">
-                        <a th:href="@{/my/point?group=point}">포인트내역</a>
-                    </li>
-                    <li th:classappend="${group} eq 'coupon'?'on':'off'">
-                        <a th:href="@{/my/coupon?group=coupon}">쿠폰</a>
-                    </li>
-                    <li th:classappend="${group} eq 'review'?'on':'off'">
-                        <a th:href="@{/my/review?group=review}">나의리뷰</a>
-                    </li>
-                    <li th:classappend="${group} eq 'qna'?'on':'off'">
-                        <a th:href="@{/my/qna?group=qna}">문의하기</a>
-                    </li>
-                    <li th:classappend="${group} eq 'info'?'on':'off'">
-                        <a th:href="@{/my/info?group=info}">나의설정</a>
-                </ul>
+                <th:block th:include="@{my/_side.html}"/>
                 <section>
                     <a th:href="@{#}">
                         <img th:src="@{/img/my_banner2.png}" alt="실적/한도 제한없는 스마일 카드 적립 혜택" class="banner">
                     </a>
                     <article>
                         <h3>회원정보 설정</h3>
+                        <input type="hidden" name="uid" th:value="${user.uid}">
                         <table border="0">
                             <tr>
                                 <td>사용자 ID</td>
-                                <td th:text=${user.uid}></td>
+                                <td th:text="'****'+${user.uid.substring(4,user.uid.length)}"></td>
                             </tr>
                             <tr>
                                 <td>비밀번호</td>
                                 <td>
-                                    <button id="btnChangePass">비밀번호 수정</button>
+                                    <button id="btnChangePass" type="button" onclick="location.href='/Kmarket2/my/pwChange?group=info'">비밀번호 수정</button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>이름</td>
-                                <td>[[${user.name}]]</td>
+                                <td>[[${user.name.charAt(0)+'*'+user.name.charAt(user.name.length-1)}]]</td>
                             </tr>
                             <tr>
                                 <td>가입날</td>
-                                <td>[[${user.rdate.substring(2, 10)}]]</td>
+                                <td>[[${user.rdate.substring(0, 10)}]]</td>
                             </tr>
                             <tr>
                                 <td>E-mail</td>
                                 <td>
+                                <p class="email" style="display: none;">
                                     <input type="text" name="email1" th:value="${user.email.substring(0, user.email.indexOf('@'))}">
                                     @
                                     <input type="text" name="email2" th:value="${user.email.substring(user.email.indexOf('@')+1, user.email.length)}">
-                                    <select>
+                                    <select class="emailAuto">
                                         <option>직접입력</option>
                                         <option>naver.com</option>
                                         <option>daum.net</option>
@@ -62,31 +126,36 @@
                                         <option>nate.com</option>
                                         <option>outlook.com</option>
                                     </select>
+                                </p>
                                     <button id="btnChangeEmail">수정하기</button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>휴대폰</td>
                                 <td>
-                                    <p class="hp">
-                                        <input type="text" name="hp1" value="010">
+                                    <p class="hp" style="display: none">
+                                        <input type="text" name="hp1" th:value="${user.hp.substring(0,3)}">
                                         -
-                                        <input type="text" name="hp2" value="1234">
+                                        <input type="text" name="hp2" th:value="${user.hp.substring(4,8)}">
                                         -
-                                        <input type="text" name="hp3" value="1001">
-                                        <button id="btnChangeEmail">수정하기</button>
+                                        <input type="text" name="hp3" th:value="${user.hp.substring(9,13)}">
                                     </p>
+                                    <button id="btnChangeHp">수정하기</button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>주소</td>
                                 <td>
-                                    <input type="text" name="zip">
-                                    <button id="btnFindZip">주소검색</button>
-                                    <p class="address">
-                                        <input type="text" name="addr1">
-                                        <input type="text" name="addr2">
-                                    </p>
+                                    <div>
+                                        <input type="text" name="zip" id="zip" th:value="${user.zip}" readonly>
+                                        <button type="button" id="btnZip" onclick="postcode()">우편번호 찾기</button>
+                                    </div>
+                                    <div>
+                                        <input type="text" name="addr1" id="addr1" size="50" th:value="${user.addr1}" style="margin: 3px 0px;" readonly>
+                                    </div>
+                                    <div>
+                                        <input type="text" name="addr2" id="addr2" size="50" th:value="${user.addr2}" placeholder="상세주소를 입력하세요.">
+                                    </div>
                                 </td>
                             </tr>
                             <tr>

@@ -40,12 +40,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.usernameParameter("uid")
 			.passwordParameter("pass");
 			
+		// 자동로그인 설정
+		http.rememberMe()
+			.rememberMeParameter("remember") // 체크박스의 name과 동일해야함
+			.tokenValiditySeconds(60*60) // 만료 시간 default: 14일
+			.alwaysRemember(false) // 사용자가 체크박스를 활성화하지 않아도 항상 실행 default: false 
+			.userDetailsService(userService); // 기능을 사용할 때 사용자 정보가 필요함. 반드시 이 설정 필요함
+		
 		// 로그아웃 설정
 		http.logout()
 					.invalidateHttpSession(true)
 					.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
 					.logoutSuccessUrl("/member/login?success=200");
-		
 		
 	}
 	

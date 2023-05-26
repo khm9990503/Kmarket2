@@ -3,11 +3,16 @@ package kr.co.kmarket2.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.kmarket2.dao.MyDAO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.CouponVO;
+import kr.co.kmarket2.vo.MemberVO;
 import kr.co.kmarket2.vo.OrderVO;
+import kr.co.kmarket2.vo.PointVO;
+import kr.co.kmarket2.vo.ProductVO;
 import kr.co.kmarket2.vo.ReviewVO;
 
 @Service
@@ -16,9 +21,63 @@ public class MyService {
 	@Autowired
 	private MyDAO dao;
 	
+	@Autowired
+	private PasswordEncoder encoder;
+	
 	// 마이페이지 메인 주문 목록
 	public List<OrderVO> selectOrdersIndex(String uid){
-		return dao.selectOrdersIndex(uid);
+		List<OrderVO> orders = dao.selectOrdersIndex(uid);
+		for(OrderVO order : orders) {
+			char isJ  = order.getThumb1().charAt(1);
+			if(isJ == 'J') {
+				order.setThumb1(order.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+			}
+		}
+		return orders;
+	};
+	
+	// 마이페이지 홈 포인트 적립내역 목록
+	public List<PointVO> selectMemberPointsIndex(String uid){
+		return dao.selectMemberPointsIndex(uid);
+	};
+	// 마이페이지 홈 상품리뷰 목록
+	public List<ReviewVO> selectReviewsIndex(String uid){
+		return dao.selectReviewsIndex(uid);
+	};
+	// 마이페이지 홈 상품리뷰 등록
+	public int insertReview(ReviewVO vo) {
+		return dao.insertReview(vo);
+	};
+	// 마이페이지 홈 수취확인 업데이트
+	public int updateOrderComplete(int ordNo) {
+		return dao.updateOrderComplete(ordNo);
+	};
+	// 마이페이지 홈 판매자정보 보기
+	public MemberVO selectSellerIndex(String company) {
+		return dao.selectSellerIndex(company);
+	};
+	// 마이페이지 홈 문의하기
+	public int insertQna(ArticleVO vo) {
+		return dao.insertQna(vo);
+	};
+	// 마이페이지 헤더 정보 불러오기
+	public int selectMypageHeaderInfo(String uid, int sort) {
+		return dao.selectMypageHeaderInfo(uid, sort);
+	};
+	// 나의 전체주문내역 목록
+	public List<OrderVO> selectOrders(String uid, int sort, int start, String srt, String end){
+		List<OrderVO> orders = dao.selectOrders(uid, sort, start, srt, end);
+		for(OrderVO order : orders) {
+			char isJ  = order.getThumb1().charAt(1);
+			if(isJ == 'J') {
+				order.setThumb1(order.getThumb1().replaceFirst("/Java1_Kmarket1", ""));
+			}
+		}
+		return orders;
+	};
+	// 나의 전체주문내역 총 갯수
+	public int selectOrdersCountTotal(String uid, int sort, String srt, String end) {
+		return dao.selectOrdersCountTotal(uid, sort, srt, end);
 	};
 	
 	// 나의문의 불러오기
@@ -31,6 +90,27 @@ public class MyService {
 		return dao.selectQnaCountTotal(uid, group);
 	}
 	
+	// 나의 쿠폰 불러오기
+	public List<CouponVO> selectCoupons(String uid){
+		return dao.selectCoupons(uid);
+	};
+	
+	// 나의 포인트 내역 불러오기
+	public List<PointVO> selectPoints(String uid, int sort, int start){
+		return dao.selectPoints(uid, sort, start);
+	};
+	public List<PointVO> selectPointsDuring(String uid, int start, String srt, String end){
+		return dao.selectPointsDuring(uid, start, srt, end);
+	};
+	
+	// 나의 포인트 내역 총 갯수
+	public int selectPointsCountTotal(String uid, int sort) {
+		return dao.selectPointsCountTotal(uid,  sort);
+	};
+	public int selectPointsCountDuring(String uid, String srt, String end) {
+		return dao.selectPointsCountDuring(uid, srt, end);
+	};
+	
 	// 리뷰 불러오기
 	public List<ReviewVO> selectReview(String uid, int start){
 		return dao.selectReview(uid, start);
@@ -41,6 +121,22 @@ public class MyService {
 		return dao.selectReviewCountTotal(uid);
 	}
 
+	// 나의 정보 수정
+	public int updateMemberInfo(MemberVO vo) {
+		return dao.updateMemberInfo(vo);
+	};
+	
+	// 나의 정보 비밀번호 수정
+	public int updatePassword(String uid, String pass2) {
+		String pass = encoder.encode(pass2);
+		return dao.updatePassword(uid, pass);
+	};
+	
+	// 나의 정보 회원탈퇴
+	public int dropMember(String uid) {
+		return dao.dropMember(uid);
+	}
+	
 	// paging
 	public int getLastPageNum(int total) {
 

@@ -1,96 +1,221 @@
 <th:block th:include="@{my/_header.html}"/>
+<script type="text/javascript">
+$(function(){
+	let today = new Date();
+	let month = today.getMonth()+1;
+	for(let i = 0; i < month; i++){
+		let tag = "<li>";
+			tag += "<a th:href='@{#}' class='sort' data-sort='"+i+"'>";
+			tag += "<em>"+(month-i)+"</em>월";
+			tag += "</a>";
+			tag += "</li>";
+		$(".date_5ea").append(tag);
+	};
+	
+	// 기간별조회를 누를때 이벤트
+	$(".sort").click(function(e){
+		e.preventDefault();
+		// 클릭 시 효과
+		$(this).addClass("on");
+		$(this).parent().siblings().children().removeClass("on");
+		$(this).parent().parent().siblings().children().children().removeClass("on");
+		// ajax 처리
+		let sort = $(this).data("sort");
+		let uid = $("input[name=uid]").val();
+		let pg = $("input[name=pg]").val();
+		handleAjax(sort,uid,pg);
+	});
+	
+	// 조회하기를 누를때
+	$(".btnConfirm").click(function(){
+		// ajax 처리
+		let uid = $("input[name=uid]").val();
+		let pg = $("input[name=pg]").val();
+		let srt = $("input[name=begin]").val().substring(0,10);
+		
+		let oriEnd = $("input[name=end]").val().substring(0,10);
+		let lastChar = parseInt(oriEnd.charAt(oriEnd.length-1)) + 1;
+		let end = $("input[name=end]").val().substring(0,10).slice(0,-1) + lastChar;
+		
+		if(srt != "" && oriEnd != ""){
+			handleAjax(0,uid,pg,srt,end);
+		}else{
+			alert("연도월일을 모두 선택해주세요.")
+			return;
+		}
+	});
+	
+	function handleAjax(sort,uid,pg,srt,end){
+		let json = {
+				"sort":sort,
+				"uid":uid,
+				"pg":pg,
+				"srt":srt,
+				"end":end
+		}
+		$.ajax({
+			url:"/Kmarket2/my/pointBySort",
+			method:"get",
+			data:json,
+			dataType:"json",
+			success:function(data){
+				$(".pts").remove();
+				if(data.points.length > 0){
+					for(let item of data.points){
+						// 목록 불러오기
+						let tag = "<tr class='pts'>";
+							tag += "<td class='date'>"+item.pointDate.substring(2,10)+"</td>";
+							if(item.type == 0){
+								tag += "<td class='type'>적립</td>";
+							}else if(item.type == 1){
+								tag += "<td class='type'>사용</td>";
+							}else if(item.type == 2){
+								tag += "<td class='type'>만료</td>";
+							}
+							tag += "<td class='ordNo'>"+item.ordNo+"</td>";
+							tag += "<td class='point'>"+item.point.toLocaleString('ko-KR');+"</td>";
+							tag += "<td class='desc'>"+item.desc+"</td>";
+							tag += "<td class='expire'>"+item.expiration.substring(2,10)+"</td>"
+							tag += "</tr>"
+						$(".ptsTable").append(tag);
+					}
+				}else {
+					let tag = "<tr class='pts'>";
+						tag += "<td colspan='6' style='text-align: center;'>적립 및 사용한 포인트가 없습니다.</td>";
+						tag += "</tr>";
+					$(".ptsTable").append(tag);
+				}
+				
+				// 페이징처리 불러오기
+				$(".page").empty();
+				let page = "";
+				if(srt != null){ // 기간 시작일(srt)이 있는지 없는지에 따라 분기
+					if(data.pageGroupStart > 1){
+						page += "<a href='#' data-pg='"+(data.pageGroupStart-1)+"' data-srt='"+srt+"' data-end='"+end+"' class='prev'>이전</a>";
+					}
+					for(let k = data.pageGroupStart; k <= data.pageGroupEnd; k++){
+						if(k == data.currentPage){
+							page += "<a href='#' data-pg='"+k+"' data-srt='"+srt+"' data-end='"+end+"' class='num on'>"+k+"</a>";
+						}else {
+							page += "<a href='#' data-pg='"+k+"' data-srt='"+srt+"' data-end='"+end+"' class='num'>"+k+"</a>";
+						}
+						
+					}
+					if(data.pageGroupEnd < data.lastPageNum){
+						page += "<a href='#' data-pg='"+(data.pageGroupEnd+1)+"' data-srt='"+srt+"' data-end='"+end+"' class='next'>다음</a>";
+					}
+				}else {
+					if(data.pageGroupStart > 1){
+						page += "<a href='#' data-pg='"+(data.pageGroupStart-1)+"' data-sort='"+sort+"' class='prev'>이전</a>";
+					}
+					for(let k = data.pageGroupStart; k <= data.pageGroupEnd; k++){
+						if(k == data.currentPage){
+							page += "<a href='#' data-pg='"+k+"' data-sort='"+sort+"' class='num on'>"+k+"</a>";
+						}else {
+							page += "<a href='#' data-pg='"+k+"' data-sort='"+sort+"' class='num'>"+k+"</a>";
+						}
+						
+					}
+					if(data.pageGroupEnd < data.lastPageNum){
+						page += "<a href='#' data-pg='"+(data.pageGroupEnd+1)+"' data-sort='"+sort+"' class='next'>다음</a>";
+					}
+				}
+				
+				$(".page").append(page);
+				$(".page > a").click(handlePageClick); // a태그 삭제 후 append한 a태그에 재적용
+			}
+		})
+	}
+	
+	$(".page > a").click(handlePageClick);
+	
+	// 페이징 버튼 누를 떼 이벤트
+	function handlePageClick(e){
+		e.preventDefault();
+		// 클릭 시 효과
+		$(this).addClass("on");
+		$(this).siblings().removeClass("on");
+		// ajax 처리
+		let sort = $(this).data("sort");
+		let uid = $("input[name=uid]").val();
+		let pg = $(this).data("pg");
+		let srt = $(this).data("srt");
+		let end = $(this).data("end");
+		let json = {
+				"sort":sort,
+				"uid":uid,
+				"pg":pg,
+				"srt":srt,
+				"end":end
+		}
+		$.ajax({
+			url:"/Kmarket2/my/pointBySort",
+			method:"get",
+			data:json,
+			dataType:"json",
+			success:function(data){
+				$(".pts").remove();
+				for(let item of data.points){
+					// 목록 불러오기
+					let tag = "<tr class='pts'>";
+						tag += "<td class='date'>"+item.pointDate.substring(2,10)+"</td>";
+						if(item.type == 0){
+							tag += "<td class='type'>적립</td>";
+						}else if(item.type == 1){
+							tag += "<td class='type'>사용</td>";
+						}else if(item.type == 2){
+							tag += "<td class='type'>만료</td>";
+						}
+						tag += "<td class='ordNo'>"+item.ordNo+"</td>";
+						tag += "<td class='point'>"+item.point.toLocaleString('ko-KR');+"</td>";
+						tag += "<td class='desc'>"+item.desc+"</td>";
+						tag += "<td class='expire'>"+item.expiration.substring(2,10)+"</td>"
+						tag += "</tr>"
+					$(".ptsTable").append(tag);
+						
+				}
+			}
+		});
+	}
+});
+</script>
             <div class="point">
-                <ul>
-                    <span class="menu_else"></span>
-<<<<<<< HEAD
-                    <li class="on">
-                        <a th:href="@{#}">전체주문내역</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">포인트내역</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">쿠폰</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">나의리뷰</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">문의하기</a>
-                    </li>
-                    <li>
-                        <a th:href="@{#}">나의설정</a>
-=======
-                    <li th:classappend="${group} eq 'ordered'?'on':'off'">
-                        <a th:href="@{/my/ordered?group=ordered}">전체주문내역</a>
-                    </li>
-                    <li th:classappend="${group} eq 'point'?'on':'off'">
-                        <a th:href="@{/my/point?group=point}">포인트내역</a>
-                    </li>
-                    <li th:classappend="${group} eq 'coupon'?'on':'off'">
-                        <a th:href="@{/my/coupon?group=coupon}">쿠폰</a>
-                    </li>
-                    <li th:classappend="${group} eq 'review'?'on':'off'">
-                        <a th:href="@{/my/review?group=review}">나의리뷰</a>
-                    </li>
-                    <li th:classappend="${group} eq 'qna'?'on':'off'">
-                        <a th:href="@{/my/qna?group=qna}">문의하기</a>
->>>>>>> 1c1edd4ebf35430964a28bcfb6895139873e2d5c
-                    </li>
-                    <li th:classappend="${group} eq 'info'?'on':'off'">
-                        <a th:href="@{/my/info?group=info}">나의설정</a>
-                </ul>
+                <th:block th:include="@{my/_side.html}"/>
                 <section>
                     <a href="#">
                         <img src="../img/my_banner2.png" alt="패션, 타운 하나로 끝" class="banner">
                     </a>
                     <article>
                         <h3>포인트내역</h3>
+                        <input type="hidden" name="uid" th:value="${uid}">
+                        <input type="hidden" name="pg" th:value="${pg!=null?pg:1}">
                         <div class="byDate">
                             <span class="tit">기간별조회</span>
                             <ul class="date_3ea">
                                 <li>
-                                    <a th:href="@{#}">
+                                    <a class="sort" th:href="@{#}" data-sort="5">
                                         <em>1</em>주일
                                     </a>
                                 </li>
                                 <li>
-                                    <a th:href="@{#}">
+                                    <a class="sort" th:href="@{#}" data-sort="6">
                                         <em>15</em>일
                                     </a>
                                 </li>
                                 <li>
-                                    <a th:href="@{#}" class="on">
+                                    <a th:href="@{#}" class="sort" data-sort="7">
                                         <em>1</em>개월
                                     </a>
                                 </li>
                             </ul>
                             <ul class="date_5ea">
-                                <li>
+                                <!-- 
+                                	<li>
                                     <a th:href="@{#}">
-                                        <em>11</em>월
+                                        <em>1</em>월
                                     </a>
                                 </li>
-                                <li>
-                                    <a th:href="@{#}">
-                                        <em>10</em>월
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{#}">
-                                        <em>9</em>월
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{#}">
-                                        <em>8</em>월
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{#}">
-                                        <em>7</em>월
-                                    </a>
-                                </li>
+                                 -->
                             </ul>
                             <p>
                                 <input type="date" name="begin">
@@ -99,7 +224,7 @@
                             </p>
                             <button class="btnConfirm">조회하기</button>
                         </div>
-                        <table border="0">
+                        <table border="0" class="ptsTable">
                             <tr>
                                 <th>날짜</th>
                                 <th>구분</th>
@@ -108,45 +233,30 @@
                                 <th>비고</th>
                                 <th>유효기간</th>
                             </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
-                                <td class="type">적립</td>
-                                <td class="ordNo">202212101</td>
-                                <td class="point">340</td>
-                                <td class="desc">상품 구매확정</td>
-                                <td class="expire">2024-12-12</td>
+                            <tr th:if="${#lists.isEmpty(points)}">
+                            	<td colspan="6" style="text-align: center;">적립 및 사용한 포인트가 없습니다.</td>
                             </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
-                                <td class="type">적립</td>
-                                <td class="ordNo">202212101</td>
-                                <td class="point">100</td>
-                                <td class="desc">상품 리뷰 작성 추가 포인트</td>
-                                <td class="expire">2024-12-12</td>
-                            </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
-                                <td class="type">적립</td>
-                                <td class="ordNo">202212101</td>
-                                <td class="point">340</td>
-                                <td class="desc">상품 구매확정</td>
-                                <td class="expire">2024-12-12</td>
-                            </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
-                                <td class="type">적립</td>
-                                <td class="ordNo">202212101</td>
-                                <td class="point">340</td>
-                                <td class="desc">상품 구매확정</td>
-                                <td class="expire">2024-12-12</td>
+                            <tr th:each="item : ${points}" class="pts">
+                                <td class="date">[[${item.pointDate.substring(2,10)}]]</td>
+                                <td class="type" th:if="${item.type}==0">적립</td>
+                                <td class="type" th:if="${item.type}==1">사용</td>
+                                <td class="type" th:if="${item.type}==2">만료</td>
+                                <td class="ordNo">[[${item.ordNo}]]</td>
+                                <td class="point">[[${#numbers.formatInteger(item.point,1,'COMMA')}]]</td>
+                                <td class="desc">[[${item.desc}]]</td>
+                                <td class="expire">[[${item.expiration.substring(2,10)}]]</td>
                             </tr>
                         </table>
-                        <p class="page">
-                            <a th:href="@{#}" class="prev">이전</a>
-                            <a th:href="@{#}" class="num on">1</a>
-                            <a th:href="@{#}" class="num">2</a>
-                            <a th:href="@{#}" class="num">3</a>
-                            <a th:href="@{#}" class="next">다음</a>
+                        <p class="page" th:if="${!#lists.isEmpty(points)}">
+                        	<th:block th:if="${pageGroupStart > 1}">
+                           	<a href="#" th:data-pg="${pageGroupStart-1}" data-sort="8" class="prev">이전</a>
+                            </th:block>
+                            <th:block th:each="num : ${#numbers.sequence(pageGroupStart, pageGroupEnd)}">
+                           	<a href="#" th:data-pg="${num}" data-sort="8" th:class="${num} eq ${currentPage} ? 'num on':'num'">[[${num}]]</a>
+                            </th:block>
+                            <th:block th:if="${pageGroupEnd < lastPageNum}">
+                            <a href="#" th:data-pg="${pageGroupEnd + 1}" data-sort="8" class="next">다음</a>
+                            </th:block>
                         </p>
                     </article>
                 </section>

@@ -21,6 +21,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
          */
 		registry.addResourceHandler(storageProperties.getWebLocation() + "/**" )
         .addResourceLocations("file:" + Paths.get("thumb").toAbsolutePath() + "/");
+		
+		registry.addResourceHandler("/banner/**")
+		.addResourceLocations("file:banner/");
+		
 		WebMvcConfigurer.super.addResourceHandlers(registry);
 	}
 }

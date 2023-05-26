@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.kmarket2.vo.ArticleCateVO;
 import kr.co.kmarket2.vo.ArticleVO;
+import kr.co.kmarket2.vo.BannerVO;
 import kr.co.kmarket2.vo.Cate1VO;
 import kr.co.kmarket2.vo.Cate2VO;
 import kr.co.kmarket2.vo.ProductVO;
@@ -15,6 +16,8 @@ import kr.co.kmarket2.vo.ProductVO;
 @Mapper
 @Repository
 public interface AdminDAO {
+/////// 관리자 배너 관련 /////////////////////////////////////////////
+	public int insertBanner (BannerVO vo);
 /////// 관리자 상품 관련 /////////////////////////////////////////////
 	public List<Cate1VO> selectCate1 ();
 	public List<Cate2VO> selectCate2 (int cate1);

@@ -16,7 +16,13 @@
     <script>
         $(document).ready(function(){
           $('.slider').bxSlider({
-            easing:'linear'
+            easing:'linear',
+           	auto: true,
+       		speed: 500,
+       		pause: 4000,
+       		autoControls: false,
+       		controls:false,
+       		pager:false,
           });
         
           // 스크롤 시 사이드 따라오기
@@ -42,6 +48,14 @@
 <body>
     <div id="wrapper">
         <header>
+        	<!-- <div class="banner">
+				<section class="Slider">
+		            <div class="slider">
+		                <div><a href="#"><img th:src="@{/img/my_banner1.jpg}" alt="item1"></a></div>
+		                <div><a href="#"><img th:src="@{/img/my_banner2.png}" alt="item2"></a></div>
+		            </div>
+		        </section>
+        	</div> -->
             <div class="top">
                 <div>
                 	<th:block sec:authorize="isAnonymous()">
@@ -49,7 +63,7 @@
 	                    <a th:href="@{/member/join}">회원가입</a>
                     </th:block>
                     <th:block sec:authorize="hasAnyRole('5','6','7')">
-                    	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+                    	<a><span class="nick" sec:authentication="principal.user.name">길동이</span>님 반갑습니다.</a>
                     	<a th:href="@{/admin/index}">관리자</a>
                     	<a th:href="@{/member/logout}">로그아웃</a>
 	                    <a th:href="@{/my/home}">마이페이지</a>
@@ -59,7 +73,7 @@
 	                    </a>
                     </th:block>
                     <th:block sec:authorize="hasAnyRole('1','2','3','4')">
-                    	<a><span class="nick" sec:authentication="principal.user.uid">길동이</span>님 반갑습니다.</a>
+                    	<a><span class="nick" sec:authentication="principal.user.name">길동이</span>님 반갑습니다.</a>
                     	<a th:href="@{/member/logout}">로그아웃</a>
 	                    <a th:href="@{/my/home}">마이페이지</a>
 	                    <a th:href="@{/product/cart}">

@@ -11,14 +11,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PointVO {
-	private int pointNo;
+public class CouponVO {
+	private int no;
 	private String uid;
-	private int ordNo;
-	private int point;
-	private String pointDate;
-	private String expiration;
-	// 추가 필드
-	private int type; // 사용여부
-	private String desc; // 포인트 적립,사용 내용
+	private String name;
+	private int discount;
+	private int limit;
+	private String exDate;
+	private int state;
 }
